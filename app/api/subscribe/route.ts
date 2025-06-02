@@ -5,6 +5,22 @@ export async function POST(request: Request) {
   try {
     const { email } = await request.json()
 
+    if (!email) {
+      return NextResponse.json(
+        { error: 'Email is required' },
+        { status: 400 }
+      )
+    }
+
+    if (!process.env.GMAIL_USER || !process.env.GMAIL_CLIENT_ID || 
+        !process.env.GMAIL_CLIENT_SECRET || !process.env.GMAIL_REFRESH_TOKEN) {
+      console.error('Missing Gmail OAuth2 environment variables')
+      return NextResponse.json(
+        { error: 'Email service configuration error' },
+        { status: 500 }
+      )
+    }
+
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
@@ -28,7 +44,7 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error('Subscription error:', error)
     return NextResponse.json(
-      { error: 'Failed to process subscription' },
+      { error: error instanceof Error ? error.message : 'Failed to process subscription' },
       { status: 500 }
     )
   }

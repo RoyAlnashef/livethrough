@@ -32,6 +32,9 @@ export default function ComingSoonPage() {
         if (supabaseError.code === '23505') { // Unique violation
           throw new Error('This email is already subscribed')
         }
+        if (supabaseError.code === '42501') { // Permission denied
+          throw new Error('Unable to subscribe. Please try again later.')
+        }
         throw new Error(supabaseError.message)
       }
 
@@ -145,7 +148,7 @@ export default function ComingSoonPage() {
                     </Button>
                   </div>
                   <p className="text-sm text-zinc-500 text-center">
-                    * We&apos;d spam or sell your info *
+                    * We don&apos;t spam or sell your info *
                   </p>
                 </form>
               ) : (
