@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent } from "@/components/ui/card"
 import { CheckCircle, Mail, ArrowRight, AlertCircle } from "lucide-react"
+import { supabase } from "@/lib/supabase"
 
 export default function ComingSoonPage() {
   const [email, setEmail] = useState("")
@@ -22,6 +23,19 @@ export default function ComingSoonPage() {
     setError(null)
 
     try {
+      // Store in Supabase
+      const { error: supabaseError } = await supabase
+        .from('email_subscriptions')
+        .insert([{ email }])
+
+      if (supabaseError) {
+        if (supabaseError.code === '23505') { // Unique violation
+          throw new Error('This email is already subscribed')
+        }
+        throw new Error(supabaseError.message)
+      }
+
+      // Send notification email
       const response = await fetch('/api/subscribe', {
         method: 'POST',
         headers: {
@@ -32,7 +46,7 @@ export default function ComingSoonPage() {
 
       if (!response.ok) {
         const data = await response.json()
-        throw new Error(data.error || 'Failed to subscribe')
+        throw new Error(data.error || 'Failed to send notification')
       }
 
       setIsSubmitted(true)
