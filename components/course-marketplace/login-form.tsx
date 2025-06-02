@@ -87,9 +87,11 @@ export default function LoginForm() {
     <Card className="w-full shadow-xl border border-zinc-800 bg-zinc-900/80 backdrop-blur-sm">
       <CardHeader className="space-y-1 text-center pb-8">
         <div className="flex items-center justify-center mb-4">
-          <div className="w-12 h-12 bg-gradient-to-r from-zinc-600 to-zinc-400 rounded-xl flex items-center justify-center">
-            <Sparkles className="w-6 h-6 text-white" />
-          </div>
+          <img
+            src="/images/logo-mark.svg"
+            alt="LiveThrough"
+            className="h-10 w-auto"
+          />
         </div>
         <CardTitle className="text-2xl font-bold bg-gradient-to-r from-zinc-200 to-zinc-400 bg-clip-text text-transparent">
           {getTitle()}
