@@ -63,9 +63,16 @@ export default function ComingSoonPage() {
   }
 
   return (
-    <div className="min-h-screen bg-zinc-900 relative overflow-hidden">
+    <div className="min-h-screen bg-zinc-950 relative overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-50">
+        <Image
+          src="/images/topo-map.svg"
+          alt="Topographic Map Background"
+          fill
+          className="object-cover opacity-100 [&>svg]:fill-zinc-900"
+          priority
+        />
         <div
           className="absolute inset-0"
           style={{
