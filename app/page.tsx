@@ -124,23 +124,23 @@ export default function ComingSoonPage() {
                         </div>
                       ) : (
                         <div className="flex items-center gap-3">
-                          Notify me when it's ready
+                          Notify me when it&apos;s ready
                           <ArrowRight className="h-5 w-5" />
                         </div>
                       )}
                     </Button>
                   </div>
                   <p className="text-sm text-zinc-500 text-center">
-                    * We don't spam or sell your info *
+                    * We&apos;d spam or sell your info *
                   </p>
                 </form>
               ) : (
                 <div className="text-center space-y-6">
                   <CheckCircle className="h-16 w-16 text-green-500 mx-auto" />
                   <div>
-                    <h3 className="text-3xl font-bold text-white mb-3">You're on the list!</h3>
+                    <h3 className="text-3xl font-bold text-white mb-3">You&apos;re on the list!</h3>
                     <p className="text-lg text-zinc-200">
-                      We'll notify you as soon as LiveThrough.co is ready.
+                      We&apos;ll notify you as soon as LiveThrough.co is ready.
                     </p>
                   </div>
                   <Button
