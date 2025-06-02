@@ -94,7 +94,7 @@ export default function ComingSoonPage() {
 
           {/* Email Subscription Form */}
           <Card className="max-w-2xl mx-auto bg-white/5 backdrop-blur-sm border-white/10">
-            <CardContent className="p-12">
+            <CardContent className="p-6 sm:p-8 md:p-12">
 
               {/* Title */}
               <h1 className="text-3xl md:text-4xl sm:text-4xl font-bold text-white leading-tight mb-4">
@@ -102,7 +102,7 @@ export default function ComingSoonPage() {
               </h1>
               
                 <p className="text-xl text-zinc-300 max-w-[560px] leading-relaxed mx-auto mb-6">
-                  LiveThrough is a markeplace for survival, tactical, and subsistence living courses in the U.S.
+                  LiveThrough is a markeplace for survival, tactical, and subsistence living courses.
                 </p>
               
               {(error || isSubmitted) && (
