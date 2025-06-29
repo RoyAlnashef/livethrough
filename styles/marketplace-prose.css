@@ -117,4 +117,15 @@
 .prose-marketplace em, .prose-marketplace i {
   font-style: italic;
   color: #e5e7eb;
+}
+
+.prose-marketplace img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  border-radius: 0.5rem; /* rounded-lg */
+  margin: 2em 0;
+  object-fit: contain;
+  background: #18181b; /* zinc-900 */
 } 
