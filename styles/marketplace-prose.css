@@ -66,6 +66,11 @@
   margin-bottom: 0.3em;
 }
 
+.prose-marketplace li p {
+  margin-top: 0.2em;
+  margin-bottom: 0.2em;
+}
+
 .prose-marketplace blockquote {
   border-left: 4px solid #334155; /* zinc-800 */
   background: #18181b; /* zinc-900 */
