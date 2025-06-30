@@ -23,6 +23,7 @@ import {
   Trees,
   Clock,
   BookOpen,
+  Youtube,
 } from "lucide-react"
 import { Header } from "@/components/header"
 import { useParams } from "next/navigation"
@@ -52,6 +53,7 @@ interface School {
   facebook_url?: string;
   twitter_url?: string;
   instagram_url?: string;
+  youtube_url?: string;
 }
 
 export default function CourseDetail() {
@@ -430,7 +432,7 @@ export default function CourseDetail() {
                       ) : <span className="text-zinc-300">N/A</span>}
                     </div>
                     <Separator className="bg-zinc-800" />
-                    {(school?.facebook_url || school?.twitter_url || school?.instagram_url) && (
+                    {(school?.facebook_url || school?.twitter_url || school?.instagram_url || school?.youtube_url) && (
                       <div className="flex items-center gap-3">
                         <span className="text-sm text-zinc-400">Follow us:</span>
                         <div className="flex gap-2">
@@ -447,6 +449,11 @@ export default function CourseDetail() {
                           {school.instagram_url && (
                             <Button variant="ghost" size="icon" className="h-8 w-8 text-zinc-400 hover:text-zinc-300" asChild>
                               <a href={school.instagram_url} target="_blank" rel="noopener noreferrer"><Instagram className="h-4 w-4" /></a>
+                            </Button>
+                          )}
+                          {school.youtube_url && (
+                            <Button variant="ghost" size="icon" className="h-8 w-8 text-zinc-400 hover:text-zinc-300" asChild>
+                              <a href={school.youtube_url} target="_blank" rel="noopener noreferrer"><Youtube className="h-4 w-4" /></a>
                             </Button>
                           )}
                         </div>

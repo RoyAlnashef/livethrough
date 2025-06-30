@@ -29,6 +29,7 @@ interface School {
   facebook_url?: string
   twitter_url?: string
   instagram_url?: string
+  youtube_url?: string
 }
 
 export function SchoolForm({ mode, initialValues, onSubmit, isSubmitting }: SchoolFormProps) {
@@ -44,6 +45,7 @@ export function SchoolForm({ mode, initialValues, onSubmit, isSubmitting }: Scho
     facebook_url: "",
     twitter_url: "",
     instagram_url: "",
+    youtube_url: "",
     ...initialValues,
   })
   const [logoFile, setLogoFile] = useState<File | null>(null)
@@ -118,7 +120,7 @@ export function SchoolForm({ mode, initialValues, onSubmit, isSubmitting }: Scho
               <Input id="address" value={school.address} onChange={e => handleChange("address", e.target.value)} />
             </div>
           </div>
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-4 gap-4">
             <div className="space-y-2">
               <Label htmlFor="facebook_url">Facebook</Label>
               <Input id="facebook_url" value={school.facebook_url} onChange={e => handleChange("facebook_url", e.target.value)} />
@@ -130,6 +132,10 @@ export function SchoolForm({ mode, initialValues, onSubmit, isSubmitting }: Scho
             <div className="space-y-2">
               <Label htmlFor="instagram_url">Instagram</Label>
               <Input id="instagram_url" value={school.instagram_url} onChange={e => handleChange("instagram_url", e.target.value)} />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="youtube_url">YouTube</Label>
+              <Input id="youtube_url" value={school.youtube_url} onChange={e => handleChange("youtube_url", e.target.value)} />
             </div>
           </div>
           <div className="space-y-2">
