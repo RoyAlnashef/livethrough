@@ -463,8 +463,8 @@ export default function CourseDetail() {
                     <div className="grid grid-cols-2 gap-4">
                       <SharePopover courseUrl={`https://livethrough.com/courses/${course?.id ?? ""}`} courseTitle={course?.title ?? ""} variant="outline" />
                       <Button
-                        variant="default"
-                        className="bg-teal-700 hover:bg-teal-600"
+                        variant="outline"
+                        className="border-zinc-600 text-teal-500 hover:text-teal-500 hover:bg-zinc-800 px-6 py-3 flex items-center justify-center"
                         onClick={() => {
                           if (!isAuthenticated) {
                             openAuthModal('signup')
@@ -474,8 +474,8 @@ export default function CourseDetail() {
                         }}
                         disabled={bookmarksLoading}
                       >
-                        <Bookmark className={`h-4 w-4 mr-2 ${isBookmarked(params.id) ? "fill-current" : ""}`} />
-                        {isBookmarked(params.id) ? "Saved" : "Save"}
+                        <Bookmark className={`h-4 w-4 mr-2 text-teal-500 ${isBookmarked(params.id) ? 'fill-current' : ''}`} />
+                        {isBookmarked(params.id) ? 'Saved' : 'Save'}
                       </Button>
                     </div>
                   </CardContent>
