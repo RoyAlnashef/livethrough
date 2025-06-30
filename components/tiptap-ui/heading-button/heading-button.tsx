@@ -72,8 +72,24 @@ export function canToggleHeading(editor: Editor | null, level: Level): boolean {
 }
 
 export function isHeadingActive(editor: Editor | null, level: Level): boolean {
-  if (!editor) return false
-  return editor.isActive("heading", { level })
+  if (!editor) return false;
+  const { from, to } = editor.state.selection;
+  if (from === to) return false; // Only active if there is a selection
+
+  let allAreHeadings = true;
+  editor.state.doc.nodesBetween(from, to, (node) => {
+    if (node.type.name === 'heading') {
+      if (node.attrs.level !== level) {
+        allAreHeadings = false;
+        return false; // stop iteration
+      }
+    } else if (node.isBlock) {
+      allAreHeadings = false;
+      return false; // stop iteration
+    }
+    return true;
+  });
+  return allAreHeadings;
 }
 
 export function toggleHeading(editor: Editor | null, level: Level): void {
