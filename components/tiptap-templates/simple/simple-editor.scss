@@ -67,6 +67,15 @@ body {
   padding: 3rem 3rem;
 }
 
+.simple-editor-content .tiptap.ProseMirror hr {
+  margin-top: 2.5em;
+  margin-bottom: 2.5em;
+  height: 1px;
+  background: #334155; /* zinc-800 */
+  border: none;
+  border-radius: 2px;
+}
+
 @media screen and (max-width: 480px) {
   .simple-editor-content .tiptap.ProseMirror {
     padding: 1rem 1.5rem;
