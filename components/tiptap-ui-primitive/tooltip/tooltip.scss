@@ -4,9 +4,9 @@
   --tt-kbd: var(--tt-gray-dark-a-400);
 
   .dark & {
-    --tt-tooltip-bg: var(--white);
-    --tt-tooltip-text: var(--tt-gray-light-600);
-    --tt-kbd: var(--tt-gray-light-a-400);
+    --tt-tooltip-bg: #09090b; /* zinc-950 */
+    --tt-tooltip-text: #f4f4f5; /* zinc-100 */
+    --tt-kbd: #a1a1aa; /* zinc-400 */
   }
 }
 
