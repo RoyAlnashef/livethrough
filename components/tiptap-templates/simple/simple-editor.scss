@@ -76,6 +76,18 @@ body {
   border-radius: 2px;
 }
 
+.simple-editor-content .tiptap.ProseMirror code {
+  background: #18181b; /* zinc-900 */
+  color: #fbbf24; /* yellow-400 */
+  padding: 0.2em 0.4em;
+  border-radius: 0.3em;
+  font-size: 0.95em;
+  font-family: 'DM Mono', 'Menlo', 'Monaco', 'Consolas', monospace;
+  border: 1px solid #27272a; /* zinc-800 */
+  margin: 0.2em 0;
+  display: inline-block;
+}
+
 @media screen and (max-width: 480px) {
   .simple-editor-content .tiptap.ProseMirror {
     padding: 1rem 1.5rem;
