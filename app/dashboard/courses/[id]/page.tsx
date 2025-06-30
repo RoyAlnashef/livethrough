@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from "react"
-import { useParams } from "next/navigation"
+import { useParams, useRouter } from "next/navigation"
 import { CourseForm } from "@/components/dashboard/course-form"
 import { supabase } from "@/lib/supabase"
 import { toast } from "sonner"
@@ -12,6 +12,16 @@ export default function EditCoursePage() {
   const [initialValues, setInitialValues] = useState<Partial<Course> | null>(null)
   const [loading, setLoading] = useState(true)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const router = useRouter();
+
+  // Show toast after reload if update was successful
+  useEffect(() => {
+    const successMsg = sessionStorage.getItem('courseUpdateSuccess');
+    if (successMsg) {
+      toast.success(successMsg);
+      sessionStorage.removeItem('courseUpdateSuccess');
+    }
+  }, []);
 
   useEffect(() => {
     async function fetchCourse() {
@@ -88,7 +98,8 @@ export default function EditCoursePage() {
       const result = await updateCourseWithImages(id, formData)
 
       if (result.success) {
-        toast.success(result.message)
+        sessionStorage.setItem('courseUpdateSuccess', 'Course updated successfully!');
+        window.location.reload();
       } else {
         toast.error(result.message, { duration: 5000, closeButton: true })
       }
