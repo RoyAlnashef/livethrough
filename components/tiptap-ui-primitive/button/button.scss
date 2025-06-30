@@ -227,6 +227,8 @@
   &[data-state="open"]:not([disabled]) {
     background-color: var(--tt-button-active-bg-color);
     color: var(--tt-button-active-text-color);
+    box-shadow: 0 0 0 2px #2dd4bf66; /* subtle teal glow */
+    border: 1.5px solid #2dd4bf; /* teal-400 border */
 
     .tiptap-button-icon {
       color: var(--tt-button-active-icon-color);
