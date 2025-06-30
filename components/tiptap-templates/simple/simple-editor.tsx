@@ -272,7 +272,8 @@ export function SimpleEditor({ value, onChange }: SimpleEditorProps) {
       return
     }
     // Try to insert video
-    const success = (editor.commands as any).setVideo({ src: videoUrl.trim() })
+    const setVideo = (editor.commands as Record<string, unknown>)["setVideo"] as ((opts: { src: string }) => boolean) | undefined;
+    const success = setVideo ? setVideo({ src: videoUrl.trim() }) : false;
     if (!success) {
       setVideoError("Invalid YouTube or Vimeo URL.")
       return

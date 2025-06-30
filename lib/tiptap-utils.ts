@@ -131,14 +131,10 @@ export function findNodePosition(props: {
 /**
  * Handles image upload with progress tracking and abort capability
  * @param file The file to upload
- * @param onProgress Optional callback for tracking upload progress
- * @param abortSignal Optional AbortSignal for cancelling the upload
  * @returns Promise resolving to the URL of the uploaded image
  */
 export const handleImageUpload = async (
-  file: File,
-  onProgress?: (event: { progress: number }) => void,
-  abortSignal?: AbortSignal
+  file: File
 ): Promise<string> => {
   if (!file) {
     throw new Error("No file provided");
@@ -155,12 +151,12 @@ export const handleImageUpload = async (
   const filePath = `images/${fileName}`;
 
   // Upload to Supabase Storage
-  const { data, error } = await supabase.storage
+  const uploadResult = await supabase.storage
     .from('course-descriptions')
     .upload(filePath, file);
 
-  if (error) {
-    throw new Error('Image upload failed: ' + error.message);
+  if (uploadResult.error) {
+    throw new Error('Image upload failed: ' + uploadResult.error.message);
   }
 
   // Get the public URL

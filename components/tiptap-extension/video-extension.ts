@@ -2,7 +2,7 @@ import { Node, nodeInputRule, type RawCommands } from '@tiptap/core'
 
 export interface VideoOptions {
   allowFullscreen: boolean
-  HTMLAttributes: Record<string, any>
+  HTMLAttributes: Record<string, unknown>
 }
 
 export interface VideoAttrs {
