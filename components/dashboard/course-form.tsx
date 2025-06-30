@@ -60,6 +60,13 @@ async function uploadImageInChunks(
   const fileId = uuidv4();
   let publicUrl: string | null = null;
 
+  console.log(`Starting chunked upload for ${file.name}:`, {
+    fileType: file.type,
+    fileSize: file.size,
+    totalChunks,
+    courseId
+  });
+
   for (let i = 0; i < totalChunks; i++) {
     const start = i * CHUNK_SIZE;
     const end = Math.min(file.size, (i + 1) * CHUNK_SIZE);
@@ -72,13 +79,21 @@ async function uploadImageInChunks(
         'x-total-chunks': totalChunks.toString(),
         'x-original-name': file.name,
         'x-course-id': courseId || 'temp',
+        'x-file-type': file.type, // Add file type to headers
       },
       body: chunk,
     });
+    
+    if (!res.ok) {
+      const errorData = await res.json().catch(() => ({}));
+      throw new Error(`Upload failed at chunk ${i}: ${errorData.error || res.statusText}`);
+    }
+    
     const data = await res.json();
     if (onProgress) onProgress(i + 1, totalChunks);
     if (data.status === 'file_complete' && data.publicUrl) {
       publicUrl = data.publicUrl;
+      console.log(`Upload completed for ${file.name}:`, data.publicUrl);
     }
   }
   if (!publicUrl) throw new Error('Failed to upload image');
@@ -291,7 +306,36 @@ export function CourseForm({ mode, initialValues, onSubmit, isSubmitting }: Cour
         for (let idx = 0; idx < newImageFiles.length; idx++) {
           const file = newImageFiles[idx];
           toast.info(`Uploading ${file.name} (${idx + 1}/${newImageFiles.length})`);
-          const url = await uploadImageInChunks(file, courseToSubmit.id || 'temp');
+          
+          let url: string;
+          try {
+            // Try chunked upload first
+            url = await uploadImageInChunks(file, courseToSubmit.id || 'temp');
+          } catch (chunkedError) {
+            console.warn(`Chunked upload failed for ${file.name}, trying direct upload:`, chunkedError);
+            
+            // Fallback to direct upload for webp files or if chunked upload fails
+            const formData = new FormData();
+            formData.append('file', file);
+            
+            const response = await fetch('/api/test-direct-upload', {
+              method: 'POST',
+              body: formData
+            });
+            
+            if (!response.ok) {
+              const errorData = await response.json().catch(() => ({}));
+              throw new Error(`Direct upload failed: ${errorData.error || response.statusText}`);
+            }
+            
+            const result = await response.json();
+            if (!result.success) {
+              throw new Error(`Direct upload failed: ${result.error}`);
+            }
+            
+            url = result.publicUrl;
+          }
+          
           uploadedUrls.push(url);
         }
         toast.success('All images uploaded!');

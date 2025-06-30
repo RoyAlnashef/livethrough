@@ -279,7 +279,7 @@ export default function CourseDetail() {
                 </div>
 
                 {/* Course Description */}
-                <Card className="bg-zinc-900 border-zinc-800">
+                <Card className="bg-zinc-950 border-zinc-800">
                   <CardHeader>
                     <CardTitle className="text-zinc-100">Course Description</CardTitle>
                     <Separator className="bg-zinc-800 my-2" />
@@ -359,8 +359,8 @@ export default function CourseDetail() {
               {/* Right Column - CTAs */}
               <div className="space-y-6 sticky top-8 self-start">
                 {/* Contact Information */}
-                <Card className="bg-zinc-900 border-zinc-800">
-                  <CardContent className="space-y-4 pt-6">
+                <Card className="bg-zinc-900 border-zinc-800 p-0">
+                  <CardContent className="space-y-4 py-6">
                     <div className="flex items-start gap-4 mb-4">
                       {school?.logo_url && !logoError ? (
                         <Image

@@ -5,6 +5,21 @@ import { processImage } from '@/lib/image-processing';
 import { uploadCoursePhoto } from '@/lib/supabase-storage';
 import { supabaseAdmin } from '@/lib/supabase-admin';
 
+// Helper function to detect MIME type from file extension
+function getMimeTypeFromFileName(fileName: string): string {
+  const ext = path.extname(fileName).toLowerCase();
+  const mimeTypes: { [key: string]: string } = {
+    '.jpg': 'image/jpeg',
+    '.jpeg': 'image/jpeg',
+    '.png': 'image/png',
+    '.gif': 'image/gif',
+    '.webp': 'image/webp',
+    '.bmp': 'image/bmp',
+    '.svg': 'image/svg+xml',
+  };
+  return mimeTypes[ext] || 'image/*';
+}
+
 // POST /api/upload-chunk
 export async function POST(req: NextRequest) {
   try {
@@ -14,6 +29,7 @@ export async function POST(req: NextRequest) {
     const totalChunks = req.headers.get('x-total-chunks');
     const originalName = req.headers.get('x-original-name');
     const courseId = req.headers.get('x-course-id'); // for upload path
+    const fileType = req.headers.get('x-file-type'); // Get file type from headers
 
     if (!fileId || !chunkIndex || !totalChunks || !originalName || !courseId) {
       return NextResponse.json({ error: 'Missing required headers' }, { status: 400 });
@@ -47,21 +63,35 @@ export async function POST(req: NextRequest) {
 
       // Process the assembled file with sharp (WebP conversion)
       const fileBuffer = await fs.readFile(assembledPath);
-      const processed = await processImage({
-        name: originalName,
-        buffer: fileBuffer,
-        size: fileBuffer.length,
-        type: 'image/*',
-      }, { format: 'webp' });
+      
+      // Use file type from headers if available, otherwise detect from filename
+      const detectedMimeType = fileType || getMimeTypeFromFileName(originalName);
+      console.log(`Processing file: ${originalName}, detected MIME type: ${detectedMimeType}`);
+      
+      try {
+        const processed = await processImage({
+          name: originalName,
+          buffer: fileBuffer,
+          size: fileBuffer.length,
+          type: detectedMimeType,
+        }, { format: 'webp' });
 
-      // Upload to Supabase Storage using Buffer and service role
-      publicUrl = await uploadCoursePhoto(
-        supabaseAdmin,
-        processed.buffer,
-        processed.fileName,
-        processed.mimeType,
-        courseId
-      );
+        console.log(`Processed image: ${processed.fileName}, MIME type: ${processed.mimeType}, size: ${processed.size} bytes`);
+
+        // Upload to Supabase Storage using Buffer and service role
+        publicUrl = await uploadCoursePhoto(
+          supabaseAdmin,
+          processed.buffer,
+          processed.fileName,
+          processed.mimeType,
+          courseId
+        );
+
+        console.log(`Uploaded to Supabase: ${publicUrl}`);
+      } catch (processingError) {
+        console.error('Error processing image:', processingError);
+        throw new Error(`Image processing failed: ${processingError instanceof Error ? processingError.message : 'Unknown error'}`);
+      }
 
       // Clean up temp files
       for (let i = 0; i < Number(totalChunks); i++) {
@@ -83,6 +113,9 @@ export async function POST(req: NextRequest) {
     });
   } catch (error) {
     console.error('Chunk upload error:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json({ 
+      error: 'Internal server error',
+      details: error instanceof Error ? error.message : 'Unknown error'
+    }, { status: 500 });
   }
 } 

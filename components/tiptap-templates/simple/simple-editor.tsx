@@ -19,6 +19,7 @@ import { Underline } from "@tiptap/extension-underline"
 import { Link } from "@/components/tiptap-extension/link-extension"
 import { Selection } from "@/components/tiptap-extension/selection-extension"
 import { TrailingNode } from "@/components/tiptap-extension/trailing-node-extension"
+import { Video } from '@/components/tiptap-extension/video-extension'
 
 // --- UI Primitives ---
 import { Button } from "@/components/tiptap-ui-primitive/button"
@@ -86,10 +87,12 @@ const MainToolbarContent = ({
   onHighlighterClick,
   onLinkClick,
   isMobile,
+  onEmbedVideoClick,
 }: {
   onHighlighterClick: () => void
   onLinkClick: () => void
   isMobile: boolean
+  onEmbedVideoClick: () => void
 }) => {
   return (
     <>
@@ -145,6 +148,9 @@ const MainToolbarContent = ({
 
       <ToolbarGroup>
         <ImageUploadButton text="Add" />
+        <Button data-style="ghost" tooltip="Embed Video" aria-label="Embed Video" onClick={onEmbedVideoClick}>
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" strokeWidth="2" d="M15.5 10.5V8.75A2.75 2.75 0 0 0 12.75 6h-5.5A2.75 2.75 0 0 0 4.5 8.75v6.5A2.75 2.75 0 0 0 7.25 18h5.5A2.75 2.75 0 0 0 15.5 15.25V13.5m2.5-3.5v4m0 0 2-2m-2 2-2-2"/></svg>
+        </Button>
       </ToolbarGroup>
 
       <Spacer />
@@ -190,6 +196,9 @@ export function SimpleEditor({ value, onChange }: SimpleEditorProps) {
     "main" | "highlighter" | "link"
   >("main")
   const toolbarRef = React.useRef<HTMLDivElement>(null)
+  const [showVideoPrompt, setShowVideoPrompt] = React.useState(false)
+  const [videoUrl, setVideoUrl] = React.useState("")
+  const [videoError, setVideoError] = React.useState("")
 
   const editor = useEditor({
     immediatelyRender: false,
@@ -223,6 +232,7 @@ export function SimpleEditor({ value, onChange }: SimpleEditorProps) {
       }),
       TrailingNode,
       Link.configure({ openOnClick: false }),
+      Video,
     ],
     content: value ?? content,
     onUpdate: ({ editor }) => {
@@ -249,6 +259,29 @@ export function SimpleEditor({ value, onChange }: SimpleEditorProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
 
+  const handleEmbedVideoClick = () => {
+    setVideoUrl("")
+    setVideoError("")
+    setShowVideoPrompt(true)
+  }
+
+  const handleVideoSubmit = () => {
+    if (!editor) return
+    if (!videoUrl.trim()) {
+      setVideoError("Please enter a video URL.")
+      return
+    }
+    // Try to insert video
+    const success = (editor.commands as any).setVideo({ src: videoUrl.trim() })
+    if (!success) {
+      setVideoError("Invalid YouTube or Vimeo URL.")
+      return
+    }
+    setShowVideoPrompt(false)
+    setVideoUrl("")
+    setVideoError("")
+  }
+
   return (
     <EditorContext.Provider value={{ editor }}>
       <Toolbar
@@ -266,6 +299,7 @@ export function SimpleEditor({ value, onChange }: SimpleEditorProps) {
             onHighlighterClick={() => setMobileView("highlighter")}
             onLinkClick={() => setMobileView("link")}
             isMobile={isMobile}
+            onEmbedVideoClick={handleEmbedVideoClick}
           />
         ) : (
           <MobileToolbarContent
@@ -274,6 +308,40 @@ export function SimpleEditor({ value, onChange }: SimpleEditorProps) {
           />
         )}
       </Toolbar>
+
+      {/* Video Embed Prompt Dialog */}
+      {showVideoPrompt && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
+          <div className="bg-zinc-900 border border-zinc-700 rounded-lg p-6 w-full max-w-md shadow-xl">
+            <h3 className="text-lg font-semibold text-zinc-100 mb-2">Embed YouTube or Vimeo Video</h3>
+            <input
+              type="text"
+              className="w-full bg-zinc-800 border border-zinc-700 rounded px-3 py-2 text-zinc-100 mb-2 focus:outline-none focus:ring-2 focus:ring-teal-500"
+              placeholder="Paste YouTube or Vimeo URL here..."
+              value={videoUrl}
+              onChange={e => setVideoUrl(e.target.value)}
+              autoFocus
+            />
+            {videoError && <div className="text-red-400 text-sm mb-2">{videoError}</div>}
+            <div className="flex gap-2 justify-end mt-2">
+              <button
+                className="px-4 py-2 rounded bg-zinc-700 text-zinc-200 hover:bg-zinc-600"
+                onClick={() => setShowVideoPrompt(false)}
+                type="button"
+              >
+                Cancel
+              </button>
+              <button
+                className="px-4 py-2 rounded bg-teal-600 text-white hover:bg-teal-700"
+                onClick={handleVideoSubmit}
+                type="button"
+              >
+                Embed
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="content-wrapper">
         <EditorContent

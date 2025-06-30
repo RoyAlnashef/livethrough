@@ -12,6 +12,15 @@ export async function uploadCoursePhoto(
 ): Promise<string> {
   const fullPath = `${courseId}/${Date.now()}-${fileName}`
 
+  console.log(`Uploading to Supabase Storage:`, {
+    bucket: COURSE_PHOTOS_BUCKET,
+    path: fullPath,
+    fileName,
+    mimeType,
+    bufferSize: buffer.length,
+    courseId
+  });
+
   const { error: uploadError } = await supabase.storage
     .from(COURSE_PHOTOS_BUCKET)
     .upload(fullPath, buffer, {
@@ -22,15 +31,23 @@ export async function uploadCoursePhoto(
 
   if (uploadError) {
     console.error('Error uploading photo:', uploadError)
-    throw new Error('Failed to upload photo.')
+    console.error('Upload error details:', {
+      message: uploadError.message,
+      name: uploadError.name
+    })
+    throw new Error(`Failed to upload photo: ${uploadError.message}`)
   }
+
+  console.log(`Successfully uploaded to storage: ${fullPath}`);
 
   const { data } = supabase.storage.from(COURSE_PHOTOS_BUCKET).getPublicUrl(fullPath)
 
   if (!data.publicUrl) {
+    console.error('Could not get public URL for uploaded file:', fullPath)
     throw new Error('Could not get public URL for uploaded file.')
   }
   
+  console.log(`Generated public URL: ${data.publicUrl}`);
   return data.publicUrl
 }
 

@@ -60,46 +60,73 @@ export async function processImage(
     buffer = Buffer.from(arrayBuffer)
   }
 
-  // Process image with Sharp
-  let sharpInstance = sharp(buffer)
-    .resize(opts.maxWidth, opts.maxHeight, {
-      fit: opts.fit,
-      withoutEnlargement: true
-    })
+  console.log(`Processing image: ${file.name}, type: ${file.type}, size: ${buffer.length} bytes`);
 
-  // Convert to specified format
-  switch (opts.format) {
-    case 'webp':
-      sharpInstance = sharpInstance.webp({ quality: opts.quality })
-      break
-    case 'jpeg':
-      sharpInstance = sharpInstance.jpeg({ quality: opts.quality })
-      break
-    case 'png':
-      sharpInstance = sharpInstance.png({ quality: opts.quality })
-      break
-  }
+  try {
+    // Process image with Sharp
+    let sharpInstance = sharp(buffer)
+      .resize(opts.maxWidth, opts.maxHeight, {
+        fit: opts.fit,
+        withoutEnlargement: true
+      })
 
-  // Process the image
-  const processedBuffer = await sharpInstance.toBuffer()
+    // Convert to specified format
+    switch (opts.format) {
+      case 'webp':
+        sharpInstance = sharpInstance.webp({ quality: opts.quality })
+        break
+      case 'jpeg':
+        sharpInstance = sharpInstance.jpeg({ quality: opts.quality })
+        break
+      case 'png':
+        sharpInstance = sharpInstance.png({ quality: opts.quality })
+        break
+    }
 
-  // Generate new filename with proper extension
-  const originalName = file.name
-  const nameWithoutExt = originalName.replace(/\.[^/.]+$/, '')
-  const newFileName = `${nameWithoutExt}.${opts.format}`
+    // Process the image
+    const processedBuffer = await sharpInstance.toBuffer()
 
-  // Determine MIME type
-  const mimeTypes = {
-    webp: 'image/webp',
-    jpeg: 'image/jpeg',
-    png: 'image/png'
-  }
+    // Generate new filename with proper extension
+    const originalName = file.name
+    const nameWithoutExt = originalName.replace(/\.[^/.]+$/, '')
+    const newFileName = `${nameWithoutExt}.${opts.format}`
 
-  return {
-    buffer: processedBuffer,
-    fileName: newFileName,
-    mimeType: mimeTypes[opts.format],
-    size: processedBuffer.length
+    // Determine MIME type
+    const mimeTypes = {
+      webp: 'image/webp',
+      jpeg: 'image/jpeg',
+      png: 'image/png'
+    }
+
+    const result = {
+      buffer: processedBuffer,
+      fileName: newFileName,
+      mimeType: mimeTypes[opts.format],
+      size: processedBuffer.length
+    };
+
+    console.log(`Successfully processed image: ${result.fileName}, MIME type: ${result.mimeType}, size: ${result.size} bytes`);
+    return result;
+
+  } catch (error) {
+    console.error(`Error processing image ${file.name}:`, error);
+    
+    // If Sharp processing fails, try to return the original buffer with webp extension
+    if (opts.format === 'webp') {
+      console.log(`Falling back to original buffer for ${file.name}`);
+      const originalName = file.name
+      const nameWithoutExt = originalName.replace(/\.[^/.]+$/, '')
+      const newFileName = `${nameWithoutExt}.webp`
+      
+      return {
+        buffer: buffer,
+        fileName: newFileName,
+        mimeType: 'image/webp',
+        size: buffer.length
+      };
+    }
+    
+    throw error;
   }
 }
 

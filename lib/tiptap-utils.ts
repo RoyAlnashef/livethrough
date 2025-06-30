@@ -1,5 +1,6 @@
 import type { Attrs, Node } from "@tiptap/pm/model"
 import type { Editor } from "@tiptap/react"
+import { supabase } from './supabase'
 
 export const MAX_FILE_SIZE = 5 * 1024 * 1024 // 5MB
 
@@ -139,30 +140,39 @@ export const handleImageUpload = async (
   onProgress?: (event: { progress: number }) => void,
   abortSignal?: AbortSignal
 ): Promise<string> => {
-  // Validate file
   if (!file) {
-    throw new Error("No file provided")
+    throw new Error("No file provided");
   }
-
   if (file.size > MAX_FILE_SIZE) {
     throw new Error(
       `File size exceeds maximum allowed (${MAX_FILE_SIZE / (1024 * 1024)}MB)`
-    )
+    );
   }
 
-  // For demo/testing: Simulate upload progress
-  for (let progress = 0; progress <= 100; progress += 10) {
-    if (abortSignal?.aborted) {
-      throw new Error("Upload cancelled")
-    }
-    await new Promise((resolve) => setTimeout(resolve, 500))
-    onProgress?.({ progress })
+  // Generate a unique file path
+  const fileExt = file.name.split('.').pop();
+  const fileName = `${Date.now()}-${Math.random().toString(36).substring(2, 8)}.${fileExt}`;
+  const filePath = `images/${fileName}`;
+
+  // Upload to Supabase Storage
+  const { data, error } = await supabase.storage
+    .from('course-descriptions')
+    .upload(filePath, file);
+
+  if (error) {
+    throw new Error('Image upload failed: ' + error.message);
   }
 
-  return "/images/placeholder-image.png"
+  // Get the public URL
+  const { data: publicUrlData } = supabase.storage
+    .from('course-descriptions')
+    .getPublicUrl(filePath);
 
-  // Uncomment for production use:
-  // return convertFileToBase64(file, abortSignal);
+  if (!publicUrlData?.publicUrl) {
+    throw new Error('Failed to get public URL for uploaded image.');
+  }
+
+  return publicUrlData.publicUrl;
 }
 
 /**
