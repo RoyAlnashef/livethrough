@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from "react"
-import { useParams, useRouter } from "next/navigation"
+import { useParams } from "next/navigation"
 import { CourseForm } from "@/components/dashboard/course-form"
 import { supabase } from "@/lib/supabase"
 import { toast } from "sonner"
@@ -12,7 +12,6 @@ export default function EditCoursePage() {
   const [initialValues, setInitialValues] = useState<Partial<Course> | null>(null)
   const [loading, setLoading] = useState(true)
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const router = useRouter();
 
   // Show toast after reload if update was successful
   useEffect(() => {
