@@ -2,7 +2,7 @@
 
 import { createClient } from '@supabase/supabase-js'
 import { processImage } from './image-processing'
-import { uploadCoursePhoto, deleteCoursePhoto } from './supabase-storage'
+import { uploadCoursePhoto, deleteCoursePhoto, ensureCourseFolderExists } from './supabase-storage'
 import { Course } from './types'
 import { revalidatePath } from 'next/cache'
 
@@ -227,6 +227,16 @@ export async function updateCourseWithImages(
       } catch (error) {
         console.error('Error deleting images:', error)
         // Not a critical error, but log it
+      }
+    }
+
+    // 5. Ensure course folder exists if all images were removed
+    if (finalPhotoUrls.length === 0) {
+      try {
+        await ensureCourseFolderExists(supabase, courseId)
+      } catch (error) {
+        console.warn('Failed to preserve course folder:', error)
+        // Don't fail the entire operation for this
       }
     }
 

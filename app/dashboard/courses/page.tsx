@@ -26,7 +26,7 @@ import {
 import Link from "next/link"
 import { toast } from "sonner"
 import { CourseImportModal } from "@/components/dashboard/course-import-modal"
-import { copyCoursePhotoToNewCourse } from "@/lib/supabase-storage";
+import { copyCoursePhotoToNewCourse, deleteCourseFolder } from "@/lib/supabase-storage";
 
 interface Course {
   id: string
@@ -209,6 +209,17 @@ export default function CoursesPage() {
         .delete()
         .in('id', pendingDeleteIds);
       if (error) throw error;
+      
+      // Clean up course folders from storage
+      for (const courseId of pendingDeleteIds) {
+        try {
+          await deleteCourseFolder(supabase, courseId);
+        } catch (storageError) {
+          console.warn(`Failed to clean up course folder for ${courseId}:`, storageError);
+          // Don't fail the deletion for storage cleanup issues
+        }
+      }
+      
       // Refresh courses after deletion
       const { data, error: fetchError } = await supabase
         .from('courses')
