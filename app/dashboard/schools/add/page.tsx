@@ -35,7 +35,7 @@ export default function AddSchoolPage() {
       if (insertData.id) delete insertData.id
 
       // Insert the school into the database
-      const { data: newSchool, error } = await supabase
+      const { error } = await supabase
         .from('schools')
         .insert([insertData])
         .select()
