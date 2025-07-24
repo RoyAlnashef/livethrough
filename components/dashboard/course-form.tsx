@@ -355,8 +355,8 @@ export function CourseForm({ mode, initialValues, onSubmit, isSubmitting }: Cour
       const result = await deleteCourseWithCleanup(course.id);
       
       if (result.success) {
-        toast.success('Course deleted successfully!');
-        router.push('/dashboard/courses');
+      toast.success('Course deleted successfully!');
+      router.push('/dashboard/courses');
       } else {
         toast.error(result.message);
         setShowDeleteDialog(false);

@@ -105,36 +105,36 @@ export default function CoursesPage() {
   }, [searchQuery])
 
   const fetchCourses = async () => {
-    setLoading(true)
-    const { data, error } = await supabase
-      .from('courses')
-      .select('id,title,created_at,status,location,schools(id,name)')
-      .order('created_at', { ascending: false })
-    
-    if (error) {
-      console.error('Error fetching courses:', error)
-      return
-    }
+      setLoading(true)
+      const { data, error } = await supabase
+        .from('courses')
+        .select('id,title,created_at,status,location,schools(id,name)')
+        .order('created_at', { ascending: false })
+      
+      if (error) {
+        console.error('Error fetching courses:', error)
+        return
+      }
 
-    if (data) {
-      const transformedData = data.map(course => ({
-        ...course,
-        schools: Array.isArray(course.schools) ? course.schools[0] : course.schools
-      }));
-      setCourses(transformedData as Course[]);
-      
-      // Calculate stats
-      const uniqueLocations = new Set(data.map(course => course.location))
-      
-      setStats({
-        totalCourses: data.length,
-        activeStudents: 0,
-        locations: uniqueLocations.size,
-        revenue: 0
-      })
+      if (data) {
+        const transformedData = data.map(course => ({
+          ...course,
+          schools: Array.isArray(course.schools) ? course.schools[0] : course.schools
+        }));
+        setCourses(transformedData as Course[]);
+        
+        // Calculate stats
+        const uniqueLocations = new Set(data.map(course => course.location))
+        
+        setStats({
+          totalCourses: data.length,
+          activeStudents: 0,
+          locations: uniqueLocations.size,
+          revenue: 0
+        })
+      }
+      setLoading(false)
     }
-    setLoading(false)
-  }
 
   useEffect(() => {
     fetchCourses()
@@ -332,6 +332,8 @@ export default function CoursesPage() {
   );
 
   // Handler to duplicate a course
+
+
   const handleDuplicateCourse = async (courseId: string) => {
     setDuplicatingId(courseId);
     try {
@@ -617,6 +619,7 @@ export default function CoursesPage() {
                                 <Trash2 className="h-4 w-4 mr-2" />
                                 Delete Course
                               </DropdownMenuItem>
+
                               <DropdownMenuItem
                                 className="text-zinc-200 hover:bg-zinc-800 cursor-pointer"
                                 onClick={() => handleDuplicateCourse(course.id)}
