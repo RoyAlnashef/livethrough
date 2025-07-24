@@ -20,6 +20,7 @@ interface School {
   twitter_url?: string
   instagram_url?: string
   youtube_url?: string
+  tiktok_url?: string
 }
 
 export default function EditSchoolPage() {

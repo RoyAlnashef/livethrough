@@ -30,6 +30,7 @@ interface School {
   twitter_url?: string
   instagram_url?: string
   youtube_url?: string
+  tiktok_url?: string
 }
 
 export function SchoolForm({ mode, initialValues, onSubmit, isSubmitting }: SchoolFormProps) {
@@ -46,6 +47,7 @@ export function SchoolForm({ mode, initialValues, onSubmit, isSubmitting }: Scho
     twitter_url: "",
     instagram_url: "",
     youtube_url: "",
+    tiktok_url: "",
     ...initialValues,
   })
   const [logoFile, setLogoFile] = useState<File | null>(null)
@@ -230,6 +232,21 @@ export function SchoolForm({ mode, initialValues, onSubmit, isSubmitting }: Scho
                     className="bg-zinc-800 border-zinc-700 text-zinc-100 placeholder:text-zinc-400"
                     placeholder="https://youtube.com/@yourschool"
                   />
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="tiktok_url" className="text-zinc-400 mb-2">TikTok</Label>
+                  <Input 
+                    id="tiktok_url" 
+                    value={school.tiktok_url} 
+                    onChange={e => handleChange("tiktok_url", e.target.value)} 
+                    className="bg-zinc-800 border-zinc-700 text-zinc-100 placeholder:text-zinc-400"
+                    placeholder="https://tiktok.com/@yourschool"
+                  />
+                </div>
+                <div className="space-y-2">
+                  {/* Empty div to maintain grid layout */}
                 </div>
               </div>
             </CardContent>
