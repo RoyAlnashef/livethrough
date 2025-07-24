@@ -4,6 +4,7 @@ import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { School, Phone, Mail, MapPin, Copy, Globe, Facebook, Twitter, Instagram, Youtube, Bookmark } from "lucide-react";
+import TiktokIcon from "@/components/icons/tiktok-icon";
 import { SharePopover } from "@/components/share-popover";
 import React from "react";
 
@@ -21,6 +22,7 @@ interface School {
   twitter_url?: string;
   instagram_url?: string;
   youtube_url?: string;
+  tiktok_url?: string;
 }
 
 interface SchoolInfoCardProps {
@@ -152,6 +154,11 @@ export const SchoolInfoCard: React.FC<SchoolInfoCardProps> = ({
                 {school.youtube_url && (
                   <Button variant="ghost" size="icon" className="h-10 w-10 text-teal-500 hover:text-teal-300" asChild>
                     <a href={school.youtube_url} target="_blank" rel="noopener noreferrer"><Youtube className="h-6 w-6" /></a>
+                  </Button>
+                )}
+                {school.tiktok_url && (
+                  <Button variant="ghost" size="icon" className="h-10 w-10 text-teal-500 hover:text-teal-300" asChild>
+                    <a href={school.tiktok_url} target="_blank" rel="noopener noreferrer"><TiktokIcon className="h-6 w-6" /></a>
                   </Button>
                 )}
               </div>
