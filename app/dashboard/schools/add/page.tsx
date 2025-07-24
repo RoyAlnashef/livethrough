@@ -74,6 +74,7 @@ export default function AddSchoolPage() {
               onSubmit={handleSubmit}
               onCancel={() => router.push('/dashboard/schools')}
               isSubmitting={isSubmitting}
+              storageKey="schoolFormAdd"
             />
           </div>
         )

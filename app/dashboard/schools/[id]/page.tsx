@@ -75,6 +75,9 @@ export default function EditSchoolPage() {
       const updateData = { ...data }
       if (updateData.id) delete updateData.id
 
+      // Log the data being sent
+      console.log('Updating school with:', updateData)
+
       // Update the school in the database
       const { error } = await supabase
         .from('schools')
@@ -88,7 +91,8 @@ export default function EditSchoolPage() {
       sessionStorage.setItem('schoolUpdateSuccess', 'School updated successfully!');
       window.location.reload();
     } catch (error) {
-      console.error('Error updating school:', error)
+      // Log the error details
+      console.error('Error updating school:', JSON.stringify(error, null, 2))
       toast.error('Failed to update school. Please try again.', { 
         duration: 5000, 
         closeButton: true 
@@ -127,6 +131,7 @@ export default function EditSchoolPage() {
                onSubmit={handleSubmit}
                onCancel={() => router.push('/dashboard/schools')}
                isSubmitting={isSubmitting}
+               storageKey={id ? `schoolFormEdit_${id}` : undefined}
              />
            </div>
          )

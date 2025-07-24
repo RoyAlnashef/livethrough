@@ -239,7 +239,7 @@ export function SchoolForm({ mode, initialValues, onSubmit, onCancel, isSubmitti
                   </Label>
                   <Input 
                     id="name" 
-                    value={school.name} 
+                    value={school.name ?? ""}
                     onChange={e => handleChange("name", e.target.value)} 
                     onBlur={() => handleBlur("name")}
                     required 
@@ -256,7 +256,7 @@ export function SchoolForm({ mode, initialValues, onSubmit, onCancel, isSubmitti
                   <Label htmlFor="website" className="text-zinc-400 mb-2">Website</Label>
                   <Input 
                     id="website" 
-                    value={school.website} 
+                    value={school.website ?? ""}
                     onChange={e => handleChange("website", e.target.value)} 
                     onBlur={() => handleBlur("website")}
                     className={`bg-zinc-800 border-zinc-700 text-zinc-100 placeholder:text-zinc-400 ${
@@ -273,7 +273,7 @@ export function SchoolForm({ mode, initialValues, onSubmit, onCancel, isSubmitti
                 <Label htmlFor="description" className="text-zinc-400 mb-2">Description</Label>
                 <Textarea 
                   id="description" 
-                  value={school.description} 
+                  value={school.description ?? ""}
                   onChange={e => handleChange("description", e.target.value)} 
                   rows={4}
                   className="bg-zinc-800 border-zinc-700 text-zinc-100 placeholder:text-zinc-400"
@@ -285,7 +285,7 @@ export function SchoolForm({ mode, initialValues, onSubmit, onCancel, isSubmitti
                        <Label htmlFor="contact_email" className="text-zinc-400 mb-2">Contact Email</Label>
                        <Input 
                          id="contact_email" 
-                         value={school.contact_email} 
+                         value={school.contact_email ?? ""}
                          onChange={e => handleChange("contact_email", e.target.value)} 
                          onBlur={() => handleBlur("contact_email")}
                          className={`bg-zinc-800 border-zinc-700 text-zinc-100 placeholder:text-zinc-400 ${
@@ -301,7 +301,7 @@ export function SchoolForm({ mode, initialValues, onSubmit, onCancel, isSubmitti
                   <Label htmlFor="contact_phone" className="text-zinc-400 mb-2">Contact Phone</Label>
                   <Input 
                     id="contact_phone" 
-                    value={school.contact_phone} 
+                    value={school.contact_phone ?? ""}
                     onChange={e => handleChange("contact_phone", e.target.value)} 
                     className="bg-zinc-800 border-zinc-700 text-zinc-100 placeholder:text-zinc-400"
                     placeholder="(555) 123-4567"
@@ -313,7 +313,7 @@ export function SchoolForm({ mode, initialValues, onSubmit, onCancel, isSubmitti
                   <Label htmlFor="address" className="text-zinc-400 mb-2">Address</Label>
                   <Input 
                     id="address" 
-                    value={school.address} 
+                    value={school.address ?? ""}
                     onChange={e => handleChange("address", e.target.value)} 
                     className="bg-zinc-800 border-zinc-700 text-zinc-100 placeholder:text-zinc-400"
                     placeholder="123 Wilderness Way, Boulder, CO 80301"
@@ -323,7 +323,7 @@ export function SchoolForm({ mode, initialValues, onSubmit, onCancel, isSubmitti
                   <Label htmlFor="location" className="text-zinc-400 mb-2">Location</Label>
                   <Input 
                     id="location" 
-                    value={school.location} 
+                    value={school.location ?? ""}
                     onChange={e => handleChange("location", e.target.value)} 
                     className="bg-zinc-800 border-zinc-700 text-zinc-100 placeholder:text-zinc-400"
                     placeholder="e.g., Boulder, CO"
@@ -345,7 +345,7 @@ export function SchoolForm({ mode, initialValues, onSubmit, onCancel, isSubmitti
                   <Label htmlFor="facebook_url" className="text-zinc-400 mb-2">Facebook</Label>
                   <Input 
                     id="facebook_url" 
-                    value={school.facebook_url} 
+                    value={school.facebook_url ?? ""}
                     onChange={e => handleChange("facebook_url", e.target.value)} 
                     onBlur={() => handleBlur("facebook_url")}
                     className={`bg-zinc-800 border-zinc-700 text-zinc-100 placeholder:text-zinc-400 ${
@@ -361,7 +361,7 @@ export function SchoolForm({ mode, initialValues, onSubmit, onCancel, isSubmitti
                   <Label htmlFor="twitter_url" className="text-zinc-400 mb-2">Twitter</Label>
                   <Input 
                     id="twitter_url" 
-                    value={school.twitter_url} 
+                    value={school.twitter_url ?? ""}
                     onChange={e => handleChange("twitter_url", e.target.value)} 
                     onBlur={() => handleBlur("twitter_url")}
                     className={`bg-zinc-800 border-zinc-700 text-zinc-100 placeholder:text-zinc-400 ${
@@ -379,7 +379,7 @@ export function SchoolForm({ mode, initialValues, onSubmit, onCancel, isSubmitti
                   <Label htmlFor="instagram_url" className="text-zinc-400 mb-2">Instagram</Label>
                   <Input 
                     id="instagram_url" 
-                    value={school.instagram_url} 
+                    value={school.instagram_url ?? ""}
                     onChange={e => handleChange("instagram_url", e.target.value)} 
                     onBlur={() => handleBlur("instagram_url")}
                     className={`bg-zinc-800 border-zinc-700 text-zinc-100 placeholder:text-zinc-400 ${
@@ -395,7 +395,7 @@ export function SchoolForm({ mode, initialValues, onSubmit, onCancel, isSubmitti
                   <Label htmlFor="youtube_url" className="text-zinc-400 mb-2">YouTube</Label>
                   <Input 
                     id="youtube_url" 
-                    value={school.youtube_url} 
+                    value={school.youtube_url ?? ""}
                     onChange={e => handleChange("youtube_url", e.target.value)} 
                     onBlur={() => handleBlur("youtube_url")}
                     className={`bg-zinc-800 border-zinc-700 text-zinc-100 placeholder:text-zinc-400 ${
@@ -413,7 +413,7 @@ export function SchoolForm({ mode, initialValues, onSubmit, onCancel, isSubmitti
                   <Label htmlFor="tiktok_url" className="text-zinc-400 mb-2">TikTok</Label>
                   <Input 
                     id="tiktok_url" 
-                    value={school.tiktok_url} 
+                    value={school.tiktok_url ?? ""}
                     onChange={e => handleChange("tiktok_url", e.target.value)} 
                     onBlur={() => handleBlur("tiktok_url")}
                     className={`bg-zinc-800 border-zinc-700 text-zinc-100 placeholder:text-zinc-400 ${
