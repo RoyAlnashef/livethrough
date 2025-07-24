@@ -358,4 +358,4 @@ For support and questions:
 
 ---
 
-**Note to Developers**: This project follows strict coding guidelines as outlined in `cursor.rules`. Please ensure all code follows the established patterns and best practices for maintainability and consistency. 
+**Note to AI Developer**: This project follows strict coding guidelines as outlined in the `.cursor/rules/` directory. Please ensure all code follows the established patterns and best practices for maintainability and consistency. When making changes, always analyze the existing codebase structure and maintain the established architectural patterns, naming conventions, and styling approaches. 
