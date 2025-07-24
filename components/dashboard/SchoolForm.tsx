@@ -256,11 +256,11 @@ export function SchoolForm({ mode, initialValues, onSubmit, isSubmitting }: Scho
                   onChange={handleLogoFileChange}
                   className="bg-zinc-800 border-zinc-700 text-zinc-100 file:bg-teal-600 file:border-0 file:text-white file:px-4 file:py-2 file:rounded file:cursor-pointer file:hover:bg-teal-700 h-auto"
                 />
-                {logoPreview && (
+                {(logoPreview || school.logo_url) && (
                   <div className="mt-4">
                     <div className="rounded-lg p-4 w-full border border-zinc-700 bg-zinc-800 flex items-center justify-center">
                       <img 
-                        src={logoPreview} 
+                        src={logoPreview || school.logo_url} 
                         alt="Logo Preview" 
                         className="max-h-full max-w-full object-contain p-2" 
                       />
