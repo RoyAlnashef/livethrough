@@ -2,7 +2,7 @@
 
 import { createClient } from '@supabase/supabase-js'
 import { processImage } from './image-processing'
-import { uploadCoursePhoto, deleteCoursePhoto, ensureCourseFolderExists } from './supabase-storage'
+import { uploadCoursePhoto, deleteCoursePhoto, ensureCourseFolderExists, deleteCourseFolder } from './supabase-storage'
 import { Course } from './types'
 import { revalidatePath } from 'next/cache'
 
@@ -255,6 +255,77 @@ export async function updateCourseWithImages(
     return {
       success: false,
       message: error instanceof Error ? error.message : 'An unexpected error occurred'
+    }
+  }
+}
+
+/**
+ * Maps database error codes to user-friendly error messages
+ * @param error - The error object from Supabase
+ * @returns A user-friendly error message
+ */
+const getErrorMessage = (error: unknown): string => {
+  const errorObj = error as { code?: string; message?: string };
+  
+  if (errorObj?.code === '23503') {
+    return 'Cannot delete course: It has related data that must be removed first';
+  }
+  if (errorObj?.code === '23505') {
+    return 'Cannot delete course: Duplicate entry detected';
+  }
+  if (errorObj?.code === '42P01') {
+    return 'Cannot delete course: Database table not found';
+  }
+  if (errorObj?.message?.includes('permission')) {
+    return 'Cannot delete course: Insufficient permissions';
+  }
+  return errorObj?.message || 'An unknown error occurred';
+};
+
+/**
+ * Deletes a course with proper cleanup of related data and storage
+ * @param courseId - The ID of the course to delete
+ * @returns Promise<ActionResponse> - Result of the deletion operation
+ */
+export async function deleteCourseWithCleanup(courseId: string): Promise<ActionResponse> {
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  )
+
+  try {
+    // Delete course (CASCADE will handle related data)
+    const { error } = await supabase
+      .from('courses')
+      .delete()
+      .eq('id', courseId)
+    
+    if (error) {
+      console.error('Error deleting course:', error)
+      return {
+        success: false,
+        message: getErrorMessage(error)
+      }
+    }
+
+    // Clean up storage folder
+    try {
+      await deleteCourseFolder(supabase, courseId)
+    } catch (storageError) {
+      console.warn(`Failed to clean up course folder for ${courseId}:`, storageError)
+      // Don't fail the deletion for storage cleanup issues
+    }
+
+    return {
+      success: true,
+      message: 'Course deleted successfully'
+    }
+
+  } catch (error) {
+    console.error('Unexpected error in deleteCourseWithCleanup:', error)
+    return {
+      success: false,
+      message: error instanceof Error ? error.message : 'An unexpected error occurred during deletion'
     }
   }
 } 

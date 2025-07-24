@@ -14,7 +14,8 @@ import { MapPin, DollarSign, Clock, Star, ImageIcon, X, Plus, ExternalLink } fro
 import { Separator } from "@/components/ui/separator"
 import { Course, School } from "@/lib/types"
 import { supabase } from "@/lib/supabase"
-import { deleteCourseFolder } from "@/lib/supabase-storage"
+
+import { deleteCourseWithCleanup } from "@/lib/actions"
 import { validateImageFile, formatFileSize } from "@/lib/image-validation"
 import { toast } from "sonner"
 import { v4 as uuidv4 } from 'uuid';
@@ -351,20 +352,17 @@ export function CourseForm({ mode, initialValues, onSubmit, isSubmitting }: Cour
   const handleDeleteCourse = async () => {
     if (!course.id) return;
     try {
-      const { error } = await supabase.from('courses').delete().eq('id', course.id);
-      if (error) throw error;
+      const result = await deleteCourseWithCleanup(course.id);
       
-      // Clean up course folder from storage
-      try {
-        await deleteCourseFolder(supabase, course.id);
-      } catch (storageError) {
-        console.warn('Failed to clean up course folder:', storageError);
-        // Don't fail the deletion for storage cleanup issues
+      if (result.success) {
+        toast.success('Course deleted successfully!');
+        router.push('/dashboard/courses');
+      } else {
+        toast.error(result.message);
+        setShowDeleteDialog(false);
       }
-      
-      toast.success('Course deleted successfully!');
-      router.push('/dashboard/courses');
-    } catch {
+    } catch (error) {
+      console.error('Error deleting course:', error);
       toast.error('Failed to delete course.');
       setShowDeleteDialog(false);
     }

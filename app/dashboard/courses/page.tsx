@@ -26,7 +26,8 @@ import {
 import Link from "next/link"
 import { toast } from "sonner"
 import { CourseImportModal } from "@/components/dashboard/course-import-modal"
-import { copyCoursePhotoToNewCourse, deleteCourseFolder } from "@/lib/supabase-storage";
+import { copyCoursePhotoToNewCourse } from "@/lib/supabase-storage";
+import { deleteCourseWithCleanup } from "@/lib/actions";
 
 interface Course {
   id: string
@@ -103,39 +104,39 @@ export default function CoursesPage() {
     setCurrentPage(1)
   }, [searchQuery])
 
-  useEffect(() => {
-    async function fetchCourses() {
-      setLoading(true)
-      const { data, error } = await supabase
-        .from('courses')
-        .select('id,title,created_at,status,location,schools(id,name)')
-        .order('created_at', { ascending: false })
-      
-      if (error) {
-        console.error('Error fetching courses:', error)
-        return
-      }
-
-      if (data) {
-        const transformedData = data.map(course => ({
-          ...course,
-          schools: Array.isArray(course.schools) ? course.schools[0] : course.schools
-        }));
-        setCourses(transformedData as Course[]);
-        
-        // Calculate stats
-        const uniqueLocations = new Set(data.map(course => course.location))
-        
-        setStats({
-          totalCourses: data.length,
-          activeStudents: 0,
-          locations: uniqueLocations.size,
-          revenue: 0
-        })
-      }
-      setLoading(false)
+  const fetchCourses = async () => {
+    setLoading(true)
+    const { data, error } = await supabase
+      .from('courses')
+      .select('id,title,created_at,status,location,schools(id,name)')
+      .order('created_at', { ascending: false })
+    
+    if (error) {
+      console.error('Error fetching courses:', error)
+      return
     }
 
+    if (data) {
+      const transformedData = data.map(course => ({
+        ...course,
+        schools: Array.isArray(course.schools) ? course.schools[0] : course.schools
+      }));
+      setCourses(transformedData as Course[]);
+      
+      // Calculate stats
+      const uniqueLocations = new Set(data.map(course => course.location))
+      
+      setStats({
+        totalCourses: data.length,
+        activeStudents: 0,
+        locations: uniqueLocations.size,
+        revenue: 0
+      })
+    }
+    setLoading(false)
+  }
+
+  useEffect(() => {
     fetchCourses()
   }, [])
 
@@ -203,39 +204,37 @@ export default function CoursesPage() {
 
   const handleDeleteConfirmed = async () => {
     setShowDeleteDialog(false);
+    
     try {
-      const { error } = await supabase
-        .from('courses')
-        .delete()
-        .in('id', pendingDeleteIds);
-      if (error) throw error;
+      toast.loading('Deleting course(s)...');
       
-      // Clean up course folders from storage
-      for (const courseId of pendingDeleteIds) {
-        try {
-          await deleteCourseFolder(supabase, courseId);
-        } catch (storageError) {
-          console.warn(`Failed to clean up course folder for ${courseId}:`, storageError);
-          // Don't fail the deletion for storage cleanup issues
-        }
+      // Delete each course with proper cleanup
+      const results = await Promise.allSettled(
+        pendingDeleteIds.map(id => deleteCourseWithCleanup(id))
+      );
+      
+      // Process results
+      const successful = results.filter(r => r.status === 'fulfilled' && r.value.success);
+      const failed = results.filter(r => r.status === 'rejected' || (r.status === 'fulfilled' && !r.value.success));
+      
+      if (successful.length > 0) {
+        toast.success(`Successfully deleted ${successful.length} course(s)`);
       }
       
-      // Refresh courses after deletion
-      const { data, error: fetchError } = await supabase
-        .from('courses')
-        .select('id,title,created_at,status,location,schools(id,name)')
-        .order('created_at', { ascending: false });
-      if (fetchError) throw fetchError;
-      if (data) {
-        const transformedData = data.map(course => ({
-          ...course,
-          schools: Array.isArray(course.schools) ? course.schools[0] : course.schools
-        }));
-        setCourses(transformedData as Course[]);
+      if (failed.length > 0) {
+        const errorMessages = failed.map(r => 
+          r.status === 'rejected' ? 'Unknown error' : r.value.message
+        );
+        toast.error(`Failed to delete ${failed.length} course(s): ${errorMessages.join(', ')}`);
       }
+      
+      // Refresh courses list
+      await fetchCourses();
       setSelectedRows(new Set());
+      
     } catch (error) {
-      console.error('Error deleting course(s):', error);
+      console.error('Error in handleDeleteConfirmed:', error);
+      toast.error('An unexpected error occurred during deletion');
     }
   };
 
