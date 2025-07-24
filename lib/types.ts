@@ -50,6 +50,8 @@ export interface School {
   facebook_url?: string
   twitter_url?: string
   instagram_url?: string
+  youtube_url?: string
+  tiktok_url?: string
 }
 
 export interface Filters {
