@@ -6,9 +6,9 @@ Move the school add/edit functionality from a constrained modal dialog to dedica
 ## Current State Analysis
 
 ### Existing Implementation
-- **Modal-based approach**: Schools are currently added/edited through `SchoolFormDialog` component
+- **Modal-based approach**: Schools were previously added/edited through `SchoolFormDialog` component (now removed)
 - **Constrained space**: Modal limited to 600px width, restricting form layout and field expansion
-- **Current location**: `components/dashboard/SchoolFormDialog.tsx` and `components/dashboard/SchoolForm.tsx`
+- **Current location**: `components/dashboard/SchoolForm.tsx` (formerly also `SchoolFormDialog.tsx`, now removed)
 - **Integration**: Used in `app/dashboard/schools/page.tsx` with inline state management
 
 ### Current Form Fields
@@ -44,7 +44,7 @@ app/dashboard/schools/
 ```
 components/dashboard/
 ├── SchoolForm.tsx (existing - enhanced)
-├── SchoolFormDialog.tsx (deprecated - remove after migration)
+├── SchoolFormDialog.tsx (deprecated - removed after migration)
 └── school-form.tsx (new - renamed and enhanced)
 ```
 
@@ -102,7 +102,7 @@ components/dashboard/
    - Enhance logo upload with preview and validation
 
 2. **Remove deprecated components**:
-   - Delete `SchoolFormDialog.tsx`
+   - Delete `SchoolFormDialog.tsx` (done)
    - Clean up unused imports and state
    - Update any remaining references
 
@@ -320,7 +320,7 @@ export default function SchoolsPage() {
     router.push(`/dashboard/schools/${school.id}`)
   }
   
-  // Remove SchoolFormDialog component from JSX
+  // Remove SchoolFormDialog component from JSX (already done)
   return (
     <div>
       {/* ... existing list UI ... */}
@@ -349,3 +349,18 @@ export default function SchoolsPage() {
 ## Conclusion
 
 Moving from modal-based to dedicated page forms for school management will significantly improve the user experience, provide room for future expansion, and create consistency with the course management system. The implementation follows established patterns and maintains backward compatibility during the transition. 
+
+## Quick Reference: School Add/Edit Pages
+
+### Routing Structure
+- Add School: `/dashboard/schools/add`
+- Edit School: `/dashboard/schools/[id]`
+- List Schools: `/dashboard/schools`
+
+### Form Validation Rules
+- School Name: Required, 2-100 characters
+- Website: Optional, must start with http:// or https:// if provided
+- Contact Email: Optional, must be a valid email if provided
+- Social Media URLs: Optional, must start with http:// or https:// if provided (Facebook, Twitter, Instagram, YouTube, TikTok)
+- Logo Upload: JPG, PNG, WEBP, GIF, SVG; max 2MB; preview and remove supported
+- All fields: Real-time validation and error messages 

@@ -359,3 +359,25 @@ For support and questions:
 ---
 
 **Note to AI Developer**: This project follows strict coding guidelines as outlined in the `.cursor/rules/` directory. Please ensure all code follows the established patterns and best practices for maintainability and consistency. When making changes, always analyze the existing codebase structure and maintain the established architectural patterns, naming conventions, and styling approaches. 
+
+## School Management (Add/Edit)
+
+### Routing Structure
+- Add School: `/dashboard/schools/add`
+- Edit School: `/dashboard/schools/[id]`
+- List Schools: `/dashboard/schools`
+
+### Form Validation Rules
+- **School Name**: Required, 2-100 characters
+- **Website**: Optional, must start with http:// or https:// if provided
+- **Contact Email**: Optional, must be a valid email if provided
+- **Social Media URLs**: Optional, must start with http:// or https:// if provided (Facebook, Twitter, Instagram, YouTube, TikTok)
+- **Logo Upload**: JPG, PNG, WEBP, GIF, SVG; max 2MB; preview and remove supported
+- **All fields**: Real-time validation and error messages
+
+### Features
+- Full-page add/edit forms (no modal)
+- Breadcrumb navigation
+- State persistence (localStorage)
+- Success/error toast notifications
+- Responsive and accessible UI 
