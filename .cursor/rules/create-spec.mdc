@@ -6,4 +6,6 @@ alwaysApply: false
 
 Create a detailed spec for a new feature with technical specifications and task breakdown
 
+**IMPORTANT**: ALWAYS create spec files in `.agent-os/specs/YYYY-MM-DD-feature-name/` directory following the established naming convention.
+
 Refer to the instructions located in @~/.agent-os/instructions/create-spec.md
