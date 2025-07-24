@@ -98,34 +98,31 @@ export function SchoolForm({ mode, initialValues, onSubmit, isSubmitting }: Scho
               <CardDescription className="text-zinc-400">Essential school details and contact information</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              {/* School Name - Full width */}
-              <div className="space-y-2">
-                <Label htmlFor="name" className="text-zinc-400 mb-2">
-                  School Name <span className="text-red-400">*</span>
-                </Label>
-                <Input 
-                  id="name" 
-                  value={school.name} 
-                  onChange={e => handleChange("name", e.target.value)} 
-                  required 
-                  className="bg-zinc-800 border-zinc-700 text-zinc-100 placeholder:text-zinc-400"
-                  placeholder="e.g., Wilderness Survival Academy"
-                />
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="name" className="text-zinc-400 mb-2">
+                    School Name <span className="text-red-400">*</span>
+                  </Label>
+                  <Input 
+                    id="name" 
+                    value={school.name} 
+                    onChange={e => handleChange("name", e.target.value)} 
+                    required 
+                    className="bg-zinc-800 border-zinc-700 text-zinc-100 placeholder:text-zinc-400"
+                    placeholder="e.g., Wilderness Survival Academy"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="website" className="text-zinc-400 mb-2">Website</Label>
+                  <Input 
+                    id="website" 
+                    value={school.website} 
+                    onChange={e => handleChange("website", e.target.value)} 
+                    className="bg-zinc-800 border-zinc-700 text-zinc-100 placeholder:text-zinc-400"
+                    placeholder="https://www.yourschool.com"
+                  />
+                </div>
               </div>
-
-              {/* Website - Full width */}
-              <div className="space-y-2">
-                <Label htmlFor="website" className="text-zinc-400 mb-2">Website</Label>
-                <Input 
-                  id="website" 
-                  value={school.website} 
-                  onChange={e => handleChange("website", e.target.value)} 
-                  className="bg-zinc-800 border-zinc-700 text-zinc-100 placeholder:text-zinc-400"
-                  placeholder="https://www.yourschool.com"
-                />
-              </div>
-
-              {/* Description - Full width */}
               <div className="space-y-2">
                 <Label htmlFor="description" className="text-zinc-400 mb-2">Description</Label>
                 <Textarea 
@@ -137,53 +134,49 @@ export function SchoolForm({ mode, initialValues, onSubmit, isSubmitting }: Scho
                   placeholder="Describe your school's mission, expertise, and what makes it unique..."
                 />
               </div>
-
-              {/* Contact Email - Full width */}
-              <div className="space-y-2">
-                <Label htmlFor="contact_email" className="text-zinc-400 mb-2">Contact Email</Label>
-                <Input 
-                  id="contact_email" 
-                  value={school.contact_email} 
-                  onChange={e => handleChange("contact_email", e.target.value)} 
-                  className="bg-zinc-800 border-zinc-700 text-zinc-100 placeholder:text-zinc-400"
-                  placeholder="contact@yourschool.com"
-                />
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="contact_email" className="text-zinc-400 mb-2">Contact Email</Label>
+                  <Input 
+                    id="contact_email" 
+                    value={school.contact_email} 
+                    onChange={e => handleChange("contact_email", e.target.value)} 
+                    className="bg-zinc-800 border-zinc-700 text-zinc-100 placeholder:text-zinc-400"
+                    placeholder="contact@yourschool.com"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="contact_phone" className="text-zinc-400 mb-2">Contact Phone</Label>
+                  <Input 
+                    id="contact_phone" 
+                    value={school.contact_phone} 
+                    onChange={e => handleChange("contact_phone", e.target.value)} 
+                    className="bg-zinc-800 border-zinc-700 text-zinc-100 placeholder:text-zinc-400"
+                    placeholder="(555) 123-4567"
+                  />
+                </div>
               </div>
-
-              {/* Contact Phone - Full width */}
-              <div className="space-y-2">
-                <Label htmlFor="contact_phone" className="text-zinc-400 mb-2">Contact Phone</Label>
-                <Input 
-                  id="contact_phone" 
-                  value={school.contact_phone} 
-                  onChange={e => handleChange("contact_phone", e.target.value)} 
-                  className="bg-zinc-800 border-zinc-700 text-zinc-100 placeholder:text-zinc-400"
-                  placeholder="(555) 123-4567"
-                />
-              </div>
-
-              {/* Address - Full width */}
-              <div className="space-y-2">
-                <Label htmlFor="address" className="text-zinc-400 mb-2">Address</Label>
-                <Input 
-                  id="address" 
-                  value={school.address} 
-                  onChange={e => handleChange("address", e.target.value)} 
-                  className="bg-zinc-800 border-zinc-700 text-zinc-100 placeholder:text-zinc-400"
-                  placeholder="123 Wilderness Way, Boulder, CO 80301"
-                />
-              </div>
-
-              {/* Location - Full width */}
-              <div className="space-y-2">
-                <Label htmlFor="location" className="text-zinc-400 mb-2">Location</Label>
-                <Input 
-                  id="location" 
-                  value={school.location} 
-                  onChange={e => handleChange("location", e.target.value)} 
-                  className="bg-zinc-800 border-zinc-700 text-zinc-100 placeholder:text-zinc-400"
-                  placeholder="e.g., Boulder, CO"
-                />
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="address" className="text-zinc-400 mb-2">Address</Label>
+                  <Input 
+                    id="address" 
+                    value={school.address} 
+                    onChange={e => handleChange("address", e.target.value)} 
+                    className="bg-zinc-800 border-zinc-700 text-zinc-100 placeholder:text-zinc-400"
+                    placeholder="123 Wilderness Way, Boulder, CO 80301"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="location" className="text-zinc-400 mb-2">Location</Label>
+                  <Input 
+                    id="location" 
+                    value={school.location} 
+                    onChange={e => handleChange("location", e.target.value)} 
+                    className="bg-zinc-800 border-zinc-700 text-zinc-100 placeholder:text-zinc-400"
+                    placeholder="e.g., Boulder, CO"
+                  />
+                </div>
               </div>
             </CardContent>
           </Card>
