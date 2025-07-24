@@ -254,7 +254,7 @@ export function SchoolForm({ mode, initialValues, onSubmit, isSubmitting }: Scho
                   type="file" 
                   accept="image/*" 
                   onChange={handleLogoFileChange}
-                  className="bg-zinc-800 border-zinc-700 text-zinc-100 file:bg-teal-600 file:border-0 file:text-white file:px-4 file:py-2 file:rounded file:cursor-pointer file:hover:bg-teal-700"
+                  className="bg-zinc-800 border-zinc-700 text-zinc-100 file:bg-teal-600 file:border-0 file:text-white file:px-4 file:py-2 file:rounded file:cursor-pointer file:hover:bg-teal-700 file:mr-3 file:relative file:z-10"
                 />
                 {logoPreview && (
                   <div className="mt-4">
