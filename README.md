@@ -11,26 +11,30 @@ LiveThrough is a modern, full-stack web application that serves as a comprehensi
 ## 🏔️ Features
 
 ### For Students
-- **Course Discovery**: Browse courses with advanced filtering by location, difficulty, environment, and price
+- **Course Discovery**: Browse courses with advanced filtering by location, difficulty, environment, price, and duration
 - **Course Details**: View comprehensive course information including photos, descriptions, and school details
-- **Bookmarking**: Save courses for later review
-- **Location Search**: Find courses near your location with geolocation features
+- **Bookmarking**: Save courses for later review (requires authentication)
+- **Search Functionality**: Search courses by title and description
 - **Responsive Design**: Works seamlessly on mobile and desktop
+- **Dark Theme**: Consistent dark mode throughout the application
 
-### For Schools/Instructors
-- **Admin Dashboard**: Manage courses, students, and school information
-- **Course Management**: Add, edit, and delete courses with rich text editing
-- **Student Management**: Track enrolled students and their progress
-- **Analytics**: View course performance and revenue metrics
-- **Content Management**: Upload course photos with automatic optimization
+### For Schools/Instructors (Admin)
+- **Admin Dashboard**: Complete management interface for courses, students, and schools
+- **Course Management**: Add, edit, delete, and duplicate courses with rich text editing
+- **Student Management**: Track enrolled students and their information
+- **School Management**: Manage school information and details
+- **Content Management**: Upload course photos with automatic WebP optimization
+- **Bulk Operations**: Bulk status changes and course management
+- **Course Import**: Import course data from external URLs
 
 ### Technical Features
-- **Authentication**: Secure user authentication with Supabase
-- **Real-time Updates**: Live data synchronization via Supabase subscriptions
-- **Image Management**: Course photo upload and storage with WebP conversion
+- **Authentication**: Secure user authentication with Supabase (magic link and password-based)
+- **Role-based Access**: Admin and student roles with middleware protection
+- **Image Management**: Course photo upload and storage with WebP conversion using Sharp
 - **Search & Filtering**: Advanced course discovery with multiple criteria
-- **Responsive UI**: Mobile-first design approach
-- **Dark Theme**: Consistent dark mode throughout the application
+- **Rich Text Editing**: TipTap-based editor for course descriptions with image upload
+- **SEO Optimization**: Server-side rendering, dynamic metadata, and structured data
+- **Real-time Updates**: Live data synchronization via Supabase subscriptions
 
 ## 🚀 Tech Stack
 
@@ -52,10 +56,10 @@ LiveThrough is a modern, full-stack web application that serves as a comprehensi
 
 ### Key Libraries
 - **[Sharp](https://sharp.pixelplumbing.com/)** - Server-side image processing and WebP conversion
-- **[TipTap](https://tiptap.dev/)** - Rich text editing
-- **[Recharts](https://recharts.org/)** - Data visualization
+- **[TipTap](https://tiptap.dev/)** - Rich text editing with custom extensions
 - **[Sonner](https://sonner.emilkowal.ski/)** - Toast notifications
 - **[Date-fns](https://date-fns.org/)** - Date manipulation
+- **[Cheerio](https://cheerio.js.org/)** - Web scraping for course import
 
 ## 📁 Project Structure
 
@@ -63,20 +67,19 @@ LiveThrough is a modern, full-stack web application that serves as a comprehensi
 livethrough/
 ├── app/                          # Next.js App Router pages
 │   ├── dashboard/                # Admin dashboard for schools
-│   │   ├── courses/             # Course management
+│   │   ├── courses/             # Course management (CRUD, bulk operations)
 │   │   ├── students/            # Student management
 │   │   ├── schools/             # School management
-│   │   ├── reviews/             # Review management
-│   │   ├── gear/                # Gear management
-│   │   ├── security/            # Security settings
-│   │   └── settings/            # General settings
+│   │   ├── admin-users/         # Admin user management
+│   │   ├── settings/            # General settings
+│   │   └── security/            # Security settings
 │   ├── marketplace/             # Public course marketplace
-│   │   └── courses/[id]/        # Individual course pages
+│   │   └── courses/[id]/        # Individual course pages (SSR)
 │   ├── account/                 # User account management
 │   ├── admin-login/             # Admin authentication
-│   ├── admin-setup/             # Admin setup
+│   ├── admin-setup/             # Admin setup (first admin creation)
 │   └── api/                     # API routes
-│       ├── upload-chunk/        # Image upload with chunking
+│       ├── upload-chunk/        # Image upload with chunking and WebP conversion
 │       ├── scrape-course/       # Course scraping functionality
 │       └── test-*/              # Testing endpoints
 ├── components/                   # Reusable React components
@@ -101,14 +104,14 @@ livethrough/
 ### Core Tables
 - **courses**: Course listings with details, pricing, and metadata
 - **schools**: Survival school information and contact details
-- **users**: User accounts with role-based access control
+- **users**: User accounts with role-based access control (admin/student)
 - **bookmarks**: User course bookmarks
-- **reviews**: Course reviews and ratings
-- **gear**: Equipment listings with affiliate links
-- **skills**: Skill definitions for courses
+- **course_types**: Course type definitions
+- **course_skills**: Skills associated with courses
+- **course_gear**: Equipment associated with courses
 
 ### Key Features
-- **Role-based Access**: Admin and user roles with middleware protection
+- **Role-based Access**: Admin and student roles with middleware protection
 - **Image Management**: Server-side image processing with WebP conversion
 - **Real-time Updates**: Live data synchronization via Supabase subscriptions
 - **Search & Filtering**: Advanced course discovery with multiple criteria
@@ -214,15 +217,20 @@ Follow these rules when writing code:
 ## 🔐 Authentication & Security
 
 ### Authentication Flow
-- **Supabase Auth**: Secure authentication system with email/password
+- **Supabase Auth**: Secure authentication system with email/password and magic link
 - **Protected Routes**: Middleware protection for admin areas
-- **Role-based Access**: Different permissions for students vs. schools
+- **Role-based Access**: Different permissions for students vs. admins
 - **Secure API**: Server-side validation and authentication
 
 ### Middleware Configuration
 The application uses Next.js middleware to protect routes:
 - `/account/*` - Requires authentication
 - `/dashboard/*` - Requires admin role
+
+### Admin Setup
+- First admin creation through `/admin-setup` route
+- Subsequent admin logins through `/admin-login`
+- Admin role management through dashboard
 
 ## 📱 Responsive Design
 
@@ -279,6 +287,13 @@ Ensure all required environment variables are set in your production environment
 - **Sharp**: Server-side image processing with WebP conversion
 - **Chunked Uploads**: Large file uploads with progress tracking
 - **Optimization**: Automatic resizing and compression
+- **Storage**: Supabase storage with global CDN
+
+### SEO & Performance
+- **Server-Side Rendering (SSR)**: Course detail pages for better SEO
+- **Dynamic Metadata**: SEO-optimized titles, descriptions, and keywords
+- **Structured Data**: Schema.org markup for courses and breadcrumbs
+- **Image Optimization**: Next.js Image component with Supabase storage
 
 ### Caching Strategy
 - **Static Generation**: Next.js static site generation for better performance
