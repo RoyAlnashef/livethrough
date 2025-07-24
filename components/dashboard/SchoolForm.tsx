@@ -258,7 +258,13 @@ export function SchoolForm({ mode, initialValues, onSubmit, isSubmitting }: Scho
                 />
                 {logoPreview && (
                   <div className="mt-4">
-                    <img src={logoPreview} alt="Logo Preview" className="rounded-lg h-32 w-full object-cover border border-zinc-700" />
+                    <div className="rounded-lg h-32 w-full border border-zinc-700 bg-zinc-800 flex items-center justify-center">
+                      <img 
+                        src={logoPreview} 
+                        alt="Logo Preview" 
+                        className="max-h-full max-w-full object-contain p-2" 
+                      />
+                    </div>
                   </div>
                 )}
               </div>
