@@ -14,6 +14,7 @@ import {
   DialogClose,
 } from "@/components/ui/dialog"
 import { Loader2, Globe, AlertCircle } from "lucide-react"
+import { validateUrl } from "@/lib/validation"
 
 interface ImportedCourseData {
   title: string
@@ -37,23 +38,15 @@ export function CourseImportModal({ open, onOpenChange, onImportSuccess }: Cours
   const [isScanning, setIsScanning] = useState(false)
   const [error, setError] = useState("")
 
-  const validateUrl = (url: string): boolean => {
-    try {
-      new URL(url)
-      return true
-    } catch {
-      return false
-    }
-  }
-
   const handleScanPage = async () => {
     if (!url.trim()) {
       setError("Please enter a URL")
       return
     }
 
-    if (!validateUrl(url)) {
-      setError("Please enter a valid URL")
+    const urlError = validateUrl(url, true)
+    if (urlError) {
+      setError(urlError)
       return
     }
 

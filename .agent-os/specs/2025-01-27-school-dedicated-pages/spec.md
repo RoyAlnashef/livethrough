@@ -8,8 +8,9 @@ Move the school add/edit functionality from a constrained modal dialog to dedica
 ### Existing Implementation
 - **Modal-based approach**: Schools were previously added/edited through `SchoolFormDialog` component (now removed)
 - **Constrained space**: Modal limited to 600px width, restricting form layout and field expansion
-- **Current location**: `components/dashboard/SchoolForm.tsx` (formerly also `SchoolFormDialog.tsx`, now removed)
+- **Current location**: `components/dashboard/school-form.tsx` (formerly also `SchoolFormDialog.tsx`, now removed)
 - **Integration**: Used in `app/dashboard/schools/page.tsx` with inline state management
+- **Validation**: All form validation is now handled by shared helpers in `lib/validation.ts` for consistency and maintainability. Real-time validation and error messages are enforced across all forms.
 
 ### Current Form Fields
 - School Name (required)
@@ -115,7 +116,7 @@ components/dashboard/
 ## Success Metrics
 
 ### User Experience
-- **Form usability**: Full-page forms provide better UX than cramped modals
+- **Form usability**: Full-page forms provide better UX than cramped modals. All school add/edit functionality is now handled by `school-form.tsx` and the modal-based `SchoolFormDialog` is fully removed.
 - **Navigation consistency**: Schools follow same pattern as courses
 - **Field expansion**: Room to add new fields without layout issues
 - **Responsive design**: Better mobile experience with dedicated pages

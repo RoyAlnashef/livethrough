@@ -15,6 +15,7 @@ import Image from "next/image"
 import type { User as SupabaseUser } from '@supabase/supabase-js'
 import { motion, AnimatePresence } from "framer-motion"
 import { useRouter } from "next/navigation"
+import { validateEmail, validateRequired } from "@/lib/validation"
 
 type AuthState = "login" | "signup" | "forgot-password"
 
@@ -60,13 +61,6 @@ export default function LoginForm({ initialAuthState }: LoginFormProps) {
     setAuthState(initial)
   }, [initialAuthState])
 
-  const validateEmail = (email: string): string | undefined => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    if (!email) return "Email is required"
-    if (!emailRegex.test(email)) return "Please enter a valid email address"
-    return undefined
-  }
-
   const validatePassword = (password: string): string | undefined => {
     if (!password) return "Password is required"
     if (password.length < 8) return "Password must be at least 8 characters"
@@ -80,12 +74,6 @@ export default function LoginForm({ initialAuthState }: LoginFormProps) {
   const validateConfirmPassword = (password: string, confirmPassword: string): string | undefined => {
     if (!confirmPassword) return "Please confirm your password"
     if (password !== confirmPassword) return "Passwords do not match"
-    return undefined
-  }
-
-  const validateFullName = (name: string): string | undefined => {
-    if (!name) return "Full name is required"
-    if (name.length < 2) return "Full name must be at least 2 characters"
     return undefined
   }
 
@@ -110,7 +98,7 @@ export default function LoginForm({ initialAuthState }: LoginFormProps) {
 
     // Validate full name for signup
     if (authState === "signup") {
-      const fullNameError = validateFullName(fullName)
+      const fullNameError = validateRequired(fullName, "Full name")
       if (fullNameError) newErrors.fullName = fullNameError
     }
 

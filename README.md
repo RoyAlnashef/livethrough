@@ -381,3 +381,14 @@ For support and questions:
 - State persistence (localStorage)
 - Success/error toast notifications
 - Responsive and accessible UI 
+
+## Shared Validation Utilities
+
+All dashboard forms (School, Course, Student, Auth, etc.) use shared validation helpers from `lib/validation.ts` for:
+- Email validation
+- URL validation
+- Required field validation
+- Min/max length
+- Phone number validation
+
+This ensures consistent error messages and validation logic across the application. To add new validation rules, update `lib/validation.ts` and refactor forms to use the new helpers. 

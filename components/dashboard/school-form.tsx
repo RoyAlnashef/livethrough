@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Textarea } from "@/components/ui/textarea"
 import { supabase } from '@/lib/supabase'
 import { uploadSchoolLogo } from '@/lib/supabase-storage'
+import { validateEmail, validateUrl, validateRequired, validateMinLength, validateMaxLength, validatePhone } from "@/lib/validation"
 
 interface SchoolFormProps {
   mode: "add" | "edit"
@@ -85,30 +86,26 @@ export function SchoolForm({ mode, initialValues, onSubmit, onCancel, isSubmitti
 
   const validateField = (field: keyof School, value: string): string => {
     switch (field) {
-      case 'name':
-        if (!value.trim()) return 'School name is required'
-        if (value.trim().length < 2) return 'School name must be at least 2 characters'
-        if (value.trim().length > 100) return 'School name must be less than 100 characters'
-        return ''
+      case 'name': {
+        return (
+          validateRequired(value, 'School name') ||
+          validateMinLength(value, 2, 'School name') ||
+          validateMaxLength(value, 100, 'School name') ||
+          ''
+        )
+      }
       case 'website':
-        if (value && !/^https?:\/\/.+/.test(value)) {
-          return 'Website must be a valid URL starting with http:// or https://'
-        }
-        return ''
+        return validateUrl(value) || ''
       case 'contact_email':
-        if (value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
-          return 'Please enter a valid email address'
-        }
-        return ''
+        return validateEmail(value, false) || ''
       case 'facebook_url':
       case 'twitter_url':
       case 'instagram_url':
       case 'youtube_url':
       case 'tiktok_url':
-        if (value && !/^https?:\/\/.+/.test(value)) {
-          return 'Please enter a valid URL starting with http:// or https://'
-        }
-        return ''
+        return validateUrl(value) || ''
+      case 'contact_phone':
+        return validatePhone(value) || ''
       default:
         return ''
     }

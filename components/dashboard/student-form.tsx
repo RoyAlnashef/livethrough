@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useRouter } from "next/navigation"
 import { cn } from "@/lib/utils"
+import { validateEmail, validateRequired, validatePhone } from "@/lib/validation"
 
 interface StudentFormProps {
   mode: "add" | "edit"
@@ -38,21 +39,15 @@ export function StudentForm({ mode, initialValues, onSubmit }: StudentFormProps)
 
   const validateForm = (): boolean => {
     const newErrors: Partial<Record<keyof StudentFormData, string>> = {}
-    
-    if (!formData.full_name.trim()) {
-      newErrors.full_name = "Full name is required"
+    if (validateRequired(formData.full_name, 'Full name')) {
+      newErrors.full_name = validateRequired(formData.full_name, 'Full name')!
     }
-    
-    if (!formData.email.trim()) {
-      newErrors.email = "Email is required"
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = "Invalid email format"
+    if (validateEmail(formData.email)) {
+      newErrors.email = validateEmail(formData.email)!
     }
-    
-    if (formData.phone && !/^\+?[\d\s-()]+$/.test(formData.phone)) {
-      newErrors.phone = "Invalid phone number format"
+    if (formData.phone && validatePhone(formData.phone)) {
+      newErrors.phone = validatePhone(formData.phone)!
     }
-    
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
   }
