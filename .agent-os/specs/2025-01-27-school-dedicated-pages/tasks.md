@@ -70,14 +70,14 @@
 - [x] Implement cancel functionality with navigation back to list
 
 ### Task 2.4: Update Type Definitions
-- [ ] Review and update `School` type in `lib/types.ts` if needed
-- [ ] Ensure all form fields are properly typed
-- [ ] Add any missing type definitions for new functionality
+- [x] Review and update `School` type in `lib/types.ts` if needed
+- [x] Ensure all form fields are properly typed
+- [x] Add any missing type definitions for new functionality
 
 ## Phase 3: Enhanced Features and Cleanup (Day 3)
 
 ### Task 3.1: Enhanced Form Features
-- [ ] Add field validation with real-time error messages
+- [x] Add field validation with real-time error messages
 - [ ] Implement form state persistence (optional)
 - [ ] Add confirmation dialogs for destructive actions
 - [ ] Enhance logo upload with:

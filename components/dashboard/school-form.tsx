@@ -89,17 +89,18 @@ export function SchoolForm({ mode, initialValues, onSubmit, onCancel, isSubmitti
 
   const handleChange = (field: keyof School, value: string) => {
     setSchool((prev) => ({ ...prev, [field]: value }))
-    
-    // Mark field as touched
-    setTouched((prev) => ({ ...prev, [field]: true }))
-    
-    // Validate field and update errors
-    const error = validateField(field, value)
-    setErrors((prev) => ({ ...prev, [field]: error }))
+    // Only update errors in real-time if the field has been touched
+    if (touched[field]) {
+      const error = validateField(field, value)
+      setErrors((prev) => ({ ...prev, [field]: error }))
+    }
   }
 
   const handleBlur = (field: keyof School) => {
     setTouched((prev) => ({ ...prev, [field]: true }))
+    // Always validate and show errors on blur
+    const error = validateField(field, school[field] || "")
+    setErrors((prev) => ({ ...prev, [field]: error }))
   }
 
   const handleLogoFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
