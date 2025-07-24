@@ -25,6 +25,8 @@ import { CourseCard } from "@/components/course-marketplace/course-card"
 import "@/styles/marketplace-prose.css"
 import { SchoolInfoCard } from "@/components/course-marketplace/school-info-card"
 import { Dialog, DialogTrigger, DialogContent, DialogTitle } from "@/components/ui/dialog"
+import Link from "next/link"
+import { ArrowLeft } from "lucide-react"
 
 interface CourseDetailClientProps {
   course: Course & { schools?: School }
@@ -99,6 +101,16 @@ export default function CourseDetailClient({ course, similarCourses }: CourseDet
       <div className="flex flex-col min-h-screen text-zinc-100 bg-topo-overlay">
         <div className="flex-1 pt-16 md:pt-0">
           <div className="container mx-auto pt-8 p-4 md:p-8">
+            {/* Back to Courses Link */}
+            <div className="mb-6">
+              <Link
+                href="/"
+                className="inline-flex items-center text-zinc-400 hover:text-white transition-colors text-sm"
+              >
+                <ArrowLeft className="h-4 w-4 mr-2" />
+                Back to Courses
+              </Link>
+            </div>
             <div className="grid w-full grid-cols-1 lg:grid-cols-3 gap-8">
               {/* Left Column - Course Content */}
               <div className="lg:col-span-2 space-y-8">

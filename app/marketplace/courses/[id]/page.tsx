@@ -71,8 +71,8 @@ export default async function CourseDetailPage({ params }: PageProps) {
     const structuredData = generateStructuredData(course)
     const breadcrumbData = generateBreadcrumbData(course)
 
-    return (
-      <>
+  return (
+    <>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -86,7 +86,7 @@ export default async function CourseDetailPage({ params }: PageProps) {
           }}
         />
         <CourseDetailClient 
-          course={course} 
+                  course={course}
           similarCourses={similarCourses}
         />
       </>

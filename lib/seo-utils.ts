@@ -110,21 +110,15 @@ export function generateBreadcrumbData(course: Course) {
     "@type": "BreadcrumbList",
     "itemListElement": [
       {
-        "@type": "ListItem",
+        "@type": "ListItem", 
         "position": 1,
-        "name": "Home",
+        "name": "Courses",
         "item": "https://livethrough.com"
       },
       {
-        "@type": "ListItem", 
-        "position": 2,
-        "name": "Courses",
-        "item": "https://livethrough.com/marketplace/courses"
-      },
-      {
         "@type": "ListItem",
-        "position": 3,
-        "name": course.title,
+        "position": 2,
+        "name": "Course Details",
         "item": `https://livethrough.com/marketplace/courses/${course.id}`
       }
     ]
