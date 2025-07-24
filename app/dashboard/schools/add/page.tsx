@@ -2,6 +2,7 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { SchoolForm } from "@/components/dashboard/school-form"
+import { Breadcrumbs } from "@/components/dashboard/breadcrumbs"
 import { toast } from "sonner"
 import { supabase } from "@/lib/supabase"
 
@@ -59,11 +60,21 @@ export default function AddSchoolPage() {
     }
   }
 
-  return (
-    <SchoolForm 
-      mode="add" 
-      onSubmit={handleSubmit} 
-      isSubmitting={isSubmitting} 
-    />
-  )
+          return (
+          <div className="min-h-screen bg-zinc-950 text-zinc-50 p-6">
+            <Breadcrumbs
+              segments={[
+                { name: "Dashboard", href: "/dashboard" },
+                { name: "Schools", href: "/dashboard/schools" },
+                { name: "Add School" },
+              ]}
+            />
+            <SchoolForm
+              mode="add"
+              onSubmit={handleSubmit}
+              onCancel={() => router.push('/dashboard/schools')}
+              isSubmitting={isSubmitting}
+            />
+          </div>
+        )
 } 

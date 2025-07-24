@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input"
 import { School as SchoolIcon, Search, MapPin, Edit, Trash2 } from "lucide-react"
 import { ExternalLinkIcon } from "@/components/tiptap-icons/external-link-icon"
 import { useState, useEffect } from "react"
-import { SchoolFormDialog } from "@/components/dashboard/SchoolFormDialog"
+import { useRouter } from "next/navigation"
 import { supabase } from "@/lib/supabase"
 import type { School } from "@/lib/types"
 
@@ -13,11 +13,8 @@ export default function SchoolsPage() {
   const [schools, setSchools] = useState<School[]>([])
   const [loading, setLoading] = useState(true)
   const [searchQuery, setSearchQuery] = useState("")
-  const [showDialog, setShowDialog] = useState(false)
-  const [dialogMode, setDialogMode] = useState<'add' | 'edit'>("add")
-  const [editSchool, setEditSchool] = useState<School | null>(null)
-  const [submitting, setSubmitting] = useState(false)
   const [deletingId, setDeletingId] = useState<string | null>(null)
+  const router = useRouter()
 
   useEffect(() => {
     async function fetchSchools() {
@@ -46,36 +43,11 @@ export default function SchoolsPage() {
   const uniqueLocations = new Set(schools.map(s => s.location)).size
 
   const handleAdd = () => {
-    setDialogMode("add")
-    setEditSchool(null)
-    setShowDialog(true)
+    router.push('/dashboard/schools/add')
   }
+  
   const handleEdit = (school: School) => {
-    setDialogMode("edit")
-    setEditSchool(school)
-    setShowDialog(true)
-  }
-  const handleDialogSubmit = async (school: Partial<School>) => {
-    setSubmitting(true)
-    if (dialogMode === "add") {
-      const insertData = { ...school }
-      delete insertData.id
-      delete insertData.created_at
-      const { data, error } = await supabase.from('schools').insert([insertData]).select()
-      if (!error && data && data.length > 0) {
-        setSchools(prev => [data[0] as School, ...prev])
-      }
-    } else if (dialogMode === "edit" && school.id) {
-      const updateData = { ...school }
-      delete updateData.id
-      delete updateData.created_at
-      const { data, error } = await supabase.from('schools').update(updateData).eq('id', school.id).select()
-      if (!error && data && data.length > 0) {
-        setSchools(prev => prev.map(s => s.id === school.id ? data[0] as School : s))
-      }
-    }
-    setSubmitting(false)
-    setShowDialog(false)
+    router.push(`/dashboard/schools/${school.id}`)
   }
   const handleDelete = async (school: School) => {
     if (!school.id) return
@@ -221,14 +193,6 @@ export default function SchoolsPage() {
           )}
         </div>
       </div>
-      <SchoolFormDialog
-        open={showDialog}
-        onOpenChange={setShowDialog}
-        mode={dialogMode}
-        initialValues={editSchool ?? undefined}
-        onSubmit={handleDialogSubmit}
-        isSubmitting={submitting}
-      />
     </div>
   )
 } 

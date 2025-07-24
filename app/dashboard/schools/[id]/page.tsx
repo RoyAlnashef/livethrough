@@ -1,7 +1,8 @@
 'use client'
 import { useEffect, useState } from "react"
-import { useParams } from "next/navigation"
+import { useParams, useRouter } from "next/navigation"
 import { SchoolForm } from "@/components/dashboard/school-form"
+import { Breadcrumbs } from "@/components/dashboard/breadcrumbs"
 import { supabase } from "@/lib/supabase"
 import { toast } from "sonner"
 
@@ -25,6 +26,7 @@ interface School {
 
 export default function EditSchoolPage() {
   const { id } = useParams<{ id: string }>()
+  const router = useRouter()
   const [initialValues, setInitialValues] = useState<Partial<School> | null>(null)
   const [loading, setLoading] = useState(true)
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -96,15 +98,36 @@ export default function EditSchoolPage() {
     }
   }
 
-  if (loading) return <div className="p-8 text-zinc-300">Loading school...</div>
-  if (!initialValues) return null
+           if (loading) return (
+           <div className="min-h-screen bg-zinc-950 text-zinc-50 p-6">
+             <Breadcrumbs
+               segments={[
+                 { name: "Dashboard", href: "/dashboard" },
+                 { name: "Schools", href: "/dashboard/schools" },
+                 { name: "Loading..." },
+               ]}
+             />
+             <div className="p-8 text-zinc-300">Loading school...</div>
+           </div>
+         )
+         if (!initialValues) return null
 
-  return (
-    <SchoolForm 
-      mode="edit" 
-      initialValues={initialValues} 
-      onSubmit={handleSubmit} 
-      isSubmitting={isSubmitting} 
-    />
-  )
+         return (
+           <div className="min-h-screen bg-zinc-950 text-zinc-50 p-6">
+             <Breadcrumbs
+               segments={[
+                 { name: "Dashboard", href: "/dashboard" },
+                 { name: "Schools", href: "/dashboard/schools" },
+                 { name: initialValues.name || "Edit School" },
+               ]}
+             />
+             <SchoolForm
+               mode="edit"
+               initialValues={initialValues}
+               onSubmit={handleSubmit}
+               onCancel={() => router.push('/dashboard/schools')}
+               isSubmitting={isSubmitting}
+             />
+           </div>
+         )
 } 

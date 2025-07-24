@@ -13,6 +13,7 @@ interface SchoolFormProps {
   mode: "add" | "edit"
   initialValues?: Partial<School>
   onSubmit: (data: School) => void
+  onCancel?: () => void
   isSubmitting?: boolean
 }
 
@@ -33,7 +34,7 @@ interface School {
   tiktok_url?: string
 }
 
-export function SchoolForm({ mode, initialValues, onSubmit, isSubmitting }: SchoolFormProps) {
+export function SchoolForm({ mode, initialValues, onSubmit, onCancel, isSubmitting }: SchoolFormProps) {
   const [school, setSchool] = useState<School>({
     name: "",
     description: "",
@@ -156,7 +157,7 @@ export function SchoolForm({ mode, initialValues, onSubmit, isSubmitting }: Scho
   }
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-50 p-6">
+    <div>
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-zinc-50 mb-2">{mode === "edit" ? "Edit School" : "Add New School"}</h1>
@@ -429,6 +430,17 @@ export function SchoolForm({ mode, initialValues, onSubmit, isSubmitting }: Scho
                   ? 'Saving...'
                   : mode === "add" ? "Create School" : "Update School"}
               </Button>
+              {onCancel && (
+                <Button 
+                  type="button" 
+                  onClick={onCancel}
+                  variant="outline"
+                  className="w-full border-zinc-700 text-zinc-300 hover:bg-zinc-800 hover:text-zinc-100" 
+                  disabled={isSubmitting}
+                >
+                  Cancel
+                </Button>
+              )}
             </CardContent>
           </Card>
         </div>
