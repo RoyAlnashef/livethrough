@@ -27,6 +27,7 @@ import { SchoolInfoCard } from "@/components/course-marketplace/school-info-card
 import { Dialog, DialogTrigger, DialogContent, DialogTitle } from "@/components/ui/dialog"
 import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
+import { useMobile } from "@/hooks/use-mobile"
 
 interface CourseDetailClientProps {
   course: Course & { schools?: School }
@@ -42,6 +43,7 @@ export default function CourseDetailClient({ course, similarCourses }: CourseDet
   const [logoError, setLogoError] = useState(false)
   const [currentSlide, setCurrentSlide] = useState(0)
   const sliderRef = useRef<HTMLDivElement>(null)
+  const isMobile = useMobile();
 
   const courseImages = course.photo_url || []
   const school = course.schools ? {
@@ -57,7 +59,8 @@ export default function CourseDetailClient({ course, similarCourses }: CourseDet
     setCurrentImageIndex((prev) => (prev - 1 + courseImages.length) % courseImages.length)
   }
 
-  const numSlides = Math.ceil(similarCourses.length / 2)
+  // Calculate numSlides based on screen size
+  const numSlides = isMobile ? similarCourses.length : Math.ceil(similarCourses.length / 2);
   const canScrollLeft = currentSlide > 0
   const canScrollRight = currentSlide < numSlides - 1
 
