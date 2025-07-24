@@ -3,7 +3,7 @@
 
 import * as React from "react"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog"
-import { SchoolForm } from "../dashboard/SchoolForm"
+import { SchoolForm } from "../dashboard/school-form"
 import type { School } from "@/lib/types"
 
 interface SchoolFormDialogProps {
