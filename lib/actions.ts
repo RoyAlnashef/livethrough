@@ -2,8 +2,8 @@
 
 import { createClient } from '@supabase/supabase-js'
 import { processImage } from './image-processing'
-import { uploadCoursePhoto, deleteCoursePhoto, ensureCourseFolderExists, deleteCourseFolder } from './supabase-storage'
-import { Course } from './types'
+import { uploadCoursePhoto, deleteCoursePhoto, ensureCourseFolderExists, deleteCourseFolder, uploadSchoolLogo } from './supabase-storage'
+import { Course, School } from './types'
 import { revalidatePath } from 'next/cache'
 
 export interface ActionResponse {
@@ -328,6 +328,206 @@ export async function deleteCourseWithCleanup(courseId: string): Promise<ActionR
       message: error instanceof Error ? error.message : 'An unexpected error occurred during deletion'
     }
   }
-} 
+}
 
- 
+export interface SchoolActionResponse {
+  success: boolean
+  message: string
+  data?: {
+    schoolId?: string
+    logoUrl?: string
+  }
+}
+
+export async function addSchoolWithLogo(formData: FormData): Promise<SchoolActionResponse> {
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  )
+
+  try {
+    // Extract school data
+    const schoolDataString = formData.get('schoolData') as string
+    if (!schoolDataString) {
+      return {
+        success: false,
+        message: 'School data is required'
+      }
+    }
+
+    const schoolData: School = JSON.parse(schoolDataString)
+    
+    // Extract logo file
+    const logoFile = formData.get('logoFile') as File
+    
+    // 1. Create school without logo to get an ID
+    const { data: schoolDataResult, error: insertError } = await supabase
+      .from('schools')
+      .insert([{ ...schoolData, logo_url: '' }])
+      .select()
+      .single()
+
+    if (insertError) {
+      console.error('Error creating school:', insertError)
+      return {
+        success: false,
+        message: `Failed to create school: ${insertError.message}`
+      }
+    }
+
+    if (!schoolDataResult) {
+      return {
+        success: false,
+        message: 'Failed to create school: No data returned'
+      }
+    }
+
+    const schoolId = schoolDataResult.id
+    let logoUrl = ''
+
+    // 2. Upload logo if provided
+    if (logoFile && logoFile.size > 0) {
+      try {
+        // Process logo with Sharp for optimization
+        const processedLogo = await processImage(logoFile, {
+          maxWidth: 800,
+          maxHeight: 800,
+          quality: 85,
+          format: 'webp'
+        })
+
+        // Upload processed logo to Supabase storage
+        logoUrl = await uploadSchoolLogo(
+          supabase,
+          new File([processedLogo.buffer], processedLogo.fileName, {
+            type: processedLogo.mimeType
+          }),
+          schoolId
+        )
+      } catch (error) {
+        console.error('Error processing/uploading logo:', error)
+        // School was created successfully, but logo upload failed
+        return {
+          success: false,
+          message: error instanceof Error ? `School created, but logo upload failed: ${error.message}` : 'School created, but logo upload failed due to an unknown error.'
+        }
+      }
+    }
+
+    // 3. Update school with logo URL if uploaded
+    if (logoUrl) {
+      const { error: updateError } = await supabase
+        .from('schools')
+        .update({ logo_url: logoUrl })
+        .eq('id', schoolId)
+      
+      if (updateError) {
+        console.error('Error updating school with logo:', updateError)
+        // School was created successfully, but logo URL couldn't be saved
+        // This is not a critical error, so we'll still return success
+      }
+    }
+
+    // Revalidate the schools page to show the new school
+    revalidatePath('/dashboard/schools')
+
+    return {
+      success: true,
+      message: `School created successfully!${logoUrl ? ' Logo uploaded.' : ''}`,
+      data: { schoolId, logoUrl }
+    }
+
+  } catch (error) {
+    console.error('Unexpected error in addSchoolWithLogo:', error)
+    return {
+      success: false,
+      message: error instanceof Error ? error.message : 'An unexpected error occurred'
+    }
+  }
+}
+
+export async function updateSchoolWithLogo(
+  schoolId: string, 
+  formData: FormData
+): Promise<SchoolActionResponse> {
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  )
+
+  try {
+    // Extract school data
+    const schoolDataString = formData.get('schoolData') as string
+    if (!schoolDataString) {
+      return {
+        success: false,
+        message: 'School data is required'
+      }
+    }
+
+    const schoolData: School = JSON.parse(schoolDataString)
+    
+    // Extract logo file
+    const logoFile = formData.get('logoFile') as File
+    
+    let logoUrl = schoolData.logo_url || ''
+
+    // 1. Upload new logo if provided
+    if (logoFile && logoFile.size > 0) {
+      try {
+        // Process logo with Sharp for optimization
+        const processedLogo = await processImage(logoFile, {
+          maxWidth: 800,
+          maxHeight: 800,
+          quality: 85,
+          format: 'webp'
+        })
+
+        // Upload processed logo to Supabase storage
+        logoUrl = await uploadSchoolLogo(
+          supabase,
+          new File([processedLogo.buffer], processedLogo.fileName, {
+            type: processedLogo.mimeType
+          }),
+          schoolId
+        )
+      } catch (error) {
+        console.error('Error processing/uploading new logo:', error)
+        return {
+          success: false,
+          message: error instanceof Error ? `Logo upload failed: ${error.message}` : 'Logo upload failed due to an unknown error.'
+        }
+      }
+    }
+
+    // 2. Update school with new data and logo URL
+    const { error: updateError } = await supabase
+      .from('schools')
+      .update({ ...schoolData, logo_url: logoUrl })
+      .eq('id', schoolId)
+
+    if (updateError) {
+      console.error('Error updating school:', updateError)
+      return {
+        success: false,
+        message: `Failed to update school: ${updateError.message}`
+      }
+    }
+
+    // Revalidate the schools page
+    revalidatePath('/dashboard/schools')
+
+    return {
+      success: true,
+      message: `School updated successfully!${logoFile && logoFile.size > 0 ? ' New logo uploaded.' : ''}`,
+      data: { schoolId, logoUrl }
+    }
+
+  } catch (error) {
+    console.error('Unexpected error in updateSchoolWithLogo:', error)
+    return {
+      success: false,
+      message: error instanceof Error ? error.message : 'An unexpected error occurred'
+    }
+  }
+}

@@ -33,11 +33,11 @@
 - [x] Add cancel/save buttons with proper styling
 
 ### Task 1.4: Create School Actions
-- [ ] Create `addSchoolWithLogo` function in `lib/actions.ts`
-- [ ] Create `updateSchoolWithLogo` function in `lib/actions.ts`
-- [ ] Implement logo upload and storage logic
-- [ ] Add proper error handling and validation
-- [ ] Return structured response with success/error messages
+- [x] Create `addSchoolWithLogo` function in `lib/actions.ts`
+- [x] Create `updateSchoolWithLogo` function in `lib/actions.ts`
+- [x] Implement logo upload and storage logic
+- [x] Add proper error handling and validation
+- [x] Return structured response with success/error messages
 
 ## Phase 2: Update Navigation and Integration (Day 2)
 
