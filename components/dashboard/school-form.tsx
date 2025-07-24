@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -15,6 +15,7 @@ interface SchoolFormProps {
   onSubmit: (data: School) => void
   onCancel?: () => void
   isSubmitting?: boolean
+  storageKey?: string // Add storageKey prop
 }
 
 interface School {
@@ -34,7 +35,7 @@ interface School {
   tiktok_url?: string
 }
 
-export function SchoolForm({ mode, initialValues, onSubmit, onCancel, isSubmitting }: SchoolFormProps) {
+export function SchoolForm({ mode, initialValues, onSubmit, onCancel, isSubmitting, storageKey }: SchoolFormProps) {
   const [school, setSchool] = useState<School>({
     name: "",
     description: "",
@@ -55,6 +56,32 @@ export function SchoolForm({ mode, initialValues, onSubmit, onCancel, isSubmitti
   const [logoPreview, setLogoPreview] = useState<string>("")
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [touched, setTouched] = useState<Record<string, boolean>>({})
+  const [logoError, setLogoError] = useState<string>("")
+
+  // Restore form state from localStorage on mount and on pageshow (bfcache restore)
+  useEffect(() => {
+    if (!storageKey) return;
+    const restore = () => {
+      const saved = localStorage.getItem(storageKey);
+      if (saved) {
+        try {
+          const parsed = JSON.parse(saved);
+          setSchool((prev) => ({ ...prev, ...parsed }));
+        } catch {}
+      }
+    };
+    restore();
+    window.addEventListener('pageshow', restore);
+    return () => {
+      window.removeEventListener('pageshow', restore);
+    };
+  }, [storageKey]);
+
+  // Save form state to localStorage on change
+  useEffect(() => {
+    if (!storageKey) return;
+    localStorage.setItem(storageKey, JSON.stringify(school));
+  }, [school, storageKey]);
 
   const validateField = (field: keyof School, value: string): string => {
     switch (field) {
@@ -106,9 +133,32 @@ export function SchoolForm({ mode, initialValues, onSubmit, onCancel, isSubmitti
   const handleLogoFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (file) {
+      // Validate file type
+      const allowedTypes = ["image/jpeg", "image/png", "image/webp", "image/gif", "image/svg+xml"];
+      if (!allowedTypes.includes(file.type)) {
+        setLogoError("Invalid file type. Please upload a JPG, PNG, WEBP, GIF, or SVG image.");
+        setLogoFile(null);
+        setLogoPreview("");
+        return;
+      }
+      // Validate file size (2MB max)
+      const maxSize = 2 * 1024 * 1024;
+      if (file.size > maxSize) {
+        setLogoError("File size exceeds 2MB. Please upload a smaller image.");
+        setLogoFile(null);
+        setLogoPreview("");
+        return;
+      }
+      setLogoError("");
       setLogoFile(file)
       setLogoPreview(URL.createObjectURL(file))
     }
+  }
+
+  const handleRemoveLogo = () => {
+    setLogoFile(null);
+    setLogoPreview("");
+    setLogoError("");
   }
 
   const validateForm = (): boolean => {
@@ -155,6 +205,12 @@ export function SchoolForm({ mode, initialValues, onSubmit, onCancel, isSubmitti
       }
     }
     onSubmit({ ...school, logo_url: logoUrl })
+    if (storageKey) localStorage.removeItem(storageKey);
+  }
+
+  const handleCancel = () => {
+    if (storageKey) localStorage.removeItem(storageKey);
+    if (onCancel) onCancel();
   }
 
   return (
@@ -397,14 +453,26 @@ export function SchoolForm({ mode, initialValues, onSubmit, onCancel, isSubmitti
                   onChange={handleLogoFileChange}
                   className="bg-zinc-800 border-zinc-700 text-zinc-100 file:bg-teal-600 file:border-0 file:text-white file:px-4 file:py-2 file:rounded file:cursor-pointer file:hover:bg-teal-700 h-auto"
                 />
+                {logoError && (
+                  <div className="text-red-400 text-sm mt-2">{logoError}</div>
+                )}
                 {(logoPreview || school.logo_url) && (
                   <div className="mt-4">
-                    <div className="rounded-lg p-4 w-full border border-zinc-700 bg-zinc-800 flex items-center justify-center">
+                    <div className="rounded-lg p-4 w-full border border-zinc-700 bg-zinc-800 flex items-center justify-center relative">
                       <img 
                         src={logoPreview || school.logo_url} 
                         alt="Logo Preview" 
                         className="max-h-full max-w-full object-contain p-2" 
                       />
+                      {logoPreview && (
+                        <button
+                          type="button"
+                          onClick={handleRemoveLogo}
+                          className="absolute top-2 right-2 bg-zinc-900 text-red-400 border border-zinc-700 rounded-full px-2 py-1 text-xs hover:bg-zinc-800 hover:text-red-300"
+                        >
+                          Remove
+                        </button>
+                      )}
                     </div>
                   </div>
                 )}
@@ -434,7 +502,7 @@ export function SchoolForm({ mode, initialValues, onSubmit, onCancel, isSubmitti
               {onCancel && (
                 <Button 
                   type="button" 
-                  onClick={onCancel}
+                  onClick={handleCancel}
                   variant="outline"
                   className="w-full border-zinc-700 text-zinc-300 hover:bg-zinc-800 hover:text-zinc-100" 
                   disabled={isSubmitting}

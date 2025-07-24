@@ -78,15 +78,13 @@
 
 ### Task 3.1: Enhanced Form Features
 - [x] Add field validation with real-time error messages
-- [ ] Implement form state persistence (optional)
-- [ ] Add confirmation dialogs for destructive actions
-- [ ] Enhance logo upload with:
-  - [ ] File type validation
-  - [ ] File size validation
-  - [ ] Image preview
-  - [ ] Remove/replace functionality
-- [ ] Add social media URL validation
-- [ ] Implement required field indicators
+- [x] Implement form state persistence (optional)
+- [x] Enhance logo upload with:
+  - [x] File type validation
+  - [x] File size validation
+  - [x] Image preview
+  - [x] Remove/replace functionality
+- [x] Add social media URL validation
 
 ### Task 3.2: Remove Deprecated Components
 - [ ] Delete `components/dashboard/SchoolFormDialog.tsx`
