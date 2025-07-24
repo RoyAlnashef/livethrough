@@ -11,13 +11,13 @@
 - [x] Add loading states and validation feedback
 
 ### Task 1.2: Create Edit School Page
-- [ ] Create directory: `app/dashboard/schools/[id]/`
-- [ ] Create file: `app/dashboard/schools/[id]/page.tsx`
-- [ ] Implement data fetching from Supabase
-- [ ] Add form pre-population logic
-- [ ] Implement update functionality
-- [ ] Add error handling for invalid school IDs
-- [ ] Add loading states during data fetch
+- [x] Create directory: `app/dashboard/schools/[id]/`
+- [x] Create file: `app/dashboard/schools/[id]/page.tsx`
+- [x] Implement data fetching from Supabase
+- [x] Add form pre-population logic
+- [x] Implement update functionality
+- [x] Add error handling for invalid school IDs
+- [x] Add loading states during data fetch
 
 ### Task 1.3: Enhance School Form Component
 - [ ] Rename `SchoolForm.tsx` to `school-form.tsx` for consistency
