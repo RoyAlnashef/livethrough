@@ -7,7 +7,7 @@ interface CourseWithSchool extends Course {
 
 export function generateCourseDescription(course: CourseWithSchool): string {
   const baseDescription = course.description 
-    ? course.description.replace(/<[^>]*>/g, '').substring(0, 150) + '...'
+    ? course.description.replace(/<[^>]*>/g, '').substring(0, 120) + '...'
     : `Learn ${course.title} with ${course.schools?.name || 'our expert instructors'}.`
 
   const details = []
@@ -28,9 +28,16 @@ export function generateCourseDescription(course: CourseWithSchool): string {
     details.push(`Starting at $${course.price}`)
   }
 
+  // Add top 3 skills to description for better SEO
+  let skillsText = ''
+  if (course.skills && Array.isArray(course.skills) && course.skills.length > 0) {
+    const topSkills = course.skills.slice(0, 3).join(', ')
+    skillsText = ` Skills include: ${topSkills}.`
+  }
+
   const detailsText = details.length > 0 ? ` ${details.join(' • ')}.` : ''
   
-  return baseDescription + detailsText
+  return baseDescription + detailsText + skillsText
 }
 
 export function generateKeywords(course: CourseWithSchool): string[] {
@@ -43,6 +50,7 @@ export function generateKeywords(course: CourseWithSchool): string[] {
     course.schools?.name,
   ]
 
+  // Add skills first to ensure they're included
   if (course.skills && Array.isArray(course.skills)) {
     keywords.push(...course.skills)
   }
@@ -56,7 +64,8 @@ export function generateKeywords(course: CourseWithSchool): string[] {
   }
 
   // Filter out undefined/null values and duplicates
-  return [...new Set(keywords.filter(Boolean))].slice(0, 10) as string[]
+  // Increase limit to 20 to accommodate more skills
+  return [...new Set(keywords.filter(Boolean))].slice(0, 20) as string[]
 }
 
 export function generateStructuredData(course: CourseWithSchool) {
@@ -90,6 +99,8 @@ export function generateStructuredData(course: CourseWithSchool) {
     } : undefined,
     "image": course.photo_url && course.photo_url.length > 0 ? course.photo_url : undefined,
     "url": `https://livethrough.com/marketplace/courses/${course.id}`,
+    // Add skills as keywords for better SEO
+    "keywords": course.skills && Array.isArray(course.skills) ? course.skills.join(', ') : undefined,
   }
 }
 
