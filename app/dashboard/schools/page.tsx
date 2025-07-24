@@ -142,12 +142,26 @@ export default function SchoolsPage() {
                 <tbody>
                   {filteredSchools.map(school => (
                     <tr key={school.id} className="border-b border-zinc-800 hover:bg-zinc-950">
-                      <td className="py-2 px-4 font-mono text-xs">{school.id?.slice(0, 8)}</td>
+                      <td className="py-2 px-4 font-mono text-xs">
+                        <button
+                          onClick={() => handleEdit(school)}
+                          className="hover:text-teal-400 transition-colors cursor-pointer"
+                          title="Edit school"
+                        >
+                          {school.id?.slice(0, 8)}
+                        </button>
+                      </td>
                       <td className="py-2 px-4 flex items-center gap-2">
                         {school.logo_url && (
                           <img src={school.logo_url} alt="logo" className="w-6 h-6 rounded-full object-cover" />
                         )}
-                        <span>{school.name}</span>
+                        <button
+                          onClick={() => handleEdit(school)}
+                          className="hover:text-teal-400 transition-colors cursor-pointer text-left"
+                          title="Edit school"
+                        >
+                          {school.name}
+                        </button>
                       </td>
                       <td className="py-2 px-4">{school.location}</td>
                       <td className="py-2 px-4">{school.created_at ? new Date(school.created_at).toLocaleDateString() : ""}</td>
