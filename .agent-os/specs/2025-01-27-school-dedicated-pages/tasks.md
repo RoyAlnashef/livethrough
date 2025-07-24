@@ -20,15 +20,15 @@
 - [x] Add loading states during data fetch
 
 ### Task 1.3: Enhance School Form Component
-- [ ] Rename `SchoolForm.tsx` to `school-form.tsx` for consistency
+- [x] Rename `SchoolForm.tsx` to `school-form.tsx` for consistency
 - [x] Expand layout to full-page design
 - [x] Reorganize form fields into logical sections:
   - [x] Basic Information (Name, Website, Description)
   - [x] Contact Information (Email, Phone, Address, Location)
   - [x] School Logo (Upload with preview)
-  - [x] Social Media (Facebook, Twitter, Instagram, YouTube)
+  - [x] Social Media (Facebook, Twitter, Instagram, YouTube, TikTok)
 - [x] Implement two-column responsive layout
-- [ ] Add proper form validation with error messages
+- [x] Add proper form validation with error messages
 - [x] Enhance logo upload with preview and validation
 - [x] Add cancel/save buttons with proper styling
 

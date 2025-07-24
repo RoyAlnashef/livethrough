@@ -52,9 +52,53 @@ export function SchoolForm({ mode, initialValues, onSubmit, isSubmitting }: Scho
   })
   const [logoFile, setLogoFile] = useState<File | null>(null)
   const [logoPreview, setLogoPreview] = useState<string>("")
+  const [errors, setErrors] = useState<Record<string, string>>({})
+  const [touched, setTouched] = useState<Record<string, boolean>>({})
+
+  const validateField = (field: keyof School, value: string): string => {
+    switch (field) {
+      case 'name':
+        if (!value.trim()) return 'School name is required'
+        if (value.trim().length < 2) return 'School name must be at least 2 characters'
+        if (value.trim().length > 100) return 'School name must be less than 100 characters'
+        return ''
+      case 'website':
+        if (value && !/^https?:\/\/.+/.test(value)) {
+          return 'Website must be a valid URL starting with http:// or https://'
+        }
+        return ''
+      case 'contact_email':
+        if (value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+          return 'Please enter a valid email address'
+        }
+        return ''
+      case 'facebook_url':
+      case 'twitter_url':
+      case 'instagram_url':
+      case 'youtube_url':
+      case 'tiktok_url':
+        if (value && !/^https?:\/\/.+/.test(value)) {
+          return 'Please enter a valid URL starting with http:// or https://'
+        }
+        return ''
+      default:
+        return ''
+    }
+  }
 
   const handleChange = (field: keyof School, value: string) => {
     setSchool((prev) => ({ ...prev, [field]: value }))
+    
+    // Mark field as touched
+    setTouched((prev) => ({ ...prev, [field]: true }))
+    
+    // Validate field and update errors
+    const error = validateField(field, value)
+    setErrors((prev) => ({ ...prev, [field]: error }))
+  }
+
+  const handleBlur = (field: keyof School) => {
+    setTouched((prev) => ({ ...prev, [field]: true }))
   }
 
   const handleLogoFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -65,8 +109,38 @@ export function SchoolForm({ mode, initialValues, onSubmit, isSubmitting }: Scho
     }
   }
 
+  const validateForm = (): boolean => {
+    const newErrors: Record<string, string> = {}
+    
+    // Validate all fields
+    Object.keys(school).forEach((field) => {
+      const value = school[field as keyof School]
+      const error = validateField(field as keyof School, value || '')
+      if (error) {
+        newErrors[field] = error
+      }
+    })
+    
+    setErrors(newErrors)
+    
+    // Mark all fields as touched
+    const allTouched: Record<string, boolean> = {}
+    Object.keys(school).forEach((field) => {
+      allTouched[field] = true
+    })
+    setTouched(allTouched)
+    
+    return Object.keys(newErrors).length === 0
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    
+    // Validate form before submission
+    if (!validateForm()) {
+      return
+    }
+    
     let logoUrl = school.logo_url
     if (logoFile) {
       try {
@@ -109,10 +183,16 @@ export function SchoolForm({ mode, initialValues, onSubmit, isSubmitting }: Scho
                     id="name" 
                     value={school.name} 
                     onChange={e => handleChange("name", e.target.value)} 
+                    onBlur={() => handleBlur("name")}
                     required 
-                    className="bg-zinc-800 border-zinc-700 text-zinc-100 placeholder:text-zinc-400"
+                    className={`bg-zinc-800 border-zinc-700 text-zinc-100 placeholder:text-zinc-400 ${
+                      touched.name && errors.name ? 'border-red-500' : ''
+                    }`}
                     placeholder="e.g., Wilderness Survival Academy"
                   />
+                  {touched.name && errors.name && (
+                    <p className="text-red-400 text-sm mt-1">{errors.name}</p>
+                  )}
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="website" className="text-zinc-400 mb-2">Website</Label>
@@ -120,9 +200,15 @@ export function SchoolForm({ mode, initialValues, onSubmit, isSubmitting }: Scho
                     id="website" 
                     value={school.website} 
                     onChange={e => handleChange("website", e.target.value)} 
-                    className="bg-zinc-800 border-zinc-700 text-zinc-100 placeholder:text-zinc-400"
+                    onBlur={() => handleBlur("website")}
+                    className={`bg-zinc-800 border-zinc-700 text-zinc-100 placeholder:text-zinc-400 ${
+                      touched.website && errors.website ? 'border-red-500' : ''
+                    }`}
                     placeholder="https://www.yourschool.com"
                   />
+                  {touched.website && errors.website && (
+                    <p className="text-red-400 text-sm mt-1">{errors.website}</p>
+                  )}
                 </div>
               </div>
               <div className="space-y-2">
@@ -137,16 +223,22 @@ export function SchoolForm({ mode, initialValues, onSubmit, isSubmitting }: Scho
                 />
               </div>
               <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="contact_email" className="text-zinc-400 mb-2">Contact Email</Label>
-                  <Input 
-                    id="contact_email" 
-                    value={school.contact_email} 
-                    onChange={e => handleChange("contact_email", e.target.value)} 
-                    className="bg-zinc-800 border-zinc-700 text-zinc-100 placeholder:text-zinc-400"
-                    placeholder="contact@yourschool.com"
-                  />
-                </div>
+                                     <div className="space-y-2">
+                       <Label htmlFor="contact_email" className="text-zinc-400 mb-2">Contact Email</Label>
+                       <Input 
+                         id="contact_email" 
+                         value={school.contact_email} 
+                         onChange={e => handleChange("contact_email", e.target.value)} 
+                         onBlur={() => handleBlur("contact_email")}
+                         className={`bg-zinc-800 border-zinc-700 text-zinc-100 placeholder:text-zinc-400 ${
+                           touched.contact_email && errors.contact_email ? 'border-red-500' : ''
+                         }`}
+                         placeholder="contact@yourschool.com"
+                       />
+                       {touched.contact_email && errors.contact_email && (
+                         <p className="text-red-400 text-sm mt-1">{errors.contact_email}</p>
+                       )}
+                     </div>
                 <div className="space-y-2">
                   <Label htmlFor="contact_phone" className="text-zinc-400 mb-2">Contact Phone</Label>
                   <Input 
@@ -197,9 +289,15 @@ export function SchoolForm({ mode, initialValues, onSubmit, isSubmitting }: Scho
                     id="facebook_url" 
                     value={school.facebook_url} 
                     onChange={e => handleChange("facebook_url", e.target.value)} 
-                    className="bg-zinc-800 border-zinc-700 text-zinc-100 placeholder:text-zinc-400"
+                    onBlur={() => handleBlur("facebook_url")}
+                    className={`bg-zinc-800 border-zinc-700 text-zinc-100 placeholder:text-zinc-400 ${
+                      touched.facebook_url && errors.facebook_url ? 'border-red-500' : ''
+                    }`}
                     placeholder="https://facebook.com/yourschool"
                   />
+                  {touched.facebook_url && errors.facebook_url && (
+                    <p className="text-red-400 text-sm mt-1">{errors.facebook_url}</p>
+                  )}
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="twitter_url" className="text-zinc-400 mb-2">Twitter</Label>
@@ -207,9 +305,15 @@ export function SchoolForm({ mode, initialValues, onSubmit, isSubmitting }: Scho
                     id="twitter_url" 
                     value={school.twitter_url} 
                     onChange={e => handleChange("twitter_url", e.target.value)} 
-                    className="bg-zinc-800 border-zinc-700 text-zinc-100 placeholder:text-zinc-400"
+                    onBlur={() => handleBlur("twitter_url")}
+                    className={`bg-zinc-800 border-zinc-700 text-zinc-100 placeholder:text-zinc-400 ${
+                      touched.twitter_url && errors.twitter_url ? 'border-red-500' : ''
+                    }`}
                     placeholder="https://twitter.com/yourschool"
                   />
+                  {touched.twitter_url && errors.twitter_url && (
+                    <p className="text-red-400 text-sm mt-1">{errors.twitter_url}</p>
+                  )}
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-4">
@@ -219,9 +323,15 @@ export function SchoolForm({ mode, initialValues, onSubmit, isSubmitting }: Scho
                     id="instagram_url" 
                     value={school.instagram_url} 
                     onChange={e => handleChange("instagram_url", e.target.value)} 
-                    className="bg-zinc-800 border-zinc-700 text-zinc-100 placeholder:text-zinc-400"
+                    onBlur={() => handleBlur("instagram_url")}
+                    className={`bg-zinc-800 border-zinc-700 text-zinc-100 placeholder:text-zinc-400 ${
+                      touched.instagram_url && errors.instagram_url ? 'border-red-500' : ''
+                    }`}
                     placeholder="https://instagram.com/yourschool"
                   />
+                  {touched.instagram_url && errors.instagram_url && (
+                    <p className="text-red-400 text-sm mt-1">{errors.instagram_url}</p>
+                  )}
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="youtube_url" className="text-zinc-400 mb-2">YouTube</Label>
@@ -229,9 +339,15 @@ export function SchoolForm({ mode, initialValues, onSubmit, isSubmitting }: Scho
                     id="youtube_url" 
                     value={school.youtube_url} 
                     onChange={e => handleChange("youtube_url", e.target.value)} 
-                    className="bg-zinc-800 border-zinc-700 text-zinc-100 placeholder:text-zinc-400"
+                    onBlur={() => handleBlur("youtube_url")}
+                    className={`bg-zinc-800 border-zinc-700 text-zinc-100 placeholder:text-zinc-400 ${
+                      touched.youtube_url && errors.youtube_url ? 'border-red-500' : ''
+                    }`}
                     placeholder="https://youtube.com/@yourschool"
                   />
+                  {touched.youtube_url && errors.youtube_url && (
+                    <p className="text-red-400 text-sm mt-1">{errors.youtube_url}</p>
+                  )}
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-4">
@@ -241,9 +357,15 @@ export function SchoolForm({ mode, initialValues, onSubmit, isSubmitting }: Scho
                     id="tiktok_url" 
                     value={school.tiktok_url} 
                     onChange={e => handleChange("tiktok_url", e.target.value)} 
-                    className="bg-zinc-800 border-zinc-700 text-zinc-100 placeholder:text-zinc-400"
+                    onBlur={() => handleBlur("tiktok_url")}
+                    className={`bg-zinc-800 border-zinc-700 text-zinc-100 placeholder:text-zinc-400 ${
+                      touched.tiktok_url && errors.tiktok_url ? 'border-red-500' : ''
+                    }`}
                     placeholder="https://tiktok.com/@yourschool"
                   />
+                  {touched.tiktok_url && errors.tiktok_url && (
+                    <p className="text-red-400 text-sm mt-1">{errors.tiktok_url}</p>
+                  )}
                 </div>
                 <div className="space-y-2">
                   {/* Empty div to maintain grid layout */}

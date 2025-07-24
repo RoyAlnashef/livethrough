@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useState } from "react"
 import { useParams } from "next/navigation"
-import { SchoolForm } from "@/components/dashboard/SchoolForm"
+import { SchoolForm } from "@/components/dashboard/school-form"
 import { supabase } from "@/lib/supabase"
 import { toast } from "sonner"
 

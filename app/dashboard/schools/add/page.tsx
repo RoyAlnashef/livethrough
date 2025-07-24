@@ -1,7 +1,7 @@
 'use client'
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { SchoolForm } from "@/components/dashboard/SchoolForm"
+import { SchoolForm } from "@/components/dashboard/school-form"
 import { toast } from "sonner"
 import { supabase } from "@/lib/supabase"
 
