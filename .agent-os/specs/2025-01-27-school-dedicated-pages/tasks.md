@@ -21,16 +21,16 @@
 
 ### Task 1.3: Enhance School Form Component
 - [ ] Rename `SchoolForm.tsx` to `school-form.tsx` for consistency
-- [ ] Expand layout to full-page design
-- [ ] Reorganize form fields into logical sections:
-  - [ ] Basic Information (Name, Website, Description)
-  - [ ] Contact Information (Email, Phone, Address, Location)
-  - [ ] School Logo (Upload with preview)
-  - [ ] Social Media (Facebook, Twitter, Instagram, YouTube)
-- [ ] Implement two-column responsive layout
+- [x] Expand layout to full-page design
+- [x] Reorganize form fields into logical sections:
+  - [x] Basic Information (Name, Website, Description)
+  - [x] Contact Information (Email, Phone, Address, Location)
+  - [x] School Logo (Upload with preview)
+  - [x] Social Media (Facebook, Twitter, Instagram, YouTube)
+- [x] Implement two-column responsive layout
 - [ ] Add proper form validation with error messages
-- [ ] Enhance logo upload with preview and validation
-- [ ] Add cancel/save buttons with proper styling
+- [x] Enhance logo upload with preview and validation
+- [x] Add cancel/save buttons with proper styling
 
 ### Task 1.4: Create School Actions
 - [ ] Create `addSchoolWithLogo` function in `lib/actions.ts`
