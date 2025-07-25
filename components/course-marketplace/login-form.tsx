@@ -4,7 +4,7 @@ import type React from "react"
 
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Mail, Lock, Sparkles, ArrowRight, ArrowLeft, User, Info } from "lucide-react"
@@ -232,19 +232,6 @@ export default function LoginForm({ initialAuthState }: LoginFormProps) {
         return "Reset your password"
       default:
         return "Log In"
-    }
-  }
-
-  const getDescription = () => {
-    switch (authState) {
-      case "signup":
-        return authMode === "magic"
-          ? "Enter your details to receive a magic link"
-          : "Enter your details to create your account"
-      case "forgot-password":
-        return "Enter your email to receive a password reset link"
-      default:
-        return authMode === "magic" ? "Enter your email to receive a magic link" : "Log in to your account to continue"
     }
   }
 
