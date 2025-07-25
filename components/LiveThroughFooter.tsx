@@ -48,7 +48,7 @@ export default function LiveThroughFooter() {
   return (
     <footer className="bg-zinc-950 border-t border-zinc-800" role="contentinfo" aria-label="Site footer">
       <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Brand Section */}
           <div className="space-y-4">
             <div className="flex items-center">
@@ -144,7 +144,13 @@ export default function LiveThroughFooter() {
                   </Button>
                 </>
               )}
-              {/* Policy Links */}
+            </nav>
+          </div>
+
+          {/* Resources Section */}
+          <div className="space-y-4">
+            <h3 className="text-white font-semibold text-lg">Resources</h3>
+            <nav className="flex flex-col space-y-2" role="navigation" aria-label="Footer resources navigation">
               <Link 
                 href="/privacy-policy" 
                 className="text-zinc-400 hover:text-white transition-colors text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-zinc-950 rounded"
@@ -165,13 +171,6 @@ export default function LiveThroughFooter() {
                 aria-label="View cookie policy"
               >
                 Cookie Policy
-              </Link>
-              <Link 
-                href="/refund-policy" 
-                className="text-zinc-400 hover:text-white transition-colors text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-zinc-950 rounded"
-                aria-label="View refund policy"
-              >
-                Refund Policy
               </Link>
             </nav>
           </div>
