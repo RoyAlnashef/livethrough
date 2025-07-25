@@ -325,7 +325,7 @@ export default function LoginForm({ initialAuthState }: LoginFormProps) {
             </button>
           </motion.div>
         )}
-        <CardDescription className="text-zinc-400 text-center">{getDescription()}</CardDescription>
+        {/* CardDescription removed as requested */}
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <AnimatePresence mode="wait">
@@ -536,9 +536,9 @@ export default function LoginForm({ initialAuthState }: LoginFormProps) {
                 />
                 <span>
                   By signing up, I agree to the{' '}
-                  <a href="/terms-of-service" target="_blank" rel="noopener noreferrer" className="text-teal-400 no-underline hover:text-teal-300">terms of service</a>,{' '}
-                  <a href="/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-teal-400 no-underline hover:text-teal-300">privacy policy</a>, and{' '}
-                  <a href="/cookie-policy" target="_blank" rel="noopener noreferrer" className="text-teal-400 no-underline hover:text-teal-300">cookie policy</a>.
+                  <a href="/terms-of-service" target="_blank" rel="noopener noreferrer" className="text-teal-400 hover:text-teal-300">terms of service</a>,{' '}
+                  <a href="/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-teal-400 hover:text-teal-300">privacy policy</a>, and{' '}
+                  <a href="/cookie-policy" target="_blank" rel="noopener noreferrer" className="text-teal-400 hover:text-teal-300">cookie policy</a>.
                 </span>
               </Label>
               {policyError && (
