@@ -64,7 +64,7 @@ export default function LiveThroughFooter() {
               </Link>
             </div>
             <p className="text-zinc-400 text-lg leading-relaxed">
-              Find the right courses, and learn to survive anything.
+              Find the right survival courses, and learn how to LiveThrough anything.
             </p>
             <address className="pt-4 space-y-2 not-italic">
               <div className="flex items-center space-x-2 text-zinc-400 text-sm">
@@ -99,6 +99,13 @@ export default function LiveThroughFooter() {
                   Admin
                 </Link>
               )}
+              <Link 
+                href="/" 
+                className="text-zinc-400 hover:text-white transition-colors text-sm focus:outline-none rounded"
+                aria-label="Browse all courses"
+              >
+                Browse Courses
+              </Link>
               {isAuthenticated ? (
                 <Link 
                   href="/account/courses" 

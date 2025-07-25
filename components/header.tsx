@@ -97,6 +97,12 @@ export function Header() {
                 Admin
               </Link>
             )}
+            <Link
+              href="/"
+              className="text-sm text-zinc-400 hover:text-white transition-colors font-roboto"
+            >
+              Browse Courses
+            </Link>
             {isAuthenticated ? (
               <Link
                 href="/account/courses"
@@ -180,6 +186,13 @@ export function Header() {
               Admin
             </Link>
           )}
+          <Link
+            href="/"
+            className="text-zinc-400 hover:text-white transition-colors font-roboto text-xl"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            Browse Courses
+          </Link>
           {isAuthenticated ? (
             <Link
               href="/account/courses"
