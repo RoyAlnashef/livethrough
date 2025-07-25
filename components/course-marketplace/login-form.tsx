@@ -16,6 +16,7 @@ import type { User as SupabaseUser } from '@supabase/supabase-js'
 import { motion, AnimatePresence } from "framer-motion"
 import { useRouter } from "next/navigation"
 import { validateEmail, validateRequired } from "@/lib/validation"
+import { Checkbox } from "@/components/ui/checkbox"
 
 type AuthState = "login" | "signup" | "forgot-password"
 
@@ -42,6 +43,10 @@ export default function LoginForm({ initialAuthState }: LoginFormProps) {
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [errors, setErrors] = useState<ValidationErrors>({})
+  // Add state for policy agreement
+  const [agreedToPolicies, setAgreedToPolicies] = useState(true)
+  // Add error state for policy agreement
+  const [policyError, setPolicyError] = useState<string | undefined>(undefined)
 
   // Reset errors when auth state or mode changes
   useEffect(() => {
@@ -102,8 +107,16 @@ export default function LoginForm({ initialAuthState }: LoginFormProps) {
       if (fullNameError) newErrors.fullName = fullNameError
     }
 
+    // Validate policy agreement for signup
+    if (authState === "signup" && !agreedToPolicies) {
+      setPolicyError("You must agree to the terms, privacy, and cookie policies.")
+      return false
+    } else {
+      setPolicyError(undefined)
+    }
+
     setErrors(newErrors)
-    return Object.keys(newErrors).length === 0
+    return Object.keys(newErrors).length === 0 && (!policyError)
   }
 
   // Helper to sync user to users table
@@ -601,6 +614,30 @@ export default function LoginForm({ initialAuthState }: LoginFormProps) {
               </motion.div>
             )}
           </AnimatePresence>
+
+          {/* Policy Agreement Checkbox for Signup */}
+          {authState === "signup" && (
+            <div className="flex flex-col gap-1 py-2">
+              <Label htmlFor="policy-agreement" className="flex items-center gap-2 text-sm text-zinc-200">
+                <Checkbox
+                  id="policy-agreement"
+                  checked={agreedToPolicies}
+                  onCheckedChange={checked => setAgreedToPolicies(!!checked)}
+                  className="mr-2"
+                  required
+                />
+                <span>
+                  By signing up, I agree to the{' '}
+                  <a href="/terms-of-service" target="_blank" rel="noopener noreferrer" className="text-teal-400 no-underline hover:text-teal-300">terms of service</a>,{' '}
+                  <a href="/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-teal-400 no-underline hover:text-teal-300">privacy policy</a>, and{' '}
+                  <a href="/cookie-policy" target="_blank" rel="noopener noreferrer" className="text-teal-400 no-underline hover:text-teal-300">cookie policy</a>.
+                </span>
+              </Label>
+              {policyError && (
+                <span className="text-sm text-red-500">{policyError}</span>
+              )}
+            </div>
+          )}
 
           <motion.div
             initial={{ opacity: 0, y: 10 }}
