@@ -13,6 +13,7 @@ import {
   UserCog,
   Home,
   LogOut,
+  Megaphone,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { supabase } from "@/lib/supabase"
@@ -26,6 +27,7 @@ const mainLinks = [
 
 const systemLinks = [
   { name: "Admin Users", href: "/dashboard/admin-users", icon: UserCog },
+  { name: "Ads", href: "/dashboard/ads", icon: Megaphone },
   { name: "Settings", href: "/dashboard/settings", icon: Settings },
   { name: "Security", href: "/dashboard/security", icon: Shield },
 ]

@@ -62,6 +62,28 @@ export default function AdSlot({
   useEffect(() => {
     if (!isVisible || !enabled || !hasConsent) return
 
+    // Track impression
+    const trackImpression = async () => {
+      try {
+        await fetch('/api/ads/analytics', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          credentials: 'include',
+          body: JSON.stringify({
+            slotId,
+            eventType: 'impression',
+            timestamp: new Date().toISOString()
+          })
+        })
+      } catch (error) {
+        console.error('Failed to track impression:', error)
+      }
+    }
+
+    trackImpression()
+
     // Check if AdSense is available
     if (typeof window !== 'undefined' && (window as unknown as { adsbygoogle?: unknown }).adsbygoogle) {
       try {
@@ -98,6 +120,26 @@ export default function AdSlot({
     }
   }, [isVisible, enabled, slotId, hasConsent])
 
+  // Track click event
+  const handleClick = async () => {
+    try {
+      await fetch('/api/ads/analytics', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+          slotId,
+          eventType: 'click',
+          timestamp: new Date().toISOString()
+        })
+      })
+    } catch (error) {
+      console.error('Failed to track click:', error)
+    }
+  }
+
   // Don't render if not enabled or no consent
   if (!enabled || !hasConsent) {
     return null
@@ -106,8 +148,9 @@ export default function AdSlot({
   return (
     <div
       ref={adRef}
+      onClick={handleClick}
       className={cn(
-        'ad-slot relative overflow-hidden',
+        'ad-slot relative overflow-hidden cursor-pointer',
         size === 'sidebar' && 'w-full max-w-[300px]',
         size === 'banner' && 'w-full max-w-[728px]',
         size === 'content' && 'w-full max-w-[300px]',
