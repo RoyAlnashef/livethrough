@@ -200,7 +200,7 @@ npx tsc --noEmit     # TypeScript type checking
 
 - **Tailwind CSS**: Utility-first CSS framework
 - **Custom Components**: Radix UI primitives with custom styling
-- **Dark Theme**: Consistent dark mode throughout the application
+- **Dark Theme: ZINC**: Consistent dark mode throughout the application
 
 ### Code Implementation Guidelines
 

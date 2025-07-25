@@ -150,7 +150,7 @@ export default function LiveThroughFooter() {
         </div>
         {/* Bottom Section */}
         <div className="border-t border-zinc-800 mt-12 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+          <div className="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0">
             <div className="text-zinc-400 text-sm">© 2025 LiveThrough.co. All rights reserved.</div>
           </div>
         </div>
