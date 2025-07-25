@@ -1,11 +1,11 @@
 # Advertisement Integration Tasks
 
 ## Phase 1: Planning & Design
-- [ ] Identify and document all ad slot locations across the site (sidebar, between content, footer, dashboard, course pages)
-- [ ] Update design mockups to include ad slots
-- [ ] Research Google AdSense integration requirements
-- [ ] Research privacy and consent requirements (GDPR/CCPA)
-- [ ] Plan navigation and UI for new "Ads" page in dashboard
+- [x] Identify and document all ad slot locations across the site (sidebar, between content, footer, dashboard, course pages)
+- [x] Update design mockups to include ad slots
+- [x] Research Google AdSense integration requirements
+- [x] Research privacy and consent requirements (GDPR/CCPA)
+- [x] Plan navigation and UI for new "Ads" page in dashboard
 
 ## Phase 2: Core Integration
 - [ ] Create `components/ads/AdSlot.tsx` for rendering ad slots
