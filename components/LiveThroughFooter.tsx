@@ -6,6 +6,7 @@ import { useAuthModal } from "@/components/course-marketplace/auth-modal-context
 import { useAuth } from "@/lib/auth-context"
 import { useRouter } from "next/navigation"
 import { Mail, MapPin } from "lucide-react"
+import { AdSlot } from "@/components/ads"
 
 export default function LiveThroughFooter() {
   const { openAuthModal } = useAuthModal()
@@ -39,6 +40,20 @@ export default function LiveThroughFooter() {
 
   return (
     <footer className="bg-zinc-950 border-t border-zinc-800" role="contentinfo" aria-label="Site footer">
+      {/* Footer Banner Ad */}
+      <div className="border-b border-zinc-800">
+        <div className="container mx-auto px-4 py-6">
+          <div className="flex justify-center">
+            <AdSlot
+              slotId="footer-banner-ad-slot"
+              adUnitPath="/footer/banner"
+              size="banner"
+              enabled={process.env.NODE_ENV === 'production'}
+            />
+          </div>
+        </div>
+      </div>
+      
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Brand Section */}

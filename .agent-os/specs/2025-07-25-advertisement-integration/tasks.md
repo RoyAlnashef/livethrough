@@ -8,12 +8,12 @@
 - [x] Plan navigation and UI for new "Ads" page in dashboard
 
 ## Phase 2: Core Integration
-- [ ] Create `components/ads/AdSlot.tsx` for rendering ad slots
-- [ ] Add ad slot components to selected pages/locations
-- [ ] Integrate Google AdSense script into AdSlot component
-- [ ] Implement lazy-loading for ads (IntersectionObserver)
-- [ ] Ensure ad slots are responsive for mobile/desktop
-- [ ] Reserve space for ads to avoid layout shift (CLS)
+- [x] Create `components/ads/AdSlot.tsx` for rendering ad slots
+- [x] Add ad slot components to selected pages/locations
+- [x] Integrate Google AdSense script into AdSlot component
+- [x] Implement lazy-loading for ads (IntersectionObserver)
+- [x] Ensure ad slots are responsive for mobile/desktop
+- [x] Reserve space for ads to avoid layout shift (CLS)
 
 ## Phase 3: Dashboard Ad Controls
 - [ ] Create new page at `app/dashboard/ads/page.tsx`
@@ -38,8 +38,8 @@
 - [ ] Restrict analytics access to admin users only
 
 ## Phase 4: Privacy & Consent
-- [ ] Integrate or update consent management (cookie banner, opt-out logic)
-- [ ] Ensure ads do not load before user consent (where required)
+- [x] Integrate or update consent management (cookie banner, opt-out logic)
+- [x] Ensure ads do not load before user consent (where required)
 - [ ] Exclude ads for admins and premium users (if applicable)
 
 ## Phase 5: Analytics & Testing
