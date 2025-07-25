@@ -38,15 +38,15 @@
 ## Phase 2: Content Creation (Week 2)
 
 ### Terms of Service Content
-- [ ] Write comprehensive Terms of Service content
-- [ ] Include user registration and account terms
-- [ ] Add course booking and payment terms
-- [ ] Include intellectual property rights section
-- [ ] Add dispute resolution procedures
-- [ ] Include limitation of liability clauses
-- [ ] Add termination and account closure terms
+- [x] Write comprehensive Terms of Service content
+- [x] Include user registration and account terms
+- [x] ~~Add course booking and payment terms~~ (Removed - not currently offered)
+- [x] Include intellectual property rights section
+- [x] Add dispute resolution procedures
+- [x] Include limitation of liability clauses
+- [x] Add termination and account closure terms
 - [ ] Review content with legal counsel
-- [ ] Implement content in Terms of Service page
+- [x] Implement content in Terms of Service page
 
 ### Privacy Policy Content
 - [ ] Write GDPR/CCPA compliant Privacy Policy
