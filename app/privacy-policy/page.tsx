@@ -278,24 +278,26 @@ export default function PrivacyPolicyPage() {
           <section>
             <h2 className="text-2xl font-semibold text-white mb-4">10. Cookies and Tracking Technologies</h2>
             <p className="mb-4">
-              We use cookies and similar tracking technologies to enhance your experience on our platform.
+              We use cookies and similar tracking technologies to enhance your experience on our platform. Cookies are small text files stored on your device that help us provide personalized content and improve our services.
             </p>
             
-            <h3 className="text-xl font-semibold text-white mb-3">10.1 Types of Cookies</h3>
+            <h3 className="text-xl font-semibold text-white mb-3">10.1 How We Use Cookies</h3>
             <ul className="list-disc list-inside space-y-2 ml-4 mb-4">
-              <li><strong>Essential Cookies:</strong> Required for platform functionality</li>
-              <li><strong>Analytics Cookies:</strong> Help us understand platform usage</li>
-              <li><strong>Preference Cookies:</strong> Remember your settings and preferences</li>
-              <li><strong>Marketing Cookies:</strong> Used for advertising and marketing (with consent)</li>
+              <li><strong>Essential Cookies:</strong> Required for platform functionality and security</li>
+              <li><strong>Analytics Cookies:</strong> Help us understand platform usage and improve performance</li>
+              <li><strong>Preference Cookies:</strong> Remember your settings and personalize your experience</li>
+              <li><strong>Marketing Cookies:</strong> Used for advertising and marketing (only with your consent)</li>
             </ul>
 
-            <h3 className="text-xl font-semibold text-white mb-3">10.2 Cookie Management</h3>
-            <p className="mb-4">You can control cookies through:</p>
-            <ul className="list-disc list-inside space-y-2 ml-4">
-              <li>Your browser settings</li>
-              <li>Our cookie consent banner</li>
-              <li>Third-party opt-out mechanisms</li>
-            </ul>
+            <h3 className="text-xl font-semibold text-white mb-3">10.2 Cookie Consent</h3>
+            <p className="mb-4">
+              We obtain your consent before setting non-essential cookies. You can manage your cookie preferences through our cookie consent banner or your browser settings.
+            </p>
+
+            <h3 className="text-xl font-semibold text-white mb-3">10.3 Detailed Cookie Information</h3>
+            <p>
+              For detailed information about the specific cookies we use, their purposes, durations, and how to manage them, please see our <a href="/cookie-policy" className="text-blue-400 hover:text-blue-300 underline">Cookie Policy</a>.
+            </p>
           </section>
 
           <section>

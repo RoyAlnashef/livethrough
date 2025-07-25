@@ -33,8 +33,8 @@ const breadcrumbs = [
 
 export default function RefundPolicyPage() {
   return (
-      <div className="container mx-auto px-4 py-8">
-        <BreadcrumbNavigation items={breadcrumbs} className="mb-8" />
+      <div className="container mx-auto px-4 pt-8 pb-16">
+        <BreadcrumbNavigation items={breadcrumbs} className="mb-8 max-w-4xl mx-auto" />
         
         <PolicyLayout
           title="Refund Policy"

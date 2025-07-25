@@ -9,7 +9,7 @@ interface PolicyLayoutProps {
 
 export function PolicyLayout({ title, lastUpdated, version, children }: PolicyLayoutProps) {
   return (
-    <article className="max-w-4xl mx-auto">
+    <article className="mx-auto max-w-4xl">
       <header className="mb-8">
         <h1 className="text-3xl font-bold text-white mb-2">{title}</h1>
         <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-4 text-zinc-400 text-sm space-y-1 sm:space-y-0">

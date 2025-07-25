@@ -6,7 +6,7 @@ export default function PrivacyLayout({ children }: { children: React.ReactNode 
   return (
     <div className="min-h-screen bg-black flex flex-col">
       <Header />
-      <main className="flex-1">{children}</main>
+      <main className="flex-1 bg-topo-overlay">{children}</main>
       <LiveThroughFooter />
     </div>
   );
