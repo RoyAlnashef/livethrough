@@ -1,5 +1,6 @@
 import { ReactNode } from "react"
 import { Header } from "@/components/header"
+import LiveThroughFooter from "@/components/LiveThroughFooter"
 
 interface AccountLayoutProps {
   children: ReactNode
@@ -7,9 +8,9 @@ interface AccountLayoutProps {
 
 export default function AccountLayout({ children }: AccountLayoutProps) {
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-black flex flex-col">
       <Header />
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-8 flex-1">
         {/* Horizontal Navigation */}
         <nav className="flex gap-6 mb-8 border-b border-zinc-800 pb-4">
           <a
@@ -36,6 +37,7 @@ export default function AccountLayout({ children }: AccountLayoutProps) {
           {children}
         </main>
       </div>
+      <LiveThroughFooter />
     </div>
   )
 } 
