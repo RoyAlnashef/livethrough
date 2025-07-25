@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image"
 import Link from "next/link"
 import { useAuthModal } from "@/components/course-marketplace/auth-modal-context"

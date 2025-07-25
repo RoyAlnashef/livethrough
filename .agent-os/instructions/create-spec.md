@@ -15,14 +15,15 @@ When creating specifications for new features, follow these guidelines to ensure
 ### Naming Convention
 - **Directory**: Use date format `YYYY-MM-DD` followed by a descriptive feature name
 - **File**: Use descriptive name ending in `_SPEC.md` or `SPEC.md`
-- **Example**: `2025-07-27-course-detail-seo-optimization/COURSE_DETAIL_SEO_SPEC.md`
+- **Example**: `2025-07-24-course-detail-seo-optimization/COURSE_DETAIL_SEO_SPEC.md`
+- **IMPORTANT**: Always use the current date when creating new specs. Do not use future dates or incorrect dates.
 
 ### Directory Structure
 ```
 .agent-os/specs/
 ├── 2025-07-23-course-deletion-error-fix/
 ├── 2025-07-23-course-photos-folder-deletion-bug/
-├── 2025-07-27-course-detail-seo-optimization/
+├── 2025-07-23-course-detail-seo-optimization/
 │   └── spec.md
 └── [new-spec-directory]/
     └── spec.md
@@ -54,6 +55,8 @@ When creating specifications for new features, follow these guidelines to ensure
 ## Process Steps
 
 1. **Create Directory**: `mkdir -p .agent-os/specs/YYYY-MM-DD-feature-name/`
+   - **CRITICAL**: Use the current date in YYYY-MM-DD format (e.g., `2025-07-24` for July 24, 2025)
+   - Do not use future dates or incorrect dates
 2. **Create Spec File**: Create the specification document in the new directory
 3. **Follow Template**: Use the established format and sections
 4. **Include Examples**: Provide code examples and technical details
@@ -63,7 +66,7 @@ When creating specifications for new features, follow these guidelines to ensure
 
 ### Good Spec Location
 ```
-.agent-os/specs/2025-01-27-course-detail-seo-optimization/spec.md
+.agent-os/specs/2025-07-23-course-detail-seo-optimization/spec.md
 ```
 
 ### Bad Spec Location
