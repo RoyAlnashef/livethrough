@@ -7,7 +7,6 @@
 - [x] Create `/app/legal/terms-of-service/page.tsx`
 - [x] Create `/app/legal/privacy-policy/page.tsx`
 - [x] Create `/app/legal/cookie-policy/page.tsx`
-- [x] Create `/app/legal/refund-policy/page.tsx`
 - [x] Test all routes are accessible and working
 - [x] Simplify the url scheme. No need for the '/legal/page-name'. We can just make it ...through.co/page-name
 
@@ -30,7 +29,6 @@
 - [x] Add metadata generation for Terms of Service page
 - [x] Add metadata generation for Privacy Policy page
 - [x] Add metadata generation for Cookie Policy page
-- [x] Add metadata generation for Refund Policy page
 - [x] Implement structured data for all policy pages
 - [x] Add canonical URLs for all pages
 - [x] Test SEO with Lighthouse and other tools
@@ -69,15 +67,7 @@
 - [ ] Review content with legal counsel
 - [x] Implement content in Cookie Policy page
 
-### Refund Policy Content
-- [ ] Write clear refund and cancellation terms
-- [ ] Define refund eligibility criteria
-- [ ] Document refund process and timeline
-- [ ] Include course cancellation policies
-- [ ] Add contact information for refund requests
-- [ ] Document dispute resolution for refunds
-- [ ] Review content with legal counsel
-- [ ] Implement content in Refund Policy page
+
 
 ## Phase 3: Enhancement (Week 3)
 
