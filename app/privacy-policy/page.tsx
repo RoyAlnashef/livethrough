@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     title: 'Privacy Policy | LiveThrough',
     description: 'LiveThrough Privacy Policy - Learn how we collect, use, and protect your personal information.',
     type: 'website',
-    url: 'https://livethrough.com/legal/privacy-policy',
+    url: 'https://livethrough.co/privacy-policy',
   },
   twitter: {
     card: 'summary',
@@ -22,13 +22,12 @@ export const metadata: Metadata = {
     description: 'LiveThrough Privacy Policy - Learn how we collect, use, and protect your personal information.',
   },
   alternates: {
-    canonical: 'https://livethrough.com/legal/privacy-policy',
+    canonical: 'https://livethrough.co/privacy-policy',
   },
 }
 
 const breadcrumbs = [
   { label: 'Home', href: '/' },
-  { label: 'Legal', href: '/legal' },
   { label: 'Privacy Policy' },
 ]
 

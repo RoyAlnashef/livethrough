@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     title: 'Terms of Service | LiveThrough',
     description: 'LiveThrough Terms of Service - Learn about our terms, conditions, and user agreements.',
     type: 'website',
-    url: 'https://livethrough.com/legal/terms-of-service',
+    url: 'https://livethrough.co/terms-of-service',
   },
   twitter: {
     card: 'summary',
@@ -22,13 +22,12 @@ export const metadata: Metadata = {
     description: 'LiveThrough Terms of Service - Learn about our terms, conditions, and user agreements.',
   },
   alternates: {
-    canonical: 'https://livethrough.com/legal/terms-of-service',
+    canonical: 'https://livethrough.co/terms-of-service',
   },
 }
 
 const breadcrumbs = [
   { label: 'Home', href: '/' },
-  { label: 'Legal', href: '/legal' },
   { label: 'Terms of Service' },
 ]
 

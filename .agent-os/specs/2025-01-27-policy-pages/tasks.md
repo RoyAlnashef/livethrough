@@ -9,6 +9,7 @@
 - [x] Create `/app/legal/cookie-policy/page.tsx`
 - [x] Create `/app/legal/refund-policy/page.tsx`
 - [x] Test all routes are accessible and working
+- [x] Simplify the url scheme. No need for the '/legal/page-name'. We can just make it ...through.co/page-name
 
 ### Layout Components
 - [x] Create `components/legal/policy-layout.tsx` component

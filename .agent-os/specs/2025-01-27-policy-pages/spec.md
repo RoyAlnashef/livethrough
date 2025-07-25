@@ -27,22 +27,21 @@ Create dedicated policy pages with proper routing:
 
 ```
 app/
-├── legal/
-│   ├── terms-of-service/
-│   │   └── page.tsx
-│   ├── privacy-policy/
-│   │   └── page.tsx
-│   ├── cookie-policy/
-│   │   └── page.tsx
-│   └── refund-policy/
-│       └── page.tsx
+├── terms-of-service/
+│   └── page.tsx
+├── privacy-policy/
+│   └── page.tsx
+├── cookie-policy/
+│   └── page.tsx
+└── refund-policy/
+    └── page.tsx
 ```
 
 **URL Structure:**
-- `/legal/terms-of-service`
-- `/legal/privacy-policy`
-- `/legal/cookie-policy`
-- `/legal/refund-policy`
+- `/terms-of-service`
+- `/privacy-policy`
+- `/cookie-policy`
+- `/refund-policy`
 
 ### 2. Page Layout and Design
 **Priority: High**
@@ -131,7 +130,7 @@ Update footer navigation to point to actual policy pages:
 ```typescript
 // Update LiveThroughFooter.tsx
 <Link 
-  href="/legal/privacy-policy" 
+  href="/privacy-policy" 
   className="text-zinc-400 hover:text-white transition-colors text-sm"
   aria-label="View privacy policy"
 >
@@ -324,7 +323,6 @@ export const metadata: Metadata = {
 
 const breadcrumbs = [
   { label: 'Home', href: '/' },
-  { label: 'Legal', href: '/legal' },
   { label: 'Terms of Service' },
 ]
 
@@ -387,21 +385,21 @@ export function PolicyLayout({ title, lastUpdated, version, children }: PolicyLa
   Privacy Policy
 </Link>
 <Link 
-  href="/legal/terms-of-service" 
+  href="/terms-of-service" 
   className="text-zinc-400 hover:text-white transition-colors text-sm"
   aria-label="View terms of service"
 >
   Terms of Service
 </Link>
 <Link 
-  href="/legal/cookie-policy" 
+  href="/cookie-policy" 
   className="text-zinc-400 hover:text-white transition-colors text-sm"
   aria-label="View cookie policy"
 >
   Cookie Policy
 </Link>
 <Link 
-  href="/legal/refund-policy" 
+  href="/refund-policy" 
   className="text-zinc-400 hover:text-white transition-colors text-sm"
   aria-label="View refund policy"
 >

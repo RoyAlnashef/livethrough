@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     title: 'Cookie Policy | LiveThrough',
     description: 'LiveThrough Cookie Policy - Learn about the cookies we use and how to manage them.',
     type: 'website',
-    url: 'https://livethrough.com/legal/cookie-policy',
+    url: 'https://livethrough.co/cookie-policy',
   },
   twitter: {
     card: 'summary',
@@ -22,13 +22,12 @@ export const metadata: Metadata = {
     description: 'LiveThrough Cookie Policy - Learn about the cookies we use and how to manage them.',
   },
   alternates: {
-    canonical: 'https://livethrough.com/legal/cookie-policy',
+    canonical: 'https://livethrough.co/cookie-policy',
   },
 }
 
 const breadcrumbs = [
   { label: 'Home', href: '/' },
-  { label: 'Legal', href: '/legal' },
   { label: 'Cookie Policy' },
 ]
 

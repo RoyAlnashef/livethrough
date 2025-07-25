@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     title: 'Refund Policy | LiveThrough',
     description: 'LiveThrough Refund Policy - Learn about our course cancellation and refund terms.',
     type: 'website',
-    url: 'https://livethrough.com/legal/refund-policy',
+    url: 'https://livethrough.co/refund-policy',
   },
   twitter: {
     card: 'summary',
@@ -22,13 +22,12 @@ export const metadata: Metadata = {
     description: 'LiveThrough Refund Policy - Learn about our course cancellation and refund terms.',
   },
   alternates: {
-    canonical: 'https://livethrough.com/legal/refund-policy',
+    canonical: 'https://livethrough.co/refund-policy',
   },
 }
 
 const breadcrumbs = [
   { label: 'Home', href: '/' },
-  { label: 'Legal', href: '/legal' },
   { label: 'Refund Policy' },
 ]
 
