@@ -15,14 +15,14 @@ export default function AdSenseScript({
   onLoad,
   onError 
 }: AdSenseScriptProps) {
-  const [isLoaded, setIsLoaded] = useState(false)
-  const [hasError, setHasError] = useState(false)
+  const [, setIsLoaded] = useState(false)
+  const [, setHasError] = useState(false)
 
   useEffect(() => {
     if (!enabled || typeof window === 'undefined') return
 
     // Check if script is already loaded
-    if ((window as any).adsbygoogle) {
+    if ((window as unknown as { adsbygoogle?: unknown }).adsbygoogle) {
       setIsLoaded(true)
       onLoad?.()
       return

@@ -6,7 +6,7 @@ import { useAdConsent } from '@/hooks/use-ad-consent'
 
 interface AdSlotProps {
   slotId: string
-  adUnitPath: string
+  adUnitPath?: string
   size?: 'banner' | 'sidebar' | 'content' | 'footer'
   className?: string
   fallbackContent?: React.ReactNode
@@ -22,7 +22,6 @@ const AD_SIZES = {
 
 export default function AdSlot({ 
   slotId, 
-  adUnitPath, 
   size = 'content',
   className,
   fallbackContent,
@@ -64,7 +63,7 @@ export default function AdSlot({
     if (!isVisible || !enabled || !hasConsent) return
 
     // Check if AdSense is available
-    if (typeof window !== 'undefined' && (window as any).adsbygoogle) {
+    if (typeof window !== 'undefined' && (window as unknown as { adsbygoogle?: unknown }).adsbygoogle) {
       try {
         // Create ad slot
         const adElement = document.createElement('ins')
@@ -81,7 +80,7 @@ export default function AdSlot({
 
           // Push ad to AdSense
           try {
-            (window as any).adsbygoogle.push({})
+            (window as unknown as { adsbygoogle: { push: (config: unknown) => void } }).adsbygoogle.push({})
             setIsLoaded(true)
           } catch (error) {
             console.error('AdSense push error:', error)
@@ -97,7 +96,7 @@ export default function AdSlot({
       setAdBlocked(true)
       setHasError(true)
     }
-  }, [isVisible, enabled, slotId])
+  }, [isVisible, enabled, slotId, hasConsent])
 
   // Don't render if not enabled or no consent
   if (!enabled || !hasConsent) {

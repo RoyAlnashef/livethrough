@@ -79,7 +79,7 @@ export default function TestAdsPage() {
                 <li>Environment is production (ads are disabled in development)</li>
               </ul>
               <p className="text-zinc-300">
-                If ads don't load, check the browser console for any error messages.
+                If ads don&apos;t load, check the browser console for any error messages.
               </p>
             </div>
           </section>

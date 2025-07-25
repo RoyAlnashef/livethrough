@@ -43,10 +43,10 @@ export default function ConsentBanner() {
             <h3 className="text-white font-semibold mb-2">
               We use cookies and similar technologies
             </h3>
-            <p className="text-zinc-400 text-sm mb-4">
-              We use cookies and similar technologies to provide, protect, and improve our services. 
-              By clicking "Accept All", you consent to our use of cookies for analytics and marketing purposes.
-            </p>
+                          <p className="text-zinc-400 text-sm mb-4">
+                We use cookies and similar technologies to provide, protect, and improve our services. 
+                By clicking &quot;Accept All&quot;, you consent to our use of cookies for analytics and marketing purposes.
+              </p>
             
             {showDetails && (
               <div className="space-y-3 mb-4 p-4 bg-zinc-800 rounded-lg">
