@@ -5,8 +5,7 @@ import Link from "next/link"
 import { useAuthModal } from "@/components/course-marketplace/auth-modal-context"
 import { useAuth } from "@/lib/auth-context"
 import { useRouter } from "next/navigation"
-import { Button } from "@/components/ui/button"
-import { Mail, Phone, MapPin } from "lucide-react"
+import { Mail, MapPin } from "lucide-react"
 
 export default function LiveThroughFooter() {
   const { openAuthModal } = useAuthModal()
@@ -23,13 +22,6 @@ export default function LiveThroughFooter() {
   const handleLogout = async () => {
     // You may want to use the same supabase logic as header, or just route home
     router.push('/')
-  }
-
-  const handleSignUpClick = () => {
-    if (typeof window !== 'undefined') {
-      window.localStorage.setItem('authModalInitialState', 'signup')
-    }
-    openAuthModal()
   }
 
   const handleLogInClick = () => {
@@ -73,12 +65,6 @@ export default function LiveThroughFooter() {
                   roy@livethrough.co
                 </a>
               </div>
-              {/* <div className="flex items-center space-x-2 text-zinc-400 text-sm">
-                <Phone className="h-4 w-4" aria-hidden="true" />
-                <a href="tel:1-818-669-2723" className="hover:text-white transition-colors">
-                  1-818-669-2723
-                </a>
-              </div> */}
               <div className="flex items-center space-x-2 text-zinc-400 text-sm">
                 <MapPin className="h-4 w-4" aria-hidden="true" />
                 <span>Los Angeles, CA</span>
@@ -141,14 +127,6 @@ export default function LiveThroughFooter() {
                   >
                     Log In
                   </button>
-                  {/* <Button 
-                    onClick={handleSignUpClick} 
-                    variant="outline" 
-                    className="my-2 text-zinc-400 hover:text-white transition-colors text-sm text-left focus:outline-none rounded"
-                    aria-label="Sign up for new account"
-                  >
-                    Sign Up
-                  </Button> */}
                 </>
               )}
             </nav>
