@@ -23,7 +23,6 @@ type AuthState = "login" | "signup" | "forgot-password"
 interface ValidationErrors {
   email?: string
   password?: string
-  confirmPassword?: string
   fullName?: string
 }
 
@@ -38,10 +37,8 @@ export default function LoginForm({ initialAuthState }: LoginFormProps) {
   const [authState, setAuthState] = useState<AuthState>("login")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-  const [confirmPassword, setConfirmPassword] = useState("")
   const [fullName, setFullName] = useState("")
   const [showPassword, setShowPassword] = useState(false)
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [errors, setErrors] = useState<ValidationErrors>({})
   // Add state for policy agreement
   const [agreedToPolicies, setAgreedToPolicies] = useState(true)
@@ -76,12 +73,6 @@ export default function LoginForm({ initialAuthState }: LoginFormProps) {
     return undefined
   }
 
-  const validateConfirmPassword = (password: string, confirmPassword: string): string | undefined => {
-    if (!confirmPassword) return "Please confirm your password"
-    if (password !== confirmPassword) return "Passwords do not match"
-    return undefined
-  }
-
   const validateForm = (): boolean => {
     const newErrors: ValidationErrors = {}
 
@@ -93,12 +84,6 @@ export default function LoginForm({ initialAuthState }: LoginFormProps) {
     if (authMode === "password" && authState !== "forgot-password") {
       const passwordError = validatePassword(password)
       if (passwordError) newErrors.password = passwordError
-
-      // Validate confirm password for signup
-      if (authState === "signup") {
-        const confirmPasswordError = validateConfirmPassword(password, confirmPassword)
-        if (confirmPasswordError) newErrors.confirmPassword = confirmPasswordError
-      }
     }
 
     // Validate full name for signup
@@ -533,83 +518,6 @@ export default function LoginForm({ initialAuthState }: LoginFormProps) {
                 </div>
                 {errors.password && (
                   <p className="text-sm text-red-500 mt-1">{errors.password}</p>
-                )}
-              </motion.div>
-            )}
-          </AnimatePresence>
-
-          <AnimatePresence mode="wait">
-            {authState === "signup" && authMode === "password" && (
-              <motion.div
-                key="confirmPassword"
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }}
-                exit={{ opacity: 0, height: 0 }}
-                transition={{ duration: 0.2 }}
-                className="space-y-2"
-              >
-                <Label htmlFor="confirmPassword" className="text-sm font-medium text-zinc-200">
-                  Confirm password
-                </Label>
-                <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                  <Input
-                    id="confirmPassword"
-                    type={showConfirmPassword ? "text" : "password"}
-                    placeholder="Confirm your password"
-                    value={confirmPassword}
-                    onChange={(e) => {
-                      setConfirmPassword(e.target.value)
-                      if (errors.confirmPassword) {
-                        setErrors(prev => ({ ...prev, confirmPassword: undefined }))
-                      }
-                    }}
-                    className={`pl-10 pr-10 h-11 bg-zinc-800 border-zinc-700 text-zinc-100 placeholder:text-zinc-500 focus:border-zinc-500 focus:ring-zinc-500 ${
-                      errors.confirmPassword ? "border-red-500 focus:border-red-500 focus:ring-red-500" : ""
-                    }`}
-                    required
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-zinc-400 hover:text-zinc-300"
-                    aria-label={showConfirmPassword ? "Hide password" : "Show password"}
-                  >
-                    {showConfirmPassword ? (
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24" />
-                        <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68" />
-                        <path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61" />
-                        <line x1="2" x2="22" y1="2" y2="22" />
-                      </svg>
-                    ) : (
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
-                        <circle cx="12" cy="12" r="3" />
-                      </svg>
-                    )}
-                  </button>
-                </div>
-                {errors.confirmPassword && (
-                  <p className="text-sm text-red-500 mt-1">{errors.confirmPassword}</p>
                 )}
               </motion.div>
             )}
