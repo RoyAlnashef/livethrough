@@ -3,7 +3,6 @@ import Link from "next/link"
 import { useAuthModal } from "@/components/course-marketplace/auth-modal-context"
 import { useAuth } from "@/lib/auth-context"
 import { useRouter } from "next/navigation"
-import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Mail, Phone, MapPin } from "lucide-react"
 
