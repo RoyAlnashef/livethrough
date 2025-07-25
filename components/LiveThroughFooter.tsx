@@ -144,28 +144,28 @@ export default function LiveThroughFooter() {
               )}
               {/* Policy Links */}
               <Link 
-                href="#" 
+                href="/legal/privacy-policy" 
                 className="text-zinc-400 hover:text-white transition-colors text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-zinc-950 rounded"
                 aria-label="View privacy policy"
               >
                 Privacy Policy
               </Link>
               <Link 
-                href="#" 
+                href="/legal/terms-of-service" 
                 className="text-zinc-400 hover:text-white transition-colors text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-zinc-950 rounded"
                 aria-label="View terms of service"
               >
                 Terms of Service
               </Link>
               <Link 
-                href="#" 
+                href="/legal/cookie-policy" 
                 className="text-zinc-400 hover:text-white transition-colors text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-zinc-950 rounded"
                 aria-label="View cookie policy"
               >
                 Cookie Policy
               </Link>
               <Link 
-                href="#" 
+                href="/legal/refund-policy" 
                 className="text-zinc-400 hover:text-white transition-colors text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-zinc-950 rounded"
                 aria-label="View refund policy"
               >
