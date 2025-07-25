@@ -38,14 +38,20 @@ export default function LiveThroughFooter() {
     openAuthModal()
   }
 
+  const handleNewsletterSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    // TODO: Implement newsletter signup logic
+    console.log('Newsletter signup submitted')
+  }
+
   return (
-    <footer className="bg-zinc-950 border-t border-zinc-800">
+    <footer className="bg-zinc-950 border-t border-zinc-800" role="contentinfo" aria-label="Site footer">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {/* Brand Section */}
           <div className="space-y-4">
             <div className="flex items-center">
-              <Link href="/">
+              <Link href="/" aria-label="Go to homepage">
                 <Image
                   src="/images/livethrough-logo-lockup-red.svg"
                   alt="LIVETHROUGH"
@@ -59,65 +65,111 @@ export default function LiveThroughFooter() {
             <p className="text-zinc-400 text-lg leading-relaxed">
               Find the right courses, and learn to survive anything.
             </p>
-            <div className="pt-4 space-y-2">
+            <address className="pt-4 space-y-2 not-italic">
               <div className="flex items-center space-x-2 text-zinc-400 text-sm">
-                <Mail className="h-4 w-4" />
-                <span>roy@livethrough.co</span>
+                <Mail className="h-4 w-4" aria-hidden="true" />
+                <a href="mailto:roy@livethrough.co" className="hover:text-white transition-colors">
+                  roy@livethrough.co
+                </a>
               </div>
               <div className="flex items-center space-x-2 text-zinc-400 text-sm">
-                <Phone className="h-4 w-4" />
-                <span>1-818-669-2723</span>
+                <Phone className="h-4 w-4" aria-hidden="true" />
+                <a href="tel:1-818-669-2723" className="hover:text-white transition-colors">
+                  1-818-669-2723
+                </a>
               </div>
               <div className="flex items-center space-x-2 text-zinc-400 text-sm">
-                <MapPin className="h-4 w-4" />
+                <MapPin className="h-4 w-4" aria-hidden="true" />
                 <span>Los Angeles, CA</span>
               </div>
-            </div>
+            </address>
           </div>
 
           {/* Menu Links Section */}
           <div className="space-y-4">
             <h3 className="text-white font-semibold text-lg">Menu</h3>
-            <nav className="flex flex-col space-y-2">
+            <nav className="flex flex-col space-y-2" role="navigation" aria-label="Footer navigation">
               {isAdmin && (
-                <Link href="/dashboard/courses" className="text-zinc-400 hover:text-white transition-colors text-sm">
+                <Link 
+                  href="/dashboard/courses" 
+                  className="text-zinc-400 hover:text-white transition-colors text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-zinc-950 rounded"
+                  aria-label="Go to admin dashboard"
+                >
                   Admin
                 </Link>
               )}
               {isAuthenticated ? (
-                <Link href="/account/courses" className="text-zinc-400 hover:text-white transition-colors text-sm">
+                <Link 
+                  href="/account/courses" 
+                  className="text-zinc-400 hover:text-white transition-colors text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-zinc-950 rounded"
+                  aria-label="Go to my account"
+                >
                   My Account
                 </Link>
               ) : (
-                <Link href="/account/courses" className="text-zinc-400 hover:text-white transition-colors text-sm" onClick={handleMyCoursesClick}>
+                <Link 
+                  href="/account/courses" 
+                  className="text-zinc-400 hover:text-white transition-colors text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-zinc-950 rounded" 
+                  onClick={handleMyCoursesClick}
+                  aria-label="Go to my courses (opens login modal if not authenticated)"
+                >
                   My Courses
                 </Link>
               )}
               {isAuthenticated ? (
-                <button onClick={handleLogout} className="text-zinc-400 hover:text-white transition-colors text-sm text-left">
+                <button 
+                  onClick={handleLogout} 
+                  className="text-zinc-400 hover:text-white transition-colors text-sm text-left focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-zinc-950 rounded"
+                  aria-label="Log out of account"
+                >
                   Log Out
                 </button>
               ) : (
                 <>
-                  <button onClick={handleLogInClick} className="text-zinc-400 hover:text-white transition-colors text-sm text-left">
+                  <button 
+                    onClick={handleLogInClick} 
+                    className="text-zinc-400 hover:text-white transition-colors text-sm text-left focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-zinc-950 rounded"
+                    aria-label="Log in to account"
+                  >
                     Log In
                   </button>
-                  <Button onClick={handleSignUpClick} variant="outline" className="text-teal-600 border-teal-600 hover:bg-teal-600 hover:text-teal-500 text-sm">
+                  <Button 
+                    onClick={handleSignUpClick} 
+                    variant="outline" 
+                    className="text-teal-600 border-teal-600 hover:bg-teal-600 hover:text-teal-500 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 focus:ring-offset-zinc-950"
+                    aria-label="Sign up for new account"
+                  >
                     Sign Up
                   </Button>
                 </>
               )}
               {/* Policy Links */}
-              <Link href="#" className="text-zinc-400 hover:text-white transition-colors text-sm">
+              <Link 
+                href="#" 
+                className="text-zinc-400 hover:text-white transition-colors text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-zinc-950 rounded"
+                aria-label="View privacy policy"
+              >
                 Privacy Policy
               </Link>
-              <Link href="#" className="text-zinc-400 hover:text-white transition-colors text-sm">
+              <Link 
+                href="#" 
+                className="text-zinc-400 hover:text-white transition-colors text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-zinc-950 rounded"
+                aria-label="View terms of service"
+              >
                 Terms of Service
               </Link>
-              <Link href="#" className="text-zinc-400 hover:text-white transition-colors text-sm">
+              <Link 
+                href="#" 
+                className="text-zinc-400 hover:text-white transition-colors text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-zinc-950 rounded"
+                aria-label="View cookie policy"
+              >
                 Cookie Policy
               </Link>
-              <Link href="#" className="text-zinc-400 hover:text-white transition-colors text-sm">
+              <Link 
+                href="#" 
+                className="text-zinc-400 hover:text-white transition-colors text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-zinc-950 rounded"
+                aria-label="View refund policy"
+              >
                 Refund Policy
               </Link>
             </nav>
@@ -127,7 +179,11 @@ export default function LiveThroughFooter() {
           <div className="space-y-4">
             <h3 className="text-white font-semibold text-lg">Newsletter Signup</h3>
             <p className="text-zinc-400 text-sm">Get survival tips, course updates, and more in your inbox.</p>
-            <form className="flex flex-col sm:flex-row gap-2" onSubmit={e => e.preventDefault()}>
+            <form 
+              className="flex flex-col sm:flex-row gap-2" 
+              onSubmit={handleNewsletterSubmit}
+              aria-labelledby="newsletter-heading"
+            >
               <label htmlFor="footer-newsletter-email" className="sr-only">Email address</label>
               <input
                 type="email"
@@ -135,17 +191,20 @@ export default function LiveThroughFooter() {
                 name="email"
                 required
                 placeholder="Your email"
-                className="px-3 py-2 rounded bg-zinc-900 text-zinc-100 placeholder-zinc-500 border border-zinc-700 focus:outline-none focus:ring-2 focus:ring-red-500 flex-1"
+                className="px-3 py-2 rounded bg-zinc-900 text-zinc-100 placeholder-zinc-500 border border-zinc-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 flex-1"
                 autoComplete="email"
-                aria-label="Email address"
+                aria-label="Email address for newsletter"
+                aria-describedby="newsletter-description"
               />
               <button
                 type="submit"
-                className="px-4 py-2 rounded bg-teal-600 text-white font-semibold hover:bg-teal-700 transition-colors"
+                className="px-4 py-2 rounded bg-teal-600 text-white font-semibold hover:bg-teal-700 transition-colors focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 focus:ring-offset-zinc-950"
+                aria-label="Subscribe to newsletter"
               >
                 Subscribe
               </button>
             </form>
+            <p id="newsletter-description" className="sr-only">Enter your email address to receive survival tips and course updates</p>
           </div>
         </div>
         {/* Bottom Section */}

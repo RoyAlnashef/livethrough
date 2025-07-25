@@ -35,6 +35,7 @@ LiveThrough is a modern, full-stack web application that serves as a comprehensi
 - **Rich Text Editing**: TipTap-based editor for course descriptions with image upload
 - **SEO Optimization**: Server-side rendering, dynamic metadata, and structured data
 - **Real-time Updates**: Live data synchronization via Supabase subscriptions
+- **Accessible Footer**: WCAG-compliant footer with keyboard navigation, ARIA labels, and responsive design
 
 ## 🚀 Tech Stack
 

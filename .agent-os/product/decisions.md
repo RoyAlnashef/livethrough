@@ -166,3 +166,47 @@ Mobile-first dark theme design:
 - May not appeal to all user segments
 - Additional design complexity for light theme support
 - Potential performance impact of dark theme implementation 
+
+## 2024-07-27: Footer & Accessibility Overhaul
+
+**ID:** DEC-004
+**Status:** Accepted
+**Category:** Product & Technical
+**Stakeholders:** Product Owner, Design Team, Development Team
+
+### Decision
+
+Redesigned the site footer to improve accessibility, navigation, and user engagement. The new footer features a three-column layout (Brand, Menu, Newsletter Signup), accessible ARIA labels, keyboard navigation, and policy links moved to the menu. All interactive elements are now WCAG-compliant.
+
+### Context
+
+The previous footer was not fully accessible and did not provide a clear, modern navigation experience. Policy links were separated from the main navigation, and there was no newsletter signup or clear Sign Up CTA. Accessibility improvements were needed to meet compliance and user expectations.
+
+### Alternatives Considered
+
+1. **Minimal Footer Update**
+   - Pros: Less development effort
+   - Cons: Would not address accessibility or navigation issues
+
+2. **Full Footer Redesign (Chosen)**
+   - Pros: Modern, accessible, and user-friendly; supports future growth
+   - Cons: More development/design effort
+
+### Rationale
+
+- Improves accessibility for all users (keyboard, screen reader, etc.)
+- Consolidates navigation and policy links for clarity
+- Adds newsletter signup and prominent Sign Up CTA
+- Aligns with product mission of inclusivity and usability
+
+### Consequences
+
+**Positive:**
+- Improved accessibility and compliance
+- Better user engagement and navigation
+- Clearer brand and policy communication
+- Foundation for future enhancements
+
+**Negative:**
+- Required refactoring of existing footer code
+- Slight increase in codebase complexity 
