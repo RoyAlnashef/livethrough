@@ -93,7 +93,7 @@ export default function LiveThroughFooter() {
               {isAdmin && (
                 <Link 
                   href="/dashboard/courses" 
-                  className="text-zinc-400 hover:text-white transition-colors text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-zinc-950 rounded"
+                  className="text-zinc-400 hover:text-white transition-colors text-sm focus:outline-none rounded"
                   aria-label="Go to admin dashboard"
                 >
                   Admin
@@ -102,7 +102,7 @@ export default function LiveThroughFooter() {
               {isAuthenticated ? (
                 <Link 
                   href="/account/courses" 
-                  className="text-zinc-400 hover:text-white transition-colors text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-zinc-950 rounded"
+                  className="text-zinc-400 hover:text-white transition-colors text-sm focus:outline-none rounded"
                   aria-label="Go to my account"
                 >
                   My Account
@@ -110,7 +110,7 @@ export default function LiveThroughFooter() {
               ) : (
                 <Link 
                   href="/account/courses" 
-                  className="text-zinc-400 hover:text-white transition-colors text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-zinc-950 rounded" 
+                  className="text-zinc-400 hover:text-white transition-colors text-sm focus:outline-none rounded" 
                   onClick={handleMyCoursesClick}
                   aria-label="Go to my courses (opens login modal if not authenticated)"
                 >
@@ -120,7 +120,7 @@ export default function LiveThroughFooter() {
               {isAuthenticated ? (
                 <button 
                   onClick={handleLogout} 
-                  className="text-zinc-400 hover:text-white transition-colors text-sm text-left focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-zinc-950 rounded"
+                  className="text-zinc-400 hover:text-white transition-colors text-sm text-left focus:outline-none rounded"
                   aria-label="Log out of account"
                 >
                   Log Out
@@ -129,7 +129,7 @@ export default function LiveThroughFooter() {
                 <>
                   <button 
                     onClick={handleLogInClick} 
-                    className="text-zinc-400 hover:text-white transition-colors text-sm text-left focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-zinc-950 rounded"
+                    className="text-zinc-400 hover:text-white transition-colors text-sm text-left focus:outline-none rounded"
                     aria-label="Log in to account"
                   >
                     Log In
@@ -137,7 +137,7 @@ export default function LiveThroughFooter() {
                   <Button 
                     onClick={handleSignUpClick} 
                     variant="outline" 
-                    className="text-teal-600 border-teal-600 hover:bg-teal-600 hover:text-teal-500 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 focus:ring-offset-zinc-950"
+                    className="text-teal-600 border-teal-600 hover:bg-teal-600 hover:text-teal-500 text-sm focus:outline-none"
                     aria-label="Sign up for new account"
                   >
                     Sign Up
@@ -153,21 +153,21 @@ export default function LiveThroughFooter() {
             <nav className="flex flex-col space-y-2" role="navigation" aria-label="Footer resources navigation">
               <Link 
                 href="/privacy-policy" 
-                className="text-zinc-400 hover:text-white transition-colors text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-zinc-950 rounded"
+                className="text-zinc-400 hover:text-white transition-colors text-sm focus:outline-none rounded"
                 aria-label="View privacy policy"
               >
                 Privacy Policy
               </Link>
               <Link 
                 href="/terms-of-service" 
-                className="text-zinc-400 hover:text-white transition-colors text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-zinc-950 rounded"
+                className="text-zinc-400 hover:text-white transition-colors text-sm focus:outline-none rounded"
                 aria-label="View terms of service"
               >
                 Terms of Service
               </Link>
               <Link 
                 href="/cookie-policy" 
-                className="text-zinc-400 hover:text-white transition-colors text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-zinc-950 rounded"
+                className="text-zinc-400 hover:text-white transition-colors text-sm focus:outline-none rounded"
                 aria-label="View cookie policy"
               >
                 Cookie Policy
@@ -198,7 +198,7 @@ export default function LiveThroughFooter() {
               />
               <button
                 type="submit"
-                className="px-4 py-2 rounded bg-teal-600 text-white font-semibold hover:bg-teal-700 transition-colors focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 focus:ring-offset-zinc-950"
+                className="px-4 py-2 rounded bg-teal-600 text-white font-semibold hover:bg-teal-700 transition-colors focus:outline-none"
                 aria-label="Subscribe to newsletter"
               >
                 Subscribe
