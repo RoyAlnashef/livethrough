@@ -60,13 +60,13 @@ export function FilterSidebar({ filters, setFilters, clearFilters, filteredCours
             <X className="h-5 w-5" />
           </Button>
         </div>
-        <div className="space-y-6">
+        <div className="space-y-8">
           {/* Course Type Section */}
-          <div className="space-y-3">
+          <div className="space-y-4 pb-6 border-b border-zinc-800 mb-6">
             <h3 className="text-white font-medium">Course Type</h3>
-            <div className="space-y-3">
+            <div className="grid grid-cols-2 gap-3">
               {courseTypeOptions.map((type) => (
-                <div key={type.id} className="flex items-center space-x-3">
+                <div key={type.id} className="flex items-center space-x-2">
                   <Checkbox
                     id={`mobile-type-${type.id}`}
                     checked={filters.courseTypes.includes(type.id)}
@@ -93,7 +93,7 @@ export function FilterSidebar({ filters, setFilters, clearFilters, filteredCours
             </div>
           </div>
           {/* Environment Section (Hard-coded) */}
-          <div className="space-y-4">
+          <div className="space-y-4 pb-6 border-b border-zinc-800 mb-6">
             <div>
               <h3 className="text-white font-medium mb-2">Environments</h3>
               <p className="text-xs text-zinc-400 mb-4">
@@ -133,7 +133,7 @@ export function FilterSidebar({ filters, setFilters, clearFilters, filteredCours
           </div>
 
           {/* Price Section */}
-          <div className="space-y-3">
+          <div className="space-y-4 pb-6 border-b border-zinc-800 mb-6">
             <h3 className="text-white font-medium">Price</h3>
             <div className="space-y-3">
               <div className="text-sm text-zinc-300">
@@ -162,7 +162,7 @@ export function FilterSidebar({ filters, setFilters, clearFilters, filteredCours
           </div>
 
           {/* Difficulty Section */}
-          <div className="space-y-3">
+          <div className="space-y-4 pb-6 border-b border-zinc-800 mb-6">
             <h3 className="text-white font-medium">Difficulty</h3>
             <div className="grid grid-cols-2 gap-3">
               {difficultyOptions.map((difficulty) => (
@@ -194,7 +194,7 @@ export function FilterSidebar({ filters, setFilters, clearFilters, filteredCours
           </div>
 
           {/* Duration Section */}
-          <div className="space-y-3">
+          <div className="space-y-4 pb-6 border-b border-zinc-800 mb-6">
             <h3 className="text-white font-medium">Duration</h3>
             <div className="space-y-3">
               {minDuration === 1 && maxDuration === 40 ? (
