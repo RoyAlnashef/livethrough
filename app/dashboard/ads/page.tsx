@@ -21,10 +21,12 @@ import {
   TrendingUp,
   Copy,
   Check,
-  AlertCircle
+  AlertCircle,
+  TestTube
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { getCurrentUserRole } from "@/lib/auth-utils"
+import { AdSlot } from "@/components/ads"
 
 // Mock data for ad slots - in real implementation, this would come from database
 const AD_SLOTS = [
@@ -456,6 +458,93 @@ export default function AdsPage() {
               <p className="text-sm text-yellow-400">
                 Changes to ad configuration require a page refresh to take effect.
               </p>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Ad Testing Section */}
+        <Card className="bg-zinc-900 border-zinc-800">
+          <CardHeader>
+            <CardTitle className="text-white flex items-center gap-2">
+              <TestTube className="w-5 h-5" />
+              Ad Testing
+            </CardTitle>
+            <CardDescription className="text-zinc-400">
+              Test ad integration and verify ad loading functionality
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-8">
+              {/* Banner Ad Test */}
+              <section className="space-y-4">
+                <h3 className="text-lg font-semibold text-white">Banner Ad (728x90)</h3>
+                <div className="flex justify-center">
+                  <AdSlot
+                    slotId="test-banner-ad-slot"
+                    adUnitPath="/test/banner"
+                    size="banner"
+                    enabled={true}
+                  />
+                </div>
+              </section>
+
+              {/* Content Ad Test */}
+              <section className="space-y-4">
+                <h3 className="text-lg font-semibold text-white">Content Ad (300x250)</h3>
+                <div className="flex justify-center">
+                  <AdSlot
+                    slotId="test-content-ad-slot"
+                    adUnitPath="/test/content"
+                    size="content"
+                    enabled={true}
+                  />
+                </div>
+              </section>
+
+              {/* Sidebar Ad Test */}
+              <section className="space-y-4">
+                <h3 className="text-lg font-semibold text-white">Sidebar Ad (300x250)</h3>
+                <div className="flex justify-center">
+                  <AdSlot
+                    slotId="test-sidebar-ad-slot"
+                    adUnitPath="/test/sidebar"
+                    size="sidebar"
+                    enabled={true}
+                  />
+                </div>
+              </section>
+
+              {/* Footer Ad Test */}
+              <section className="space-y-4">
+                <h3 className="text-lg font-semibold text-white">Footer Ad (728x90)</h3>
+                <div className="flex justify-center">
+                  <AdSlot
+                    slotId="test-footer-ad-slot"
+                    adUnitPath="/test/footer"
+                    size="footer"
+                    enabled={true}
+                  />
+                </div>
+              </section>
+
+              {/* Test Instructions */}
+              <section className="space-y-4">
+                <h3 className="text-lg font-semibold text-white">Testing Instructions</h3>
+                <div className="prose prose-invert max-w-none">
+                  <p className="text-zinc-300">
+                    The ads above should load if:
+                  </p>
+                  <ul className="text-zinc-300 list-disc list-inside space-y-2">
+                    <li>Google AdSense is properly configured</li>
+                    <li>User has given consent for marketing cookies</li>
+                    <li>No ad blocker is active</li>
+                    <li>Environment is production (ads are disabled in development)</li>
+                  </ul>
+                  <p className="text-zinc-300">
+                    If ads don&apos;t load, check the browser console for any error messages.
+                  </p>
+                </div>
+              </section>
             </div>
           </CardContent>
         </Card>

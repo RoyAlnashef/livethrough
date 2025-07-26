@@ -1,6 +1,6 @@
 # Technical Stack
 
-> Last Updated: 2024-12-19
+> Last Updated: 2025-01-27
 > Version: 1.0.0
 
 ## Frontend Technologies
@@ -22,6 +22,15 @@
 - **Authentication:** Supabase Auth + NextAuth.js 4.24.11
 - **File Storage:** Supabase Storage
 - **Real-time Features:** Supabase Realtime
+
+## Advertisement System
+
+- **Ad Network:** Google AdSense
+- **Ad Client ID:** ca-pub-1437334079893020
+- **Ad Components:** Custom AdSlot, AdSenseScript, ConsentBanner
+- **Analytics Tracking:** Custom API endpoints for impression/click tracking
+- **Privacy Management:** GDPR/CCPA compliant consent system
+- **Performance:** Lazy loading with IntersectionObserver, layout shift prevention
 
 ## Development Tools
 
@@ -64,4 +73,6 @@
 - **API Security:** Server-side validation and authentication
 - **Image Processing:** Server-side WebP conversion and optimization
 - **Caching:** Next.js static generation and Supabase CDN
-- **Performance:** Turbopack for development, optimized builds for production 
+- **Performance:** Turbopack for development, optimized builds for production
+- **Privacy Compliance:** GDPR/CCPA compliant ad consent management
+- **Ad Security:** Row Level Security (RLS) for ad analytics data 
