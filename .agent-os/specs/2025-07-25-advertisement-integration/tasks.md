@@ -56,6 +56,25 @@
 - [ ] Monitor ad performance and revenue
 - [ ] Monitor for ad blocker impact and fallback content
 
+## Phase 7: Google AdSense Account Setup & Configuration
+- [x] Sign up for Google AdSense account at https://www.google.com/adsense
+- [x] Complete AdSense application with website URL, contact info, and payment details
+- [ ] Wait for Google AdSense approval (typically 1-2 weeks)
+- [ ] Receive AdSense Client ID (format: ca-pub-XXXXXXXXXXXXXXXX)
+- [ ] Create `.env.local` file in project root with AdSense configuration
+- [ ] Add `NEXT_PUBLIC_ADSENSE_CLIENT_ID=ca-pub-XXXXXXXXXXXXXXXX` to environment variables
+- [ ] Create ad units in AdSense dashboard for each slot:
+  - [ ] `sidebar-top` (300x250)
+  - [ ] `content-between` (728x90)
+  - [ ] `footer` (728x90)
+  - [ ] `marketplace-sidebar` (300x250)
+- [ ] Copy Ad Unit IDs from AdSense dashboard (format: 1234567890)
+- [ ] Update ad slot configurations in dashboard with actual Ad Unit IDs
+- [ ] Test AdSense integration with real ad units
+- [ ] Verify ads are displaying correctly across all slots
+- [ ] Monitor AdSense dashboard for initial impressions and revenue
+- [ ] Ensure site meets AdSense requirements (original content, policy compliance, minimum traffic)
+
 ---
 
 ## ✅ **COMPLETED FEATURES:**

@@ -24,6 +24,9 @@ export const metadata: Metadata = {
     template: "LiveThrough • %s",
   },
   description: "LiveThrough - Survival Course Marketplace",
+  other: {
+    "google-adsense-account": "ca-pub-1437334079893020",
+  },
 };
 
 export default function RootLayout({
