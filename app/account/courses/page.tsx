@@ -9,7 +9,7 @@ import type { Course } from '@/lib/types';
 import Link from 'next/link'
 
 export default function MyCourses() {
-  const { bookmarkedCourseIds, bookmarksWithTimestamps, loading: bookmarksLoading, toggleBookmark, isBookmarked } = useBookmarks();
+  const { bookmarksWithTimestamps, loading: bookmarksLoading, toggleBookmark, isBookmarked } = useBookmarks();
   const { isAuthenticated } = useAuth();
   const [courses, setCourses] = useState<Course[]>([]);
   const [loading, setLoading] = useState(false);

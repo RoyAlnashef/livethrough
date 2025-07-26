@@ -33,16 +33,6 @@ export default function AccountLayout({ children }: AccountLayoutProps) {
             My Courses
           </a>
           <a
-            href="/account/profile"
-            className={`px-4 py-4 font-medium transition-colors ${
-              isActive('/account/profile')
-                ? 'text-white border-b-1 border-teal-500'
-                : 'text-zinc-400 hover:text-white'
-            }`}
-          >
-            Profile
-          </a>
-          <a
             href="/account/settings"
             className={`px-4 py-4 font-medium transition-colors ${
               isActive('/account/settings')
