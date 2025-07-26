@@ -60,9 +60,9 @@
 - [x] Sign up for Google AdSense account at https://www.google.com/adsense
 - [x] Complete AdSense application with website URL, contact info, and payment details
 - [ ] Wait for Google AdSense approval (typically 1-2 weeks)
-- [ ] Receive AdSense Client ID (format: ca-pub-XXXXXXXXXXXXXXXX)
-- [ ] Create `.env.local` file in project root with AdSense configuration
-- [ ] Add `NEXT_PUBLIC_ADSENSE_CLIENT_ID=ca-pub-XXXXXXXXXXXXXXXX` to environment variables
+- [x] Receive AdSense Client ID (format: ca-pub-XXXXXXXXXXXXXXXX)
+- [x] Create `.env.local` file in project root with AdSense configuration
+- [x] Add `NEXT_PUBLIC_ADSENSE_CLIENT_ID=ca-pub-XXXXXXXXXXXXXXXX` to environment variables
 - [ ] Create ad units in AdSense dashboard for each slot:
   - [ ] `sidebar-top` (300x250)
   - [ ] `content-between` (728x90)
