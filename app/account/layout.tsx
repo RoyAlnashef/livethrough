@@ -26,7 +26,7 @@ export default function AccountLayout({ children }: AccountLayoutProps) {
             href="/account/courses"
             className={`px-4 py-4 font-medium transition-colors ${
               isActive('/account/courses')
-                ? 'text-white border-b-2 border-teal-500 pb-2'
+                ? 'text-white border-b-1 border-teal-500'
                 : 'text-zinc-400 hover:text-white'
             }`}
           >
@@ -36,7 +36,7 @@ export default function AccountLayout({ children }: AccountLayoutProps) {
             href="/account/profile"
             className={`px-4 py-4 font-medium transition-colors ${
               isActive('/account/profile')
-                ? 'text-white border-b-2 border-teal-500 pb-2'
+                ? 'text-white border-b-1 border-teal-500'
                 : 'text-zinc-400 hover:text-white'
             }`}
           >
@@ -46,7 +46,7 @@ export default function AccountLayout({ children }: AccountLayoutProps) {
             href="/account/settings"
             className={`px-4 py-4 font-medium transition-colors ${
               isActive('/account/settings')
-                ? 'text-white border-b-2 border-teal-500 pb-2'
+                ? 'text-white border-b-1 border-teal-500'
                 : 'text-zinc-400 hover:text-white'
             }`}
           >
@@ -54,7 +54,7 @@ export default function AccountLayout({ children }: AccountLayoutProps) {
           </a>
         </nav>
         {/* Main Content */}
-        <main className="flex-1">
+        <main className="flex-1 pb-8">
           {children}
         </main>
       </div>
