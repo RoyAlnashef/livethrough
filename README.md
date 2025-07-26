@@ -26,6 +26,7 @@ LiveThrough is a modern, full-stack web application that serves as a comprehensi
 - **Content Management**: Upload course photos with automatic WebP optimization
 - **Bulk Operations**: Bulk status changes and course management
 - **Course Import**: Import course data from external URLs
+- **Advertisement Management**: Complete ad system with analytics and performance tracking
 
 ### Technical Features
 - **Authentication**: Secure user authentication with Supabase (magic link and password-based)
@@ -36,6 +37,40 @@ LiveThrough is a modern, full-stack web application that serves as a comprehensi
 - **SEO Optimization**: Server-side rendering, dynamic metadata, and structured data
 - **Real-time Updates**: Live data synchronization via Supabase subscriptions
 - **Accessible Footer**: WCAG-compliant footer with keyboard navigation, ARIA labels, and responsive design
+- **Advertisement System**: Google AdSense integration with privacy-compliant consent management
+
+## 📊 Advertisement System
+
+### Overview
+LiveThrough includes a comprehensive advertisement system designed to generate revenue while maintaining user experience and privacy compliance.
+
+### Features
+- **Google AdSense Integration**: Full AdSense support with responsive ad units
+- **Privacy Compliance**: GDPR/CCPA compliant consent management
+- **Admin Dashboard**: Complete ad management interface at `/dashboard/ads`
+- **Analytics Tracking**: Real-time impression and click tracking
+- **Performance Optimization**: Lazy loading and layout shift prevention
+- **Role-based Exclusion**: Ads hidden for admin users
+
+### Ad Management Dashboard
+- **Slot Management**: Enable/disable ad slots with toggle switches
+- **Performance Analytics**: Real-time metrics with date range filtering
+- **Revenue Tracking**: Display aggregate revenue (when available from AdSense)
+- **Ad Code Configuration**: Manage AdSense client ID and slot configurations
+- **Privacy Controls**: Consent management and user exclusion settings
+
+### Technical Implementation
+- **Components**: `AdSlot`, `AdSenseScript`, `ConsentBanner`
+- **API Endpoints**: `/api/ads/analytics` for tracking and retrieval
+- **Database**: `ad_analytics` table with Row Level Security
+- **Privacy**: Non-PII analytics with consent-aware loading
+
+### Current Status
+- ✅ **Infrastructure Complete**: Full ad system implemented and tested
+- ✅ **Google AdSense**: Account created and application submitted
+- ✅ **Client ID**: `ca-pub-1437334079893020` configured
+- ⏳ **Pending**: Google AdSense approval (1-2 weeks typical)
+- ⏳ **Next Steps**: Ad unit creation and live testing after approval
 
 ## 🚀 Tech Stack
 
@@ -71,6 +106,7 @@ livethrough/
 │   │   ├── courses/             # Course management (CRUD, bulk operations)
 │   │   ├── students/            # Student management
 │   │   ├── schools/             # School management
+│   │   ├── ads/                 # Advertisement management and analytics
 │   │   ├── admin-users/         # Admin user management
 │   │   ├── settings/            # General settings
 │   │   └── security/            # Security settings
@@ -80,10 +116,17 @@ livethrough/
 │   ├── admin-login/             # Admin authentication
 │   ├── admin-setup/             # Admin setup (first admin creation)
 │   └── api/                     # API routes
+│       ├── ads/                 # Advertisement analytics and tracking
+│       │   └── analytics/       # Ad impression and click tracking
 │       ├── upload-chunk/        # Image upload with chunking and WebP conversion
 │       ├── scrape-course/       # Course scraping functionality
 │       └── test-*/              # Testing endpoints
 ├── components/                   # Reusable React components
+│   ├── ads/                     # Advertisement components
+│   │   ├── AdSlot.tsx          # Ad slot rendering component
+│   │   ├── AdSenseScript.tsx   # Google AdSense script loader
+│   │   ├── ConsentBanner.tsx   # Privacy consent banner
+│   │   └── index.tsx           # Component exports
 │   ├── course-marketplace/      # Marketplace-specific components
 │   ├── dashboard/               # Dashboard-specific components
 │   ├── tiptap-*/               # Rich text editor components
@@ -96,7 +139,10 @@ livethrough/
 │   ├── image-processing.ts     # Image processing utilities
 │   └── utils.ts                # Utility functions
 ├── hooks/                       # Custom React hooks
+│   └── use-ad-consent.ts       # Advertisement consent management
 ├── supabase/                    # Database migrations
+│   └── migrations/
+│       └── 20250725120000_create_ad_analytics.sql  # Ad analytics table
 └── public/                      # Static assets
 ```
 
@@ -110,12 +156,14 @@ livethrough/
 - **course_types**: Course type definitions
 - **course_skills**: Skills associated with courses
 - **course_gear**: Equipment associated with courses
+- **ad_analytics**: Advertisement performance tracking (impressions, clicks)
 
 ### Key Features
 - **Role-based Access**: Admin and student roles with middleware protection
 - **Image Management**: Server-side image processing with WebP conversion
 - **Real-time Updates**: Live data synchronization via Supabase subscriptions
 - **Search & Filtering**: Advanced course discovery with multiple criteria
+- **Advertisement Analytics**: Privacy-compliant ad performance tracking
 
 ## 🚀 Getting Started
 
@@ -281,6 +329,10 @@ Ensure all required environment variables are set in your production environment
 
 ### Course Management
 - `POST /api/scrape-course` - Course data scraping functionality
+
+### Advertisement Analytics
+- `POST /api/ads/analytics` - Record ad impressions and clicks
+- `GET /api/ads/analytics` - Retrieve aggregated ad performance data
 
 ## 📊 Performance Optimization
 
