@@ -29,10 +29,12 @@ export async function POST(request: NextRequest) {
       {
         cookies: {
           get: (name: string) => request.cookies.get(name)?.value,
-          set: (name: string, value: string, options: any) => {
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          set: (_name: string, _value: string, _options: unknown) => {
             // This is a server-side API route, so we don't need to set cookies
           },
-          remove: (name: string, options: any) => {
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          remove: (_name: string, _options: unknown) => {
             // This is a server-side API route, so we don't need to remove cookies
           },
         },
@@ -76,10 +78,12 @@ export async function GET(request: NextRequest) {
       {
         cookies: {
           get: (name: string) => request.cookies.get(name)?.value,
-          set: (name: string, value: string, options: any) => {
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          set: (_name: string, _value: string, _options: unknown) => {
             // This is a server-side API route, so we don't need to set cookies
           },
-          remove: (name: string, options: any) => {
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          remove: (_name: string, _options: unknown) => {
             // This is a server-side API route, so we don't need to remove cookies
           },
         },
@@ -154,10 +158,10 @@ export async function GET(request: NextRequest) {
     // Aggregate data for summary
     const summary = {
       totalEvents: data?.length || 0,
-      impressions: data?.filter((event: any) => event.event_type === 'impression').length || 0,
-      clicks: data?.filter((event: any) => event.event_type === 'click').length || 0,
+      impressions: data?.filter((event: { event_type: string }) => event.event_type === 'impression').length || 0,
+      clicks: data?.filter((event: { event_type: string }) => event.event_type === 'click').length || 0,
       ctr: 0,
-      bySlot: {} as Record<string, any>
+      bySlot: {} as Record<string, { impressions: number; clicks: number; ctr: number }>
     }
 
     // Calculate CTR
@@ -167,7 +171,7 @@ export async function GET(request: NextRequest) {
 
     // Group by slot
     if (data) {
-      data.forEach((event: any) => {
+      data.forEach((event: { slot_id: string; event_type: string }) => {
         if (!summary.bySlot[event.slot_id]) {
           summary.bySlot[event.slot_id] = {
             impressions: 0,

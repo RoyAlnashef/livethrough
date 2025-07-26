@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { useRouter } from "next/navigation"
 import { Breadcrumbs } from "@/components/dashboard/breadcrumbs"
 import { Button } from "@/components/ui/button"
@@ -10,7 +10,7 @@ import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import { Separator } from "@/components/ui/separator"
+
 import { 
   Megaphone, 
   Settings, 
@@ -80,8 +80,16 @@ export default function AdsPage() {
   const [copiedSlot, setCopiedSlot] = useState<string | null>(null)
   const [dateRange, setDateRange] = useState("7d")
   const [loading, setLoading] = useState(true)
-  const [currentUser, setCurrentUser] = useState<any>(null)
-  const [analyticsData, setAnalyticsData] = useState<any>(null)
+  const [currentUser, setCurrentUser] = useState<{ id: string; email: string; role: string } | null>(null)
+  const [analyticsData, setAnalyticsData] = useState<{ 
+    data: unknown[]; 
+    summary: { 
+      impressions: number; 
+      clicks: number; 
+      totalEvents: number; 
+      bySlot: Record<string, { impressions: number; clicks: number; ctr: number }> 
+    } 
+  } | null>(null)
   const [analyticsLoading, setAnalyticsLoading] = useState(false)
 
   const handleToggleSlot = (slotId: string) => {
@@ -95,7 +103,7 @@ export default function AdsPage() {
   }
 
   // Fetch analytics data
-  const fetchAnalytics = async () => {
+  const fetchAnalytics = useCallback(async () => {
     try {
       setAnalyticsLoading(true)
       const response = await fetch(`/api/ads/analytics?from=${getDateFromRange(dateRange)}`, {
@@ -113,7 +121,7 @@ export default function AdsPage() {
     } finally {
       setAnalyticsLoading(false)
     }
-  }
+  }, [dateRange])
 
   // Helper function to get date from range
   const getDateFromRange = (range: string) => {
@@ -158,7 +166,7 @@ export default function AdsPage() {
     if (currentUser?.role === 'admin') {
       fetchAnalytics()
     }
-  }, [dateRange, currentUser])
+  }, [dateRange, currentUser, fetchAnalytics])
 
   const handleCopyCode = async (slotId: string) => {
     const code = `<AdSlot slotId="${slotId}" size="content" />`
