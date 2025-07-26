@@ -8,7 +8,7 @@ interface AccountLayoutProps {
 
 export default function AccountLayout({ children }: AccountLayoutProps) {
   return (
-    <div className="min-h-screen bg-black flex flex-col">
+    <div className="min-h-screen bg-black flex flex-col pt-16 md:pt-0">
       <Header />
       <div className="container mx-auto px-4 py-8 flex-1">
         {/* Horizontal Navigation */}
