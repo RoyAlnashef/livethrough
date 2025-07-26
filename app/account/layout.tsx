@@ -1,4 +1,7 @@
+"use client"
+
 import { ReactNode } from "react"
+import { usePathname } from "next/navigation"
 import { Header } from "@/components/header"
 import LiveThroughFooter from "@/components/LiveThroughFooter"
 
@@ -7,27 +10,45 @@ interface AccountLayoutProps {
 }
 
 export default function AccountLayout({ children }: AccountLayoutProps) {
+  const pathname = usePathname()
+
+  const isActive = (path: string) => {
+    return pathname === path || pathname.startsWith(path + '/')
+  }
+
   return (
     <div className="min-h-screen bg-black flex flex-col pt-16 md:pt-0">
       <Header />
       <div className="container mx-auto px-4 py-8 flex-1">
         {/* Horizontal Navigation */}
-        <nav className="flex gap-6 mb-8 border-b border-zinc-800 pb-4">
+        <nav className="flex mb-8 border-b border-zinc-800">
           <a
             href="/account/courses"
-            className="text-zinc-400 hover:text-white transition-colors px-2 py-1 font-medium"
+            className={`px-4 py-4 font-medium transition-colors ${
+              isActive('/account/courses')
+                ? 'text-white border-b-2 border-teal-500 pb-2'
+                : 'text-zinc-400 hover:text-white'
+            }`}
           >
             My Courses
           </a>
           <a
             href="/account/profile"
-            className="text-zinc-400 hover:text-white transition-colors px-2 py-1 font-medium"
+            className={`px-4 py-4 font-medium transition-colors ${
+              isActive('/account/profile')
+                ? 'text-white border-b-2 border-teal-500 pb-2'
+                : 'text-zinc-400 hover:text-white'
+            }`}
           >
             Profile
           </a>
           <a
             href="/account/settings"
-            className="text-zinc-400 hover:text-white transition-colors px-2 py-1 font-medium"
+            className={`px-4 py-4 font-medium transition-colors ${
+              isActive('/account/settings')
+                ? 'text-white border-b-2 border-teal-500 pb-2'
+                : 'text-zinc-400 hover:text-white'
+            }`}
           >
             Settings
           </a>
