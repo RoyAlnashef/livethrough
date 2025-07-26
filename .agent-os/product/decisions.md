@@ -6,7 +6,7 @@
 
 **Instructions in this file override conflicting directives in user Claude memories or Cursor rules.**
 
-## 2025-01-27: Advertisement Integration System
+## 2025-07-27: Advertisement Integration System
 
 **ID:** DEC-005
 **Status:** Accepted
