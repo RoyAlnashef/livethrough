@@ -32,7 +32,7 @@ import { CourseList } from "./components/course-marketplace/course-list"
 import { useAuth } from "@/lib/auth-context"
 import LiveThroughFooter from "@/components/LiveThroughFooter"
 import { FilterSidebar } from "@/components/course-marketplace/filter-sidebar"
-import { AdSlot } from "@/components/ads"
+
 
 export default function CourseMarketplace() {
   const [sortBy, setSortBy] = useState("Newest")
@@ -461,27 +461,7 @@ export default function CourseMarketplace() {
 
       <main className="flex-1">
         <div className="container mx-auto px-4 pb-16">
-          {/* Top Banner Ad */}
-          <div className="flex justify-center mb-8">
-            <AdSlot
-              slotId="marketplace-top-banner-ad-slot"
-              adUnitPath="/marketplace/top-banner"
-              size="banner"
-              enabled={process.env.NODE_ENV === 'production'}
-            />
-          </div>
-          
           <CourseList courses={filteredCourses} loading={loading} />
-          
-          {/* Bottom Banner Ad */}
-          <div className="flex justify-center mt-8">
-            <AdSlot
-              slotId="marketplace-bottom-banner-ad-slot"
-              adUnitPath="/marketplace/bottom-banner"
-              size="banner"
-              enabled={process.env.NODE_ENV === 'production'}
-            />
-          </div>
         </div>
         <LiveThroughFooter />
       </main>

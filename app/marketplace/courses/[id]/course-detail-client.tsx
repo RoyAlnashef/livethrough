@@ -28,7 +28,7 @@ import { Dialog, DialogTrigger, DialogContent, DialogTitle } from "@/components/
 import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
 import { useMobile } from "@/hooks/use-mobile"
-import { AdSlot } from "@/components/ads"
+
 
 interface CourseDetailClientProps {
   course: Course & { schools?: School }
@@ -245,15 +245,7 @@ export default function CourseDetailClient({ course, similarCourses }: CourseDet
                   </CardContent>
                 </Card>
 
-                {/* Content Ad Slot */}
-                <div className="flex justify-center py-6">
-                  <AdSlot
-                    slotId="course-content-ad-slot"
-                    adUnitPath="/marketplace/courses/content"
-                    size="content"
-                    enabled={process.env.NODE_ENV === 'production'}
-                  />
-                </div>
+
 
                 {/* School Info for md and below */}
                 <SchoolInfoCard
@@ -375,13 +367,7 @@ export default function CourseDetailClient({ course, similarCourses }: CourseDet
                   variant="desktop"
                 />
 
-                {/* Sidebar Ad Slot */}
-                <AdSlot
-                  slotId="course-sidebar-ad-slot"
-                  adUnitPath="/marketplace/courses/sidebar"
-                  size="sidebar"
-                  enabled={process.env.NODE_ENV === 'production'}
-                />
+
               </div>
             </div>
           </div>

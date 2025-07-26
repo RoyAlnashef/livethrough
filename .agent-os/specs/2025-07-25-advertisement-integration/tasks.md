@@ -14,6 +14,7 @@
 - [x] Implement lazy-loading for ads (IntersectionObserver)
 - [x] Ensure ad slots are responsive for mobile/desktop
 - [x] Reserve space for ads to avoid layout shift (CLS)
+- [x] Remove ad slot components from marketplace (temporarily)
 
 ## Phase 3: Dashboard Ad Controls ✅ COMPLETED
 - [x] Create new page at `app/dashboard/ads/page.tsx`
@@ -97,6 +98,7 @@
 - ✅ Lazy loading and responsive design
 - ✅ Consent management integration
 - ✅ Analytics tracking for impressions and clicks
+- ✅ Ad slots temporarily removed from marketplace pages
 
 ---
 
