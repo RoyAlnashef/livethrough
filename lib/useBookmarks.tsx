@@ -7,24 +7,29 @@ import Link from 'next/link';
 export function useBookmarks() {
   const { user, isAuthenticated } = useAuth();
   const [bookmarkedCourseIds, setBookmarkedCourseIds] = useState<Set<string>>(new Set());
+  const [bookmarksWithTimestamps, setBookmarksWithTimestamps] = useState<Array<{ course_id: string; created_at: string }>>([]);
   const [loading, setLoading] = useState(false);
 
   // Fetch bookmarks for the authenticated user
   useEffect(() => {
     if (!isAuthenticated || !user) {
       setBookmarkedCourseIds(new Set());
+      setBookmarksWithTimestamps([]);
       return;
     }
     setLoading(true);
     supabase
       .from('bookmarks')
-      .select('course_id')
+      .select('course_id, created_at')
       .eq('user_id', user.id)
+      .order('created_at', { ascending: false })
       .then(({ data, error }) => {
         if (error) {
           setBookmarkedCourseIds(new Set());
+          setBookmarksWithTimestamps([]);
         } else {
           setBookmarkedCourseIds(new Set(data.map((b: { course_id: string }) => b.course_id)));
+          setBookmarksWithTimestamps(data);
         }
         setLoading(false);
       });
@@ -86,6 +91,7 @@ export function useBookmarks() {
 
   return {
     bookmarkedCourseIds,
+    bookmarksWithTimestamps,
     isBookmarked,
     toggleBookmark,
     loading,

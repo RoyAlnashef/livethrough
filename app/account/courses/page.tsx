@@ -9,32 +9,36 @@ import type { Course } from '@/lib/types';
 import Link from 'next/link'
 
 export default function MyCourses() {
-  const { bookmarkedCourseIds, loading: bookmarksLoading, toggleBookmark, isBookmarked } = useBookmarks();
+  const { bookmarkedCourseIds, bookmarksWithTimestamps, loading: bookmarksLoading, toggleBookmark, isBookmarked } = useBookmarks();
   const { isAuthenticated } = useAuth();
   const [courses, setCourses] = useState<Course[]>([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchCourses = async () => {
-      if (!isAuthenticated || bookmarkedCourseIds.size === 0) {
+      if (!isAuthenticated || bookmarksWithTimestamps.length === 0) {
         setCourses([]);
         return;
       }
       setLoading(true);
-      const ids = Array.from(bookmarkedCourseIds);
+      const ids = bookmarksWithTimestamps.map(bookmark => bookmark.course_id);
       const { data, error } = await supabase
         .from('courses')
         .select('id, photo_url, title, price, location, difficulty, environment, duration')
         .in('id', ids);
       if (!error && data) {
-        setCourses(data);
+        // Sort courses by bookmark creation time (most recent first)
+        const sortedCourses = bookmarksWithTimestamps
+          .map(bookmark => data.find(course => course.id === bookmark.course_id))
+          .filter(course => course !== undefined) as Course[];
+        setCourses(sortedCourses);
       } else {
         setCourses([]);
       }
       setLoading(false);
     };
     fetchCourses();
-  }, [bookmarkedCourseIds, isAuthenticated]);
+  }, [bookmarksWithTimestamps, isAuthenticated]);
 
   // Add handler for toggling bookmarks
   const handleBookmarkToggle = (courseId: string) => {
