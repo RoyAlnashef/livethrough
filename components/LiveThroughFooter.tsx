@@ -41,7 +41,7 @@ export default function LiveThroughFooter() {
   return (
     <footer className="bg-zinc-950 border-t border-zinc-800" role="contentinfo" aria-label="Site footer">
       {/* Footer Banner Ad */}
-      <div className="border-b border-zinc-800">
+      {/* <div className="border-b border-zinc-800">
         <div className="container mx-auto px-4 py-6">
           <div className="flex justify-center">
             <AdSlot
@@ -52,7 +52,7 @@ export default function LiveThroughFooter() {
             />
           </div>
         </div>
-      </div>
+      </div> */}
       
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
