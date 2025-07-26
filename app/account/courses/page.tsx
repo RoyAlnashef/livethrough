@@ -5,6 +5,7 @@ import { useBookmarks } from '@/lib/useBookmarks';
 import { useAuth } from '@/lib/auth-context';
 import { supabase } from '@/lib/supabase';
 import { CourseCard } from '@/components/course-marketplace/course-card';
+import { CourseGridSkeleton } from '@/components/account';
 import type { Course } from '@/lib/types';
 import Link from 'next/link'
 
@@ -12,7 +13,7 @@ export default function MyCourses() {
   const { bookmarksWithTimestamps, loading: bookmarksLoading, toggleBookmark, isBookmarked } = useBookmarks();
   const { isAuthenticated } = useAuth();
   const [courses, setCourses] = useState<Course[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -49,9 +50,9 @@ export default function MyCourses() {
     <div className="space-y-6">
       <h1 className="text-2xl font-bold text-white">My Courses</h1>
       {bookmarksLoading || loading ? (
-        <div className="text-zinc-400">Loading your bookmarked courses...</div>
+        <CourseGridSkeleton />
       ) : courses.length === 0 ? (
-        <div className="flex flex-col items-center gap-4 text-zinc-400 mt-8">
+        <div className="flex flex-col items-center gap-4 text-zinc-400 mt-8 fade-in">
           <span>You have no bookmarked courses yet.</span>
           <Link
             href="/"
@@ -61,7 +62,7 @@ export default function MyCourses() {
           </Link>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 fade-in">
           {courses.filter(course => course.id).map(course => (
             <CourseCard
               key={course.id}

@@ -44,7 +44,7 @@ export default function AccountLayout({ children }: AccountLayoutProps) {
           </a>
         </nav>
         {/* Main Content */}
-        <main className="flex-1 pb-8">
+        <main className="flex-1 pb-8 transition-opacity duration-300 ease-in-out">
           {children}
         </main>
       </div>

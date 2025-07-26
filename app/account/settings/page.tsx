@@ -1,4 +1,24 @@
+'use client'
+
+import { useState, useEffect } from 'react'
+import { SettingsSkeleton } from '@/components/account'
+
 export default function Settings() {
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    // Simulate loading time for settings data
+    const timer = setTimeout(() => {
+      setLoading(false)
+    }, 800)
+
+    return () => clearTimeout(timer)
+  }, [])
+
+  if (loading) {
+    return <SettingsSkeleton />
+  }
+
   return (
     <div className="space-y-6">
       <h1 className="text-2xl font-bold text-white">Settings</h1>
