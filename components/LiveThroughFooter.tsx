@@ -6,7 +6,7 @@ import { useAuthModal } from "@/components/course-marketplace/auth-modal-context
 import { useAuth } from "@/lib/auth-context"
 import { useRouter } from "next/navigation"
 import { Mail, MapPin } from "lucide-react"
-import { AdSlot } from "@/components/ads"
+// import { AdSlot } from "@/components/ads"
 
 export default function LiveThroughFooter() {
   const { openAuthModal } = useAuthModal()
