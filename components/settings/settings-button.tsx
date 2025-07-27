@@ -8,7 +8,7 @@ export function SettingsButton({
   loading = false,
   className = ''
 }: SettingsButtonProps) {
-  const baseClasses = 'px-6 py-2 rounded-md transition-colors font-medium'
+  const baseClasses = 'px-3 py-1 rounded-sm transition-colors font-medium'
   
   const variantClasses = {
     primary: 'bg-teal-600 text-white hover:bg-teal-700',

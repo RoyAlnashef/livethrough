@@ -54,16 +54,19 @@ export function DangerZone({
       <div className="space-y-6">
         {/* Data Export */}
         <div className="space-y-4">
-          <div>
-            <h3 className="text-white font-medium mb-2">Export Your Data</h3>
-            <p className="text-sm text-zinc-400 mb-4">
-              Download a copy of all your data including profile information, course bookmarks, and activity history.
-            </p>
+          <div className="flex items-center justify-between">
+            <div className="flex-1">
+              <h3 className="text-white font-medium">Export Your Data</h3>
+              <p className="text-sm text-zinc-400 mt-1">
+                Download a copy of all your data including profile information, course bookmarks, and activity history.
+              </p>
+            </div>
             <SettingsButton
               onClick={handleExportData}
               loading={isExporting || loading}
               disabled={isExporting || loading}
               variant="secondary"
+              className="ml-4"
             >
               Export Data
             </SettingsButton>
@@ -72,17 +75,20 @@ export function DangerZone({
 
         {/* Account Deletion */}
         <div className="space-y-4">
-          <div>
-            <h3 className="text-white font-medium mb-2">Delete Account</h3>
-            <p className="text-sm text-zinc-400 mb-4">
-              Once you delete your account, there is no going back. Please be certain.
-            </p>
+          <div className="flex items-center justify-between">
+            <div className="flex-1">
+              <h3 className="text-white font-medium">Delete Account</h3>
+              <p className="text-sm text-zinc-400 mt-1">
+                Once you delete your account, there is no going back. Please be certain.
+              </p>
+            </div>
             
             {!showDeleteConfirmation ? (
               <SettingsButton
                 onClick={() => setShowDeleteConfirmation(true)}
                 variant="danger"
                 disabled={loading}
+                className="ml-4"
               >
                 Delete Account
               </SettingsButton>

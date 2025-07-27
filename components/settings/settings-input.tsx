@@ -29,11 +29,11 @@ export function SettingsInput({
         required={required}
         disabled={disabled}
         className={`
-          w-full px-4 py-2 bg-zinc-900 border border-zinc-800 text-white rounded-md 
+          w-full px-4 py-2 bg-zinc-900 border border-zinc-800 text-white rounded-sm 
           focus:outline-none focus:ring-2 focus:ring-teal-600
           ${error ? 'border-red-500' : ''}
           ${disabled ? 'opacity-50 cursor-not-allowed' : ''}
-        `}
+        `}  
       />
       {error && (
         <p className="text-red-500 text-sm mt-1">{error}</p>

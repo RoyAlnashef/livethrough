@@ -51,10 +51,12 @@ export function PrivacySettings({
       <div className="space-y-6">
         <div className="space-y-4">
           {/* Profile Visibility */}
-          <div>
-            <label className="block text-white font-medium mb-2">Profile Visibility</label>
-            <p className="text-sm text-zinc-400 mb-3">Control who can see your profile information</p>
-            <div className="flex gap-4">
+          <div className="flex items-center justify-between">
+            <div className="flex-1">
+              <label className="block text-white font-medium">Profile Visibility</label>
+              <p className="text-sm text-zinc-400 mt-1">Control who can see your profile information</p>
+            </div>
+            <div className="flex gap-4 ml-4">
               <label className="flex items-center">
                 <input
                   type="radio"
@@ -81,10 +83,12 @@ export function PrivacySettings({
           </div>
 
           {/* Course Activity Visibility */}
-          <div>
-            <label className="block text-white font-medium mb-2">Course Activity Visibility</label>
-            <p className="text-sm text-zinc-400 mb-3">Control who can see your course activity and bookmarks</p>
-            <div className="flex gap-4">
+          <div className="flex items-center justify-between">
+            <div className="flex-1">
+              <label className="block text-white font-medium">Course Activity Visibility</label>
+              <p className="text-sm text-zinc-400 mt-1">Control who can see your course activity and bookmarks</p>
+            </div>
+            <div className="flex gap-4 ml-4">
               <label className="flex items-center">
                 <input
                   type="radio"
