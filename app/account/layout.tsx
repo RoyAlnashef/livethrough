@@ -19,7 +19,7 @@ export default function AccountLayout({ children }: AccountLayoutProps) {
   return (
     <div className="min-h-screen bg-black flex flex-col pt-16 md:pt-0">
       <Header />
-      <div className="container mx-auto px-4 py-8 flex-1">
+      <div className="container mx-auto px-4 py-4 md:py-8 flex-1">
         {/* Horizontal Navigation */}
         <nav className="flex mb-8 border-b border-zinc-800">
           <a
