@@ -63,8 +63,8 @@ export function Header() {
                 className="h-8 w-auto"
               />
             </Link>
-            <span className="hidden lg:block text-zinc-400 text-lg font-roboto">
-              Survive anything.
+            <span className="hidden lg:block text-zinc-400 text-md font-roboto">
+              Learn to survive anything.
             </span>
           </div>
 
@@ -207,7 +207,7 @@ export function Header() {
               className="h-8 w-auto"
             />
             <p className="text-zinc-400 text-xl text-center font-roboto">
-                Find the right survival courses, and learn how to live through anything.
+                Find the best courses, and learn how to survive anything.
               </p>
           </div>
           {isAdmin && (

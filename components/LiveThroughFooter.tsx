@@ -71,7 +71,7 @@ export default function LiveThroughFooter() {
               </Link>
             </div>
             <p className="text-zinc-400 text-lg leading-relaxed">
-              Find the right survival courses, and learn how to live through anything.
+            Find the best courses, and learn how to survive anything.
             </p>
             <address className="pt-4 space-y-2 not-italic">
               <div className="flex items-center space-x-2 text-zinc-400 text-sm">
