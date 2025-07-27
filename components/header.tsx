@@ -197,7 +197,7 @@ export function Header() {
           </button>
 
           {/* Logo and Tagline */}
-          <div className="flex flex-col items-center space-y-6 pb-12 border-b border-zinc-800 mb-12 max-w-sm mx-auto">
+          <div className="flex flex-col items-center space-y-6 pb-8 border-b border-zinc-800 mb-12 max-w-sm mx-auto">
             <Image
               src="/images/livethrough-logo-lockup-red.svg"
               alt="LIVETHROUGH"
