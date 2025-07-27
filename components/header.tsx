@@ -5,7 +5,7 @@ import Link from "next/link"
 import { useAuthModal } from "@/components/course-marketplace/auth-modal-context"
 import { useAuth } from "@/lib/auth-context"
 import { supabase } from "@/lib/supabase"
-import { useRouter } from "next/navigation"
+import { useRouter, usePathname } from "next/navigation"
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 
@@ -13,6 +13,7 @@ export function Header() {
   const { openAuthModal } = useAuthModal()
   const { isAuthenticated, isAdmin } = useAuth()
   const router = useRouter()
+  const pathname = usePathname()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   const handleMyCoursesClick = (e: React.MouseEvent) => {
@@ -51,7 +52,7 @@ export function Header() {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <div className="flex items-center">
+          <div className="flex items-center space-x-6">
             <Link href="/">
               <Image
                 src="/images/livethrough-logo-lockup-red.svg"
@@ -62,12 +63,15 @@ export function Header() {
                 className="h-8 w-auto"
               />
             </Link>
+            <span className="hidden lg:block text-zinc-400 text-lg font-roboto">
+              Survive anything.
+            </span>
           </div>
 
           {/* Mobile Menu Button */}
           <button
             onClick={toggleMobileMenu}
-            className="md:hidden p-2 text-zinc-400 hover:text-white transition-colors"
+            className="lg:hidden p-2 text-zinc-400 hover:text-white transition-colors"
             aria-label="Toggle menu"
           >
             <svg
@@ -88,32 +92,46 @@ export function Header() {
           </button>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center space-x-8">
+          <nav className="hidden lg:flex items-center space-x-8">
             {isAdmin && (
               <Link
                 href="/dashboard/courses"
-                className="text-sm text-zinc-500 hover:text-zinc-300 transition-colors font-roboto"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-zinc-400 hover:text-zinc-300 transition-colors font-roboto"
               >
                 Admin
               </Link>
             )}
             <Link
               href="/"
-              className="text-sm text-zinc-400 hover:text-white transition-colors font-roboto"
+              className={`text-sm font-roboto transition-colors ${
+                pathname === "/" 
+                  ? "text-white" 
+                  : "text-zinc-400 hover:text-white"
+              }`}
             >
               Browse Courses
             </Link>
             {isAuthenticated ? (
               <Link
                 href="/account/courses"
-                className="text-sm text-zinc-400 hover:text-white transition-colors font-roboto"
+                className={`text-sm font-roboto transition-colors ${
+                  pathname.startsWith("/account") 
+                    ? "text-white" 
+                    : "text-zinc-400 hover:text-white"
+                }`}
               >
                 My Account
               </Link>
             ) : (
               <Link
                 href="/account/courses"
-                className="text-sm text-zinc-400 hover:text-white transition-colors font-roboto"
+                className={`text-sm font-roboto transition-colors ${
+                  pathname.startsWith("/account") 
+                    ? "text-white" 
+                    : "text-zinc-400 hover:text-white"
+                }`}
                 onClick={handleMyCoursesClick}
               >
                 My Courses
@@ -149,15 +167,15 @@ export function Header() {
 
       {/* Mobile Menu */}
       <div
-        className={`fixed inset-0 bg-black z-50 transform transition-transform duration-300 ease-in-out ${
+        className={`fixed inset-0 bg-zinc-950 z-[60] transform transition-transform duration-300 ease-in-out ${
           isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
-        } md:hidden`}
+        } lg:hidden`}
         onClick={toggleMobileMenu}
       >
         <div 
-          className="flex flex-col items-center justify-center h-full space-y-8 relative"
+          className="flex flex-col items-center justify-center h-full space-y-8 relative bg-topo-overlay"
           onClick={(e) => e.stopPropagation()}
-          style={{ height: '100vh', background: 'black' }}
+          style={{ height: '100vh'}}
         >
           {/* Close Button */}
           <button
@@ -177,10 +195,27 @@ export function Header() {
               <path d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
+
+          {/* Logo and Tagline */}
+          <div className="flex flex-col items-center space-y-6 pb-12 border-b border-zinc-800 mb-12 max-w-sm mx-auto">
+            <Image
+              src="/images/livethrough-logo-lockup-red.svg"
+              alt="LIVETHROUGH"
+              width={180}
+              height={32}
+              priority
+              className="h-8 w-auto"
+            />
+            <p className="text-zinc-400 text-xl text-center font-roboto">
+                Find the right survival courses, and learn how to live through anything.
+              </p>
+          </div>
           {isAdmin && (
             <Link
               href="/dashboard/courses"
-              className="text-zinc-500 hover:text-zinc-300 transition-colors font-roboto text-xl"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-zinc-400 hover:text-zinc-300 transition-colors font-roboto text-xl"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Admin
@@ -188,7 +223,11 @@ export function Header() {
           )}
           <Link
             href="/"
-            className="text-zinc-400 hover:text-white transition-colors font-roboto text-xl"
+            className={`font-roboto text-xl transition-colors ${
+              pathname === "/" 
+                ? "text-white" 
+                : "text-zinc-400 hover:text-white"
+            }`}
             onClick={() => setIsMobileMenuOpen(false)}
           >
             Browse Courses
@@ -196,7 +235,11 @@ export function Header() {
           {isAuthenticated ? (
             <Link
               href="/account/courses"
-              className="text-zinc-400 hover:text-white transition-colors font-roboto text-xl"
+              className={`font-roboto text-xl transition-colors ${
+                pathname.startsWith("/account") 
+                  ? "text-white" 
+                  : "text-zinc-400 hover:text-white"
+              }`}
               onClick={() => setIsMobileMenuOpen(false)}
             >
               My Account
@@ -204,7 +247,11 @@ export function Header() {
           ) : (
             <Link
               href="/account/courses"
-              className="text-zinc-400 hover:text-white transition-colors font-roboto text-xl"
+              className={`font-roboto text-xl transition-colors ${
+                pathname.startsWith("/account") 
+                  ? "text-white" 
+                  : "text-zinc-400 hover:text-white"
+              }`}
               onClick={(e) => {
                 handleMyCoursesClick(e)
                 setIsMobileMenuOpen(false)

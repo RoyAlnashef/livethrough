@@ -267,7 +267,7 @@ export default function CourseDetailClient({ course, similarCourses }: CourseDet
                 <Dialog>
                   <DialogTrigger asChild>
                     <Button
-                      className="fixed bottom-4 left-1/2 -translate-x-1/2 w-[90vw] max-w-xl z-50 bg-teal-600 hover:bg-teal-700 text-white text-lg h-14 flex items-center justify-center rounded-lg shadow-lg lg:hidden mb-3"
+                      className="fixed bottom-4 left-1/2 -translate-x-1/2 w-[90vw] max-w-xl z-40 bg-teal-600 hover:bg-teal-700 text-white text-lg h-14 flex items-center justify-center rounded-lg shadow-lg lg:hidden mb-3"
                       size="lg"
                     >
                       Contact this School
