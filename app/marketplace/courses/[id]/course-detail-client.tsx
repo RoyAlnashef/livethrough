@@ -230,9 +230,9 @@ export default function CourseDetailClient({ course, similarCourses }: CourseDet
                     <CardTitle className="text-zinc-100">Course Description</CardTitle>
                     <Separator className="bg-zinc-800 my-2" />
                     {course.skills && course.skills.length > 0 && (
-                      <div className="flex flex-wrap gap-2 mt-2">
+                      <div className="flex flex-wrap gap-3 mt-4">
                         {course.skills.map((skill) => (
-                          <Badge key={skill} variant="secondary" className="bg-zinc-800 text-zinc-300 hover:bg-zinc-700">{skill}</Badge>
+                          <Badge key={skill} variant="secondary" className="bg-teal-950 border border-teal-800 text-zinc-300 hover:bg-teal-900">{skill}</Badge>
                         ))}
                       </div>
                     )}

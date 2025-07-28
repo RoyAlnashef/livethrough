@@ -548,9 +548,9 @@ export function CourseForm({ mode, initialValues, onSubmit, isSubmitting }: Cour
                     </Button>
                   )}
                 </div>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-3">
                   {(course.skills || []).map((skill) => (
-                    <Badge key={skill} variant="secondary" className="bg-zinc-800 text-zinc-200 hover:bg-zinc-700">
+                    <Badge key={skill} variant="secondary" className="bg-teal-950 border border-teal-800 text-zinc-200 hover:bg-teal-900">
                       {skill}
                       <button onClick={() => removeSkill(skill)} className="ml-2 hover:text-red-400">
                         <X className="h-3 w-3" />
