@@ -32,9 +32,7 @@ export default function Settings() {
     switch (activeSection) {
       case 'profile':
         return (
-          <ProfileInformation 
-            onSave={(data) => console.log('Profile saved:', data)}
-          />
+          <ProfileInformation />
         )
       case 'notifications':
         return (
@@ -131,9 +129,7 @@ export default function Settings() {
           <div className="lg:hidden space-y-6">
             <h1 className="text-2xl font-bold text-white">Settings</h1>
             <div className="space-y-6">
-              <ProfileInformation 
-                onSave={(data) => console.log('Profile saved:', data)}
-              />
+              <ProfileInformation />
               <NotificationSettings 
                 onSave={(settings) => console.log('Notification settings saved:', settings)}
               />

@@ -105,218 +105,265 @@
 
 ---
 
-## Phase 2: Backend Infrastructure (Week 2)
+## NEW EXECUTION STRATEGY: Panel-by-Panel Implementation
 
-### Database Schema Updates
-- [ ] **Create database migration for new user fields**
-  - Add `notification_preferences` JSONB column
-  - Add `privacy_settings` JSONB column  
-  - Add `email_verified` BOOLEAN column
-  - **Time Estimate:** 2 hours
+### Phase 2: Profile Information Panel (Week 1-2) ✅ COMPLETED
+
+#### Database & Backend Infrastructure ✅
+- [x] **Create database migration for user profile fields** ✅
+  - ✅ Users table already has all required fields: `full_name`, `phone`, `bio`, `avatar_url`
+  - ✅ Created avatars bucket migration for profile photo storage
+  - **Time Estimate:** 1 hour ✅
+  - **Dependencies:** None ✅
+
+- [x] **Create profile-actions.ts server actions** ✅
+  - ✅ `getUserProfile()` - Load user profile data
+  - ✅ `updateUserProfile(data: ProfileData)` - Update profile information
+  - ✅ `uploadProfilePhoto(file: File)` - Handle photo upload
+  - **Time Estimate:** 3 hours ✅
+  - **Dependencies:** Database migration ✅
+
+#### Profile Information Integration ✅
+- [x] **Connect ProfileInformation component to backend** ✅
+  - ✅ Load existing user data from Supabase on component mount
+  - ✅ Implement real form submission with server actions
+  - ✅ Add real-time validation with backend feedback
+  - ✅ Implement optimistic updates for better UX
+  - **Time Estimate:** 4 hours ✅
+  - **Dependencies:** Server actions ✅
+
+- [x] **Implement profile photo upload functionality** ✅
+  - ✅ Integrate with Supabase Storage for image upload
+  - ✅ Add file validation (size, type)
+  - ✅ Implement avatar preview and display
+  - ✅ Add proper error handling and user feedback
+  - **Time Estimate:** 4 hours ✅
+  - **Dependencies:** Image processing utilities ✅
+
+#### Testing & Polish ✅
+- [x] **Test Profile Information panel thoroughly** ✅
+  - ✅ Test form validation and error handling
+  - ✅ Test photo upload functionality
+  - ✅ Test responsive design on all devices
+  - ✅ Test loading states and error recovery
+  - **Time Estimate:** 2 hours ✅
+  - **Dependencies:** All profile functionality ✅
+
+### Phase 3: Notification Settings Panel (Week 2-3)
+
+#### Database & Backend Infrastructure
+- [ ] **Create database migration for notification preferences**
+  - Add `notification_preferences` JSONB column to users table
+  - **Time Estimate:** 1 hour
   - **Dependencies:** None
 
-### Server Actions & API
-- [ ] **Create settings-actions.ts file**
-  - `updateUserProfile()` function
-  - `updateNotificationSettings()` function
-  - `updatePrivacySettings()` function
-  - `changePassword()` function
-  - `deleteAccount()` function
-  - `exportUserData()` function
-  - **Time Estimate:** 4 hours
+- [ ] **Create notification-actions.ts server actions**
+  - `getNotificationSettings(userId: string)` - Load notification preferences
+  - `updateNotificationSettings(userId: string, settings: NotificationSettings)` - Save preferences
+  - **Time Estimate:** 2 hours
   - **Dependencies:** Database migration
 
-- [ ] **Create mock data and API stubs**
-  - Mock user data for testing UI
-  - API stubs that return mock responses
-  - Error simulation for testing error states
-  - **Time Estimate:** 2 hours
-  - **Dependencies:** Server actions
-
-## Phase 3: Integration & Functionality (Week 3)
-
-### Profile Information Integration
-- [ ] **Connect ProfileInformation component to backend**
-  - Load existing user data from Supabase
-  - Implement real form submission
-  - Add real-time validation
-  - Implement optimistic updates
-  - **Time Estimate:** 4 hours
-  - **Dependencies:** Server actions, mock data
-
-- [ ] **Implement profile photo upload**
-  - Image upload with Supabase Storage
-  - Image optimization and WebP conversion
-  - Avatar display and preview
-  - **Time Estimate:** 4 hours
-  - **Dependencies:** Image processing utilities
-
-### Settings Integration
-- [ ] **Connect NotificationSettings to backend**
-  - Save preferences to database
-  - Load existing preferences
-  - Real-time updates
-  - **Time Estimate:** 2 hours
-  - **Dependencies:** Server actions
-
-- [ ] **Connect PrivacySettings to backend**
-  - Save privacy settings to database
-  - Load existing privacy settings
-  - Implement privacy controls logic
+#### Notification Settings Integration
+- [ ] **Connect NotificationSettings component to backend**
+  - Load existing notification preferences
+  - Implement real-time save on toggle changes
+  - Add success/error feedback
   - **Time Estimate:** 3 hours
   - **Dependencies:** Server actions
 
-- [ ] **Connect SecuritySettings to backend**
-  - Implement real password change
+#### Testing & Polish
+- [ ] **Test Notification Settings panel**
+  - Test toggle functionality and persistence
+  - Test error handling and recovery
+  - **Time Estimate:** 1 hour
+  - **Dependencies:** All notification functionality
+
+### Phase 4: Privacy Settings Panel (Week 3-4)
+
+#### Database & Backend Infrastructure
+- [ ] **Create database migration for privacy settings**
+  - Add `privacy_settings` JSONB column to users table
+  - **Time Estimate:** 1 hour
+  - **Dependencies:** None
+
+- [ ] **Create privacy-actions.ts server actions**
+  - `getPrivacySettings(userId: string)` - Load privacy preferences
+  - `updatePrivacySettings(userId: string, settings: PrivacySettings)` - Save preferences
+  - **Time Estimate:** 2 hours
+  - **Dependencies:** Database migration
+
+#### Privacy Settings Integration
+- [ ] **Connect PrivacySettings component to backend**
+  - Load existing privacy settings
+  - Implement real-time save on changes
+  - Add GDPR compliance features
+  - **Time Estimate:** 3 hours
+  - **Dependencies:** Server actions
+
+#### Testing & Polish
+- [ ] **Test Privacy Settings panel**
+  - Test privacy controls functionality
+  - Test GDPR compliance features
+  - **Time Estimate:** 1 hour
+  - **Dependencies:** All privacy functionality
+
+### Phase 5: Security Settings Panel (Week 4-5)
+
+#### Backend Infrastructure
+- [ ] **Create security-actions.ts server actions**
+  - `changePassword(userId: string, currentPassword: string, newPassword: string)` - Password change
+  - `getAccountActivity(userId: string)` - Get login history
+  - **Time Estimate:** 3 hours
+  - **Dependencies:** None
+
+#### Security Settings Integration
+- [ ] **Connect SecuritySettings component to backend**
+  - Implement real password change functionality
   - Add current password verification
-  - Implement account activity display
+  - Display account activity and login history
   - **Time Estimate:** 4 hours
   - **Dependencies:** Server actions
 
-- [ ] **Connect DangerZone to backend**
-  - Implement real account deletion
+#### Testing & Polish
+- [ ] **Test Security Settings panel**
+  - Test password change functionality
+  - Test security validation
+  - **Time Estimate:** 2 hours
+  - **Dependencies:** All security functionality
+
+### Phase 6: Danger Zone Panel (Week 5-6)
+
+#### Backend Infrastructure
+- [ ] **Create danger-actions.ts server actions**
+  - `deleteAccount(userId: string, password: string)` - Account deletion
+  - `exportUserData(userId: string)` - Data export functionality
+  - **Time Estimate:** 4 hours
+  - **Dependencies:** None
+
+#### Danger Zone Integration
+- [ ] **Connect DangerZone component to backend**
+  - Implement real account deletion with confirmation
   - Add password verification for deletion
   - Implement data export functionality
   - **Time Estimate:** 5 hours
   - **Dependencies:** Server actions
 
-### Email Service Integration
-- [ ] **Email service integration setup**
-  - Configure email service (SendGrid/AWS SES)
-  - Create email templates
-  - Test notification delivery
-  - **Time Estimate:** 6 hours
-  - **Dependencies:** NotificationSettings integration
-
-## Phase 4: Testing & Polish (Week 4)
-
-### Testing
-- [ ] **Unit tests for server actions**
-  - Test all CRUD operations
-  - Test error handling
-  - Test validation logic
-  - **Time Estimate:** 4 hours
-  - **Dependencies:** All server actions
-
-- [ ] **Integration tests for components**
-  - Test form submissions
-  - Test error states
-  - Test loading states
-  - **Time Estimate:** 3 hours
-  - **Dependencies:** All components
-
-- [ ] **End-to-end testing**
-  - Test complete user flows
-  - Test responsive design
-  - Test accessibility
+#### Testing & Polish
+- [ ] **Test Danger Zone panel**
+  - Test account deletion flow
+  - Test data export functionality
+  - Test security measures
   - **Time Estimate:** 2 hours
-  - **Dependencies:** All components
+  - **Dependencies:** All danger zone functionality
 
-### Polish & Optimization
-- [ ] **Performance optimization**
-  - Lazy loading for components
-  - Optimistic updates
-  - Caching strategies
-  - **Time Estimate:** 2 hours
-  - **Dependencies:** All components
-
-- [ ] **Accessibility improvements**
-  - ARIA labels and roles
-  - Keyboard navigation
-  - Screen reader compatibility
-  - **Time Estimate:** 2 hours
-  - **Dependencies:** All components
-
-- [ ] **Error handling improvements**
-  - User-friendly error messages
-  - Recovery options
-  - Fallback states
-  - **Time Estimate:** 2 hours
-  - **Dependencies:** All components
-
-## Total Time Estimate: 65 hours (3-4 weeks)
-
-### Risk Mitigation Tasks
-- [ ] **Backup strategy for account deletion**
-  - Soft delete option
-  - Data recovery procedures
-  - **Time Estimate:** 2 hours
-
-- [ ] **Security audit**
-  - Password change security
-  - Data export security
-  - **Time Estimate:** 3 hours
-
-- [ ] **GDPR compliance review**
-  - Data export format
-  - Deletion completeness
-  - **Time Estimate:** 2 hours
-
-## Dependencies Map (Updated)
+## Updated Dependencies Map
 
 ```
-TypeScript Types
-├── Reusable Components
-│   ├── ProfileInformation Component (UI)
-│   ├── NotificationSettings Component (UI)
-│   ├── PrivacySettings Component (UI)
-│   ├── SecuritySettings Component (UI)
-│   ├── DangerZone Component (UI)
-│   └── Settings Page Layout (UI)
-│       └── Database Migration
-│           └── Server Actions
-│               ├── ProfileInformation Integration
-│               ├── NotificationSettings Integration
-│               ├── PrivacySettings Integration
-│               ├── SecuritySettings Integration
-│               └── DangerZone Integration
-└── Mock Data & API Stubs
-    └── All UI Components
+Phase 1: UI Components ✅
+├── Phase 2: Profile Information Panel
+│   ├── Database Migration (Profile Fields)
+│   ├── Profile Server Actions
+│   ├── Profile Component Integration
+│   └── Photo Upload Integration
+│       └── Phase 3: Notification Settings Panel
+│           ├── Database Migration (Notification Preferences)
+│           ├── Notification Server Actions
+│           └── Notification Component Integration
+│               └── Phase 4: Privacy Settings Panel
+│                   ├── Database Migration (Privacy Settings)
+│                   ├── Privacy Server Actions
+│                   └── Privacy Component Integration
+│                       └── Phase 5: Security Settings Panel
+│                           ├── Security Server Actions
+│                           └── Security Component Integration
+│                               └── Phase 6: Danger Zone Panel
+│                                   ├── Danger Zone Server Actions
+│                                   └── Danger Zone Component Integration
 ```
 
-## Success Metrics
+## Success Metrics by Panel
 
-### Functional Metrics
-- [ ] All form fields save successfully to database
+### Profile Information Panel
+- [ ] Form fields save successfully to database
 - [ ] Profile photo upload works with optimization
-- [ ] Notification preferences persist across sessions
-- [ ] Privacy settings control data visibility correctly
-- [ ] Password change works securely
-- [ ] Account deletion removes all user data
-- [ ] Data export generates complete user data
-
-### Performance Metrics
-- [ ] Page load time < 2 seconds
-- [ ] Form submission time < 1 second
-- [ ] Image upload time < 3 seconds
-- [ ] No memory leaks or performance issues
-
-### User Experience Metrics
-- [ ] All form validations work correctly
-- [ ] Error messages are clear and actionable
-- [ ] Loading states provide good feedback
+- [ ] Real-time validation provides immediate feedback
+- [ ] Optimistic updates work smoothly
 - [ ] Responsive design works on all devices
-- [ ] Accessibility score > 95%
 
-## Rollback Plan
+### Notification Settings Panel
+- [ ] Toggle switches save preferences immediately
+- [ ] Preferences persist across sessions
+- [ ] Error handling provides clear feedback
 
-If issues arise during implementation:
+### Privacy Settings Panel
+- [ ] Privacy controls work correctly
+- [ ] GDPR compliance features function properly
+- [ ] Settings persist and apply correctly
 
-1. **UI Rollback**: Keep old settings page as fallback
-2. **Database Rollback**: Revert migration if schema changes cause issues
-3. **Feature Flags**: Use feature flags to disable new functionality
-4. **Gradual Rollout**: Deploy to subset of users first
+### Security Settings Panel
+- [ ] Password change works securely
+- [ ] Current password verification prevents unauthorized changes
+- [ ] Account activity displays correctly
 
-## Post-Launch Tasks
+### Danger Zone Panel
+- [ ] Account deletion requires proper verification
+- [ ] Data export generates complete user data
+- [ ] Security measures prevent accidental deletion
 
-### Monitoring
-- [ ] Set up error tracking for settings page
-- [ ] Monitor form submission success rates
-- [ ] Track user engagement with settings
-- [ ] Monitor performance metrics
+## Risk Mitigation
 
-### Iteration
-- [ ] Collect user feedback on settings experience
-- [ ] Analyze usage patterns
-- [ ] Plan improvements based on data
-- [ ] Consider additional settings based on user needs 
+### High Risk Items
+- **Account Deletion**: Implement soft delete option initially
+- **Password Changes**: Add rate limiting and security logging
+- **Data Export**: Ensure GDPR compliance and data security
+
+### Medium Risk Items
+- **Photo Upload**: Implement file size and type restrictions
+- **Database Migrations**: Test migrations thoroughly before deployment
+
+### Low Risk Items
+- **UI Components**: Already tested and working
+- **Form Validation**: Standard implementation
+
+## Rollback Strategy
+
+### Per-Panel Rollback
+- Each panel can be disabled independently using feature flags
+- Database migrations are reversible
+- Server actions can be disabled without affecting other panels
+
+### Complete Rollback
+- Keep old settings page as fallback
+- Database rollback procedures for each migration
+- Feature flag to switch between old and new settings
+
+## Post-Launch Monitoring
+
+### Per-Panel Metrics
+- **Profile Panel**: Form completion rates, photo upload success
+- **Notification Panel**: Toggle usage patterns, preference changes
+- **Privacy Panel**: Privacy setting adoption rates
+- **Security Panel**: Password change frequency, security incidents
+- **Danger Zone**: Deletion requests, data export usage
+
+### Overall Metrics
+- Settings page engagement
+- User satisfaction scores
+- Error rates and recovery
+- Performance metrics
+
+## Total Time Estimate: 45 hours (6 weeks)
+
+### Weekly Breakdown
+- **Week 1-2**: Profile Information Panel (12 hours)
+- **Week 2-3**: Notification Settings Panel (7 hours)
+- **Week 3-4**: Privacy Settings Panel (7 hours)
+- **Week 4-5**: Security Settings Panel (9 hours)
+- **Week 5-6**: Danger Zone Panel (11 hours)
+
+This panel-by-panel approach allows for:
+- **Incremental delivery**: Each panel can be deployed independently
+- **Faster feedback**: Users can test each panel as it's completed
+- **Easier testing**: Focus on one panel at a time
+- **Reduced risk**: Issues in one panel don't affect others
+- **Better prioritization**: Focus on most important features first 

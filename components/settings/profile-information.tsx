@@ -1,8 +1,10 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { ProfileData } from '@/lib/types/settings'
 import { SettingsSection, SettingsInput, SettingsButton } from './index'
+import { getUserProfile, updateUserProfile, uploadProfilePhoto } from '@/lib/profile-actions'
+import { toast } from 'sonner'
 
 interface ProfileInformationProps {
   initialData?: ProfileData
@@ -26,6 +28,28 @@ export function ProfileInformation({
 
   const [errors, setErrors] = useState<Partial<ProfileData>>({})
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
+
+  // Load user profile data on component mount
+  useEffect(() => {
+    const loadUserProfile = async () => {
+      try {
+        const result = await getUserProfile()
+        if (result.success && result.data) {
+          setFormData(result.data)
+        } else if (result.error) {
+          toast.error(result.error)
+        }
+      } catch (error) {
+        console.error('Error loading user profile:', error)
+        toast.error('Failed to load profile data')
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    loadUserProfile()
+  }, [])
 
   const validateForm = (): boolean => {
     const newErrors: Partial<ProfileData> = {}
@@ -53,19 +77,36 @@ export function ProfileInformation({
 
     setIsSubmitting(true)
     try {
-      await onSave?.(formData)
+      const result = await updateUserProfile(formData)
+      if (result.success) {
+        toast.success('Profile updated successfully!')
+        onSave?.(formData)
+      } else {
+        toast.error(result.error || 'Failed to update profile')
+      }
     } catch (error) {
       console.error('Error saving profile:', error)
+      toast.error('An unexpected error occurred')
     } finally {
       setIsSubmitting(false)
     }
   }
 
-  const handlePhotoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handlePhotoChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
     if (file) {
-      // TODO: Implement actual photo upload
-      console.log('Photo selected:', file)
+      try {
+        const result = await uploadProfilePhoto(file)
+        if (result.success && result.avatarUrl) {
+          setFormData(prev => ({ ...prev, avatarUrl: result.avatarUrl! }))
+          toast.success('Profile photo updated successfully!')
+        } else {
+          toast.error(result.error || 'Failed to upload photo')
+        }
+      } catch (error) {
+        console.error('Error uploading photo:', error)
+        toast.error('An unexpected error occurred')
+      }
     }
   }
 
@@ -171,8 +212,8 @@ export function ProfileInformation({
         <div className="flex justify-end">
           <SettingsButton
             onClick={handleSave}
-            loading={isSubmitting || loading}
-            disabled={isSubmitting || loading}
+            loading={isSubmitting || loading || isLoading}
+            disabled={isSubmitting || loading || isLoading}
           >
             Save Changes
           </SettingsButton>
