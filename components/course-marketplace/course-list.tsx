@@ -75,7 +75,7 @@ export function CourseList({ courses, loading }: CourseListProps) {
             <div className="h-8 w-48 bg-zinc-700 rounded-md animate-pulse" />
           </h2>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6">
           {Array.from({ length: 6 }).map((_, i) => (
             <CourseCardSkeleton key={i} />
           ))}
@@ -87,7 +87,7 @@ export function CourseList({ courses, loading }: CourseListProps) {
   return (
     <div className="space-y-8">
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 pt-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 pt-4 gap-6">
         {displayedCourses.filter(course => course.id).map((course, index) => {
           // batchIndex is index within the current batch
           const batchIndex = index % BATCH_SIZE
