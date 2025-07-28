@@ -43,7 +43,7 @@ export async function fetchSimilarCoursesServer(courseTypeId: string, excludeId:
   
   const { data, error } = await supabase
     .from("courses")
-    .select("*")
+    .select("*, schools(*)")
     .eq("course_type_id", courseTypeId)
     .neq("id", excludeId)
     .limit(8)
@@ -53,5 +53,12 @@ export async function fetchSimilarCoursesServer(courseTypeId: string, excludeId:
     return []
   }
 
-  return data || []
+  // Process the data similar to client-side
+  const processedData = (data || []).map(course => ({
+    ...course,
+    skills: typeof course.skills === 'string' ? course.skills.split(',').map((s: string) => s.trim()).filter(Boolean) : course.skills || [],
+    photo_url: typeof course.photo_url === 'string' && course.photo_url.startsWith('[') ? JSON.parse(course.photo_url) : Array.isArray(course.photo_url) ? course.photo_url : [],
+  }))
+
+  return processedData
 } 
