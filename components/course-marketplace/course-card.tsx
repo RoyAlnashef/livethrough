@@ -1,10 +1,11 @@
 "use client"
 
 import { useState } from "react"
-import { Bookmark, Shield, Clock, Trees, ImageIcon } from "lucide-react"
+import { Bookmark, Shield, Clock, Trees, ImageIcon, FlameKindling } from "lucide-react"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 import { Course } from '@/lib/types'
 import { useAuthModal } from "./auth-modal-context"
 import Link from "next/link"
@@ -129,6 +130,31 @@ export function CourseCard({ course, onBookmarkToggle }: CourseCardProps) {
                 
               </div>
             </div>
+
+            {/* School Section */}
+            {course.schools && (
+              <div className="mt-4 pt-4 border-t border-zinc-800">
+                <div className="flex items-center gap-3">
+                  {/* School Logo/Thumbnail */}
+                  <Avatar className="w-8 h-8">
+                    <AvatarImage
+                      src={course.schools.logo_url}
+                      alt={course.schools.name}
+                    />
+                    <AvatarFallback className="bg-teal-950 ">
+                      <FlameKindling className="w-4 h-4 text-teal-600" />
+                    </AvatarFallback>
+                  </Avatar>
+                  
+                  {/* School Name */}
+                  <div className="flex-1 min-w-0">
+                    <div className="text-white text-sm font-medium truncate">
+                      {course.schools.name}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </Card>

@@ -40,6 +40,7 @@ interface Course {
   schools: {
     id: string
     name: string
+    logo_url?: string
   }
 }
 
@@ -108,7 +109,7 @@ export default function CoursesPage() {
       setLoading(true)
       const { data, error } = await supabase
         .from('courses')
-        .select('id,title,created_at,status,location,schools(id,name)')
+        .select('id,title,created_at,status,location,schools(id,name,logo_url)')
         .order('created_at', { ascending: false })
       
       if (error) {
@@ -257,7 +258,7 @@ export default function CoursesPage() {
       // Refresh courses
       const { data, error: fetchError } = await supabase
         .from('courses')
-        .select('id,title,created_at,status,location,schools(id,name)')
+        .select('id,title,created_at,status,location,schools(id,name,logo_url)')
         .order('created_at', { ascending: false });
       if (fetchError) throw fetchError;
       if (data) {
@@ -285,7 +286,7 @@ export default function CoursesPage() {
       // Refresh courses
       const { data, error: fetchError } = await supabase
         .from('courses')
-        .select('id,title,created_at,status,location,schools(id,name)')
+        .select('id,title,created_at,status,location,schools(id,name,logo_url)')
         .order('created_at', { ascending: false });
       if (fetchError) throw fetchError;
       if (data) {

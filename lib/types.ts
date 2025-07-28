@@ -33,6 +33,7 @@ export interface Course {
   isBookmarked?: boolean
   // Optionally, include the joined object for convenience
   course_type?: CourseType
+  schools?: School
 }
 
 export interface School {

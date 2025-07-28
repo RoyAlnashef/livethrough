@@ -25,12 +25,18 @@ export default function MyCourses() {
       const ids = bookmarksWithTimestamps.map(bookmark => bookmark.course_id);
       const { data, error } = await supabase
         .from('courses')
-        .select('id, photo_url, title, price, location, difficulty, environment, duration')
+        .select('id, photo_url, title, price, location, difficulty, environment, duration, schools(name,logo_url)')
         .in('id', ids);
       if (!error && data) {
+        // Transform the data to handle schools properly
+        const transformedData = data.map(course => ({
+          ...course,
+          schools: Array.isArray(course.schools) ? course.schools[0] : course.schools
+        }));
+        
         // Sort courses by bookmark creation time (most recent first)
         const sortedCourses = bookmarksWithTimestamps
-          .map(bookmark => data.find(course => course.id === bookmark.course_id))
+          .map(bookmark => transformedData.find(course => course.id === bookmark.course_id))
           .filter(course => course !== undefined) as Course[];
         setCourses(sortedCourses);
       } else {

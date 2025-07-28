@@ -24,7 +24,7 @@ export default function CourseMarketplace() {
       setLoading(true)
       const { data, error } = await supabase
         .from('courses')
-        .select('id,title,price,duration,difficulty,environment,photo_url,location,schools(name)')
+        .select('id,title,price,duration,difficulty,environment,photo_url,location,schools(name,logo_url)')
 
       if (error) {
         console.error("Error fetching courses:", error)
