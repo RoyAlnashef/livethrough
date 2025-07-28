@@ -1,18 +1,18 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { toast } from 'sonner'
 import type { NotificationSettings } from '@/lib/types/settings'
-import { SettingsSection, SettingsToggle, SettingsButton } from './index'
+import { SettingsSection, SettingsToggle } from './index'
+import { getNotificationSettings, updateNotificationSetting } from '@/lib/notification-actions'
 
 interface NotificationSettingsProps {
   initialSettings?: NotificationSettings
-  onSave?: (settings: NotificationSettings) => void
   loading?: boolean
 }
 
 export function NotificationSettings({ 
   initialSettings, 
-  onSave, 
   loading = false 
 }: NotificationSettingsProps) {
   const [settings, setSettings] = useState<NotificationSettings>({
@@ -22,22 +22,53 @@ export function NotificationSettings({
     systemAnnouncements: initialSettings?.systemAnnouncements ?? true
   })
 
-  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
-  const handleToggle = (key: keyof NotificationSettings, value: boolean) => {
+  // Load settings from backend if not provided
+  useEffect(() => {
+    const loadSettings = async () => {
+      if (!initialSettings) {
+        setIsLoading(true)
+        try {
+          const backendSettings = await getNotificationSettings()
+          if (backendSettings) {
+            setSettings(backendSettings)
+          }
+        } catch (error) {
+          console.error('Error loading notification settings:', error)
+          toast.error('Failed to load notification settings')
+        } finally {
+          setIsLoading(false)
+        }
+      }
+    }
+
+    loadSettings()
+  }, [initialSettings])
+
+  const handleToggle = async (key: keyof NotificationSettings, value: boolean) => {
+    // Optimistic update
     setSettings(prev => ({ ...prev, [key]: value }))
-  }
-
-  const handleSave = async () => {
-    setIsSubmitting(true)
+    
+    // Save to backend
     try {
-      await onSave?.(settings)
+      const result = await updateNotificationSetting(key, value)
+      if (!result.success) {
+        // Revert on error
+        setSettings(prev => ({ ...prev, [key]: !value }))
+        toast.error(result.error || 'Failed to update setting')
+      } else {
+        toast.success('Setting updated successfully')
+      }
     } catch (error) {
-      console.error('Error saving notification settings:', error)
-    } finally {
-      setIsSubmitting(false)
+      // Revert on error
+      setSettings(prev => ({ ...prev, [key]: !value }))
+      console.error('Error updating notification setting:', error)
+      toast.error('Failed to update setting')
     }
   }
+
+
 
   return (
     <SettingsSection 
@@ -52,16 +83,16 @@ export function NotificationSettings({
             description="Receive updates about your courses and account"
             checked={settings.emailNotifications}
             onChange={(checked) => handleToggle('emailNotifications', checked)}
-            disabled={loading}
+            disabled={loading || isLoading}
           />
 
           <SettingsToggle
             id="courseUpdates"
-            label="Course Updates"
-            description="Get notified when new content is added to your courses"
+            label="Bookmarked Courses"
+            description="Get notified when your bookmarked courses get updated"
             checked={settings.courseUpdates}
             onChange={(checked) => handleToggle('courseUpdates', checked)}
-            disabled={loading}
+            disabled={loading || isLoading}
           />
 
           <SettingsToggle
@@ -70,7 +101,7 @@ export function NotificationSettings({
             description="Receive important platform updates and announcements"
             checked={settings.systemAnnouncements}
             onChange={(checked) => handleToggle('systemAnnouncements', checked)}
-            disabled={loading}
+            disabled={loading || isLoading}
           />
 
           <SettingsToggle
@@ -79,19 +110,11 @@ export function NotificationSettings({
             description="Receive promotional content and special offers (optional)"
             checked={settings.marketingEmails}
             onChange={(checked) => handleToggle('marketingEmails', checked)}
-            disabled={loading}
+            disabled={loading || isLoading}
           />
         </div>
 
-        <div className="flex justify-end">
-          <SettingsButton
-            onClick={handleSave}
-            loading={isSubmitting || loading}
-            disabled={isSubmitting || loading}
-          >
-            Save Preferences
-          </SettingsButton>
-        </div>
+
       </div>
     </SettingsSection>
   )

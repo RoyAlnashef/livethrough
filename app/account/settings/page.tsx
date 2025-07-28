@@ -36,9 +36,7 @@ export default function Settings() {
         )
       case 'notifications':
         return (
-          <NotificationSettings 
-            onSave={(settings) => console.log('Notification settings saved:', settings)}
-          />
+          <NotificationSettings />
         )
       case 'privacy':
         return (
@@ -130,9 +128,7 @@ export default function Settings() {
             <h1 className="text-2xl font-bold text-white">Settings</h1>
             <div className="space-y-6">
               <ProfileInformation />
-              <NotificationSettings 
-                onSave={(settings) => console.log('Notification settings saved:', settings)}
-              />
+              <NotificationSettings />
               <PrivacySettings 
                 onSave={(settings) => console.log('Privacy settings saved:', settings)}
               />
