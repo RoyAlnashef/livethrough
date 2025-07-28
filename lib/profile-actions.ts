@@ -18,7 +18,7 @@ async function createServerSupabaseClient() {
         get(name: string) {
           return cookieStore.get(name)?.value
         },
-        set(name: string, value: string, options: any) {
+        set(name: string, value: string, options: Record<string, unknown>) {
           try {
             cookieStore.set(name, value, options)
           } catch {
@@ -27,7 +27,7 @@ async function createServerSupabaseClient() {
             // user sessions.
           }
         },
-        remove(name: string, options: any) {
+        remove(name: string, options: Record<string, unknown>) {
           try {
             cookieStore.set(name, '', options)
           } catch {
@@ -172,7 +172,7 @@ export async function uploadProfilePhoto(file: File): Promise<{
     const filePath = `${userId}/${fileName}`
 
     // Upload processed image to Supabase Storage
-    const { data: uploadData, error: uploadError } = await supabase.storage
+    const { error: uploadError } = await supabase.storage
       .from('avatars')
       .upload(filePath, processedImage.buffer, {
         contentType: processedImage.mimeType,
