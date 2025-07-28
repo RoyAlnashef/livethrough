@@ -7,13 +7,11 @@ import { getPrivacySettings, updatePrivacySetting } from '@/lib/privacy-actions'
 import { toast } from 'sonner'
 
 interface PrivacySettingsProps {
-  initialSettings?: PrivacySettings
   onSave?: (settings: PrivacySettings) => void
   loading?: boolean
 }
 
 export function PrivacySettings({ 
-  initialSettings, 
   onSave, 
   loading = false 
 }: PrivacySettingsProps) {
