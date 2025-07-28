@@ -17,8 +17,6 @@ export interface NotificationSettings {
 }
 
 export interface PrivacySettings {
-  profileVisibility: 'public' | 'private'
-  courseActivityVisibility: 'public' | 'private'
   allowDataUsage: boolean
   allowAnalytics: boolean
 }
