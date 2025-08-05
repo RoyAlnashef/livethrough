@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Roboto, Roboto_Condensed } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import { AuthModalProvider } from "@/components/course-marketplace/auth-modal-context";
 import { Toaster } from "sonner";
@@ -36,6 +37,21 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
+      <head>
+        {/* Google tag (gtag.js) */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-5JF4R7RR1C"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-5JF4R7RR1C');
+          `}
+        </Script>
+      </head>
       <body
         className={`${roboto.variable} ${robotoCondensed.variable} antialiased bg-topo-overlay`}
       >
