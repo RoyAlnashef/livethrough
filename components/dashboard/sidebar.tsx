@@ -14,6 +14,7 @@ import {
   Home,
   LogOut,
   Megaphone,
+  Mail,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { supabase } from "@/lib/supabase"
@@ -23,11 +24,12 @@ const mainLinks = [
   { name: "Schools", href: "/dashboard/schools", icon: School },
   { name: "Students", href: "/dashboard/students", icon: Users },
   { name: "Marketplace", href: "/", icon: Home },
+  { name: "Newsletter", href: "/dashboard/newsletter", icon: Mail },
+  { name: "Ads", href: "/dashboard/ads", icon: Megaphone },
 ]
 
 const systemLinks = [
   { name: "Admin Users", href: "/dashboard/admin-users", icon: UserCog },
-  { name: "Ads", href: "/dashboard/ads", icon: Megaphone },
   { name: "Settings", href: "/dashboard/settings", icon: Settings },
   { name: "Security", href: "/dashboard/security", icon: Shield },
 ]
