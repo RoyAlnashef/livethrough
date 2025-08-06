@@ -23,9 +23,9 @@ const mainLinks = [
   { name: "Courses", href: "/dashboard/courses", icon: BookOpen },
   { name: "Schools", href: "/dashboard/schools", icon: School },
   { name: "Students", href: "/dashboard/students", icon: Users },
-  { name: "Marketplace", href: "/", icon: Home },
   { name: "Newsletter", href: "/dashboard/newsletter", icon: Mail },
   { name: "Ads", href: "/dashboard/ads", icon: Megaphone },
+  { name: "Marketplace", href: "/", icon: Home },
 ]
 
 const systemLinks = [
