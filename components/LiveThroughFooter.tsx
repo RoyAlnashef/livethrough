@@ -2,16 +2,24 @@
 
 import Image from "next/image"
 import Link from "next/link"
+import { useState } from "react"
 import { useAuthModal } from "@/components/course-marketplace/auth-modal-context"
 import { useAuth } from "@/lib/auth-context"
 import { useRouter } from "next/navigation"
-import { Mail, MapPin } from "lucide-react"
+import { Mail, MapPin, Check, Loader2 } from "lucide-react"
+import { subscribeToNewsletter } from "@/lib/newsletter-actions"
 // import { AdSlot } from "@/components/ads"
 
 export default function LiveThroughFooter() {
   const { openAuthModal } = useAuthModal()
   const { isAuthenticated, isAdmin } = useAuth()
   const router = useRouter()
+
+  // Newsletter form state
+  const [email, setEmail] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
+  const [statusMessage, setStatusMessage] = useState('')
 
   const handleMyCoursesClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (!isAuthenticated) {
@@ -32,10 +40,31 @@ export default function LiveThroughFooter() {
     openAuthModal()
   }
 
-  const handleNewsletterSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleNewsletterSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    // TODO: Implement newsletter signup logic
-    console.log('Newsletter signup submitted')
+    
+    if (!email.trim()) return
+    
+    setIsSubmitting(true)
+    setSubmitStatus('idle')
+    
+    try {
+      const result = await subscribeToNewsletter(email)
+      
+      if (result.success) {
+        setSubmitStatus('success')
+        setStatusMessage(result.message)
+        setEmail('')
+      } else {
+        setSubmitStatus('error')
+        setStatusMessage(result.message)
+      }
+    } catch {
+      setSubmitStatus('error')
+      setStatusMessage('Something went wrong. Please try again.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -70,7 +99,7 @@ export default function LiveThroughFooter() {
                 />
               </Link>
             </div>
-            <p className="text-zinc-400 text-lg leading-relaxed">
+            <p className="text-white text-lg leading-relaxed">
             Find the best courses, and learn how to survive anything.
             </p>
             <address className="pt-4 space-y-2 not-italic">
@@ -177,8 +206,8 @@ export default function LiveThroughFooter() {
 
           {/* Newsletter Signup Section */}
           <div className="space-y-4">
-            <h3 className="text-white font-semibold text-lg">Newsletter Signup</h3>
-            <p className="text-zinc-400 text-sm">Get survival tips, course updates, and more in your inbox.</p>
+            <h3 className="text-white font-semibold text-lg">Subscribe to our newsletter</h3>
+            <p className="text-zinc-400 text-sm">Sign up for survival tips and resources, course updates, and more.</p>
             <form 
               className="flex flex-col sm:flex-row gap-2" 
               onSubmit={handleNewsletterSubmit}
@@ -189,22 +218,39 @@ export default function LiveThroughFooter() {
                 type="email"
                 id="footer-newsletter-email"
                 name="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
                 placeholder="Your email"
-                className="px-3 py-2 rounded bg-zinc-900 text-zinc-100 placeholder-zinc-500 border border-zinc-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 flex-1"
+                disabled={isSubmitting || submitStatus === 'success'}
+                className="px-3 py-2 rounded bg-zinc-900 text-zinc-100 placeholder-zinc-500 border border-zinc-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 flex-1 disabled:opacity-50"
                 autoComplete="email"
                 aria-label="Email address for newsletter"
                 aria-describedby="newsletter-description"
               />
               <button
                 type="submit"
-                className="px-4 py-2 rounded bg-teal-600 text-white font-semibold hover:bg-teal-700 transition-colors focus:outline-none"
+                disabled={isSubmitting || submitStatus === 'success'}
+                className="px-4 py-2 rounded bg-teal-600 text-white font-semibold hover:bg-teal-700 transition-colors focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center min-w-[120px]"
                 aria-label="Subscribe to newsletter"
               >
-                Subscribe
+                {isSubmitting ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : submitStatus === 'success' ? (
+                  <Check className="h-4 w-4" />
+                ) : (
+                  'Subscribe'
+                )}
               </button>
             </form>
-            <p id="newsletter-description" className="sr-only">Enter your email address to receive survival tips and course updates</p>
+            {submitStatus !== 'idle' && (
+              <p className={`text-sm mt-2 ${
+                submitStatus === 'success' ? 'text-green-400' : 'text-red-400'
+              }`}>
+                {statusMessage}
+              </p>
+            )}
+            <p id="newsletter-description" className="sr-only">Subscribe for survival tips, resources, course updates, and more.</p>
           </div>
         </div>
         {/* Bottom Section */}

@@ -63,7 +63,7 @@ export function Header() {
                 className="h-8 w-auto"
               />
             </Link>
-            <span className="hidden lg:block text-zinc-400 text-md font-roboto">
+            <span className="hidden md:block text-white text-md font-roboto">
               Learn to survive anything.
             </span>
           </div>
@@ -206,7 +206,7 @@ export function Header() {
               priority
               className="h-8 w-auto"
             />
-            <p className="text-zinc-400 text-xl text-center font-roboto">
+            <p className="text-white text-xl text-center font-roboto">
                 Find the best courses, and learn how to survive anything.
               </p>
           </div>
