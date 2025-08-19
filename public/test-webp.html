@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test WebP Upload</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #1a1a1a;
+            color: #fff;
+        }
+        .upload-area {
+            border: 2px dashed #666;
+            padding: 40px;
+            text-align: center;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        .upload-area.dragover {
+            border-color: #4CAF50;
+            background: rgba(76, 175, 80, 0.1);
+        }
+        input[type="file"] {
+            margin: 10px 0;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        .result {
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 4px;
+            white-space: pre-wrap;
+        }
+        .success {
+            background: #4CAF50;
+            color: white;
+        }
+        .error {
+            background: #f44336;
+            color: white;
+        }
+        .info {
+            background: #2196F3;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>Test WebP Upload</h1>
+    
+    <div class="upload-area" id="uploadArea">
+        <h3>Drop a WebP file here or click to select</h3>
+        <input type="file" id="fileInput" accept="image/webp,image/*" />
+        <br>
+        <button onclick="testUpload()">Test Chunked Upload</button>
+        <button onclick="testDirectUpload()">Test Direct Upload</button>
+        <button onclick="testStorage()">Test Storage</button>
+    </div>
+
+    <div id="result"></div>
+
+    <script>
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+        const resultDiv = document.getElementById('result');
+
+        // Drag and drop handlers
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                fileInput.files = files;
+            }
+        });
+
+        async function testUpload() {
+            const file = fileInput.files[0];
+            if (!file) {
+                showResult('Please select a file first', 'error');
+                return;
+            }
+
+            showResult(`Testing chunked upload with file: ${file.name} (${file.type}, ${file.size} bytes)`, 'info');
+
+            const formData = new FormData();
+            formData.append('file', file);
+
+            try {
+                const response = await fetch('/api/test-webp-upload', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    showResult(`✅ Chunked upload successful!\n\nOriginal: ${result.originalFile.name} (${result.originalFile.type})\nProcessed: ${result.processedFile.fileName} (${result.processedFile.mimeType})\nSize: ${result.processedFile.size} bytes\nURL: ${result.publicUrl}`, 'success');
+                } else {
+                    showResult(`❌ Chunked upload failed: ${result.error}\n\nDetails: ${result.details}`, 'error');
+                }
+            } catch (error) {
+                showResult(`❌ Network error: ${error.message}`, 'error');
+            }
+        }
+
+        async function testDirectUpload() {
+            const file = fileInput.files[0];
+            if (!file) {
+                showResult('Please select a file first', 'error');
+                return;
+            }
+
+            showResult(`Testing direct upload with file: ${file.name} (${file.type}, ${file.size} bytes)`, 'info');
+
+            const formData = new FormData();
+            formData.append('file', file);
+
+            try {
+                const response = await fetch('/api/test-direct-upload', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    showResult(`✅ Direct upload successful!\n\nOriginal: ${result.originalFile.name} (${result.originalFile.type})\nProcessed: ${result.processedFile.fileName} (${result.processedFile.mimeType})\nSize: ${result.processedFile.size} bytes\nURL: ${result.publicUrl}`, 'success');
+                } else {
+                    showResult(`❌ Direct upload failed: ${result.error}\n\nDetails: ${result.details}`, 'error');
+                }
+            } catch (error) {
+                showResult(`❌ Network error: ${error.message}`, 'error');
+            }
+        }
+
+        async function testStorage() {
+            showResult('Testing storage configuration...', 'info');
+            
+            try {
+                const response = await fetch('/api/test-storage');
+                const result = await response.json();
+                
+                if (result.success) {
+                    showResult(`✅ Storage test successful!\n\nBucket: ${result.bucket.name}\nPublic: ${result.bucket.public}\nFile count: ${result.bucket.fileCount}\n\nAvailable buckets: ${result.availableBuckets.map(b => b.name).join(', ')}`, 'success');
+                } else {
+                    showResult(`❌ Storage test failed: ${result.error}\n\nDetails: ${result.details}`, 'error');
+                }
+            } catch (error) {
+                showResult(`❌ Network error: ${error.message}`, 'error');
+            }
+        }
+
+        function showResult(message, type) {
+            resultDiv.innerHTML = `<div class="result ${type}">${message}</div>`;
+        }
+    </script>
+</body>
+</html> 
