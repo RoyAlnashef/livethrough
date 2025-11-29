@@ -84,9 +84,9 @@ export default function LiveThroughFooter() {
       </div> */}
       
       <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Brand Section */}
-          <div className="space-y-4">
+          <div className="space-y-4 pb-8 border-b sm:border-b-0 border-b-zinc-800">
             <div className="flex items-center">
               <Link href="/" aria-label="Go to homepage">
                 <Image
@@ -117,7 +117,7 @@ export default function LiveThroughFooter() {
           </div>
 
           {/* Menu Links Section */}
-          <div className="space-y-4">
+          <div className="space-y-4 pb-8 border-b sm:border-b-0 border-b-zinc-800">
             <h3 className="text-white font-semibold text-lg">Menu</h3>
             <nav className="flex flex-col space-y-2" role="navigation" aria-label="Footer navigation">
               {isAdmin && (
@@ -177,7 +177,7 @@ export default function LiveThroughFooter() {
           </div>
 
           {/* Resources Section */}
-          <div className="space-y-4">
+          <div className="space-y-4 pb-8 border-b sm:border-b-0 border-b-zinc-800">
             <h3 className="text-white font-semibold text-lg">Resources</h3>
             <nav className="flex flex-col space-y-2" role="navigation" aria-label="Footer resources navigation">
               <Link 
@@ -205,11 +205,11 @@ export default function LiveThroughFooter() {
           </div>
 
           {/* Newsletter Signup Section */}
-          <div className="space-y-4">
+          <div className="space-y-4 pb-8 border-b sm:border-b-0 border-b-zinc-800">
             <h3 className="text-white font-semibold text-lg">Subscribe to our newsletter</h3>
             <p className="text-zinc-400 text-sm">Sign up for survival tips and resources, course updates, and more.</p>
             <form 
-              className="flex flex-col sm:flex-row gap-2" 
+              className="flex flex-col md:flex-row lg:flex-col gap-4"
               onSubmit={handleNewsletterSubmit}
               aria-labelledby="newsletter-heading"
             >
@@ -223,7 +223,7 @@ export default function LiveThroughFooter() {
                 required
                 placeholder="Your email"
                 disabled={isSubmitting || submitStatus === 'success'}
-                className="px-3 py-2 rounded bg-zinc-900 text-zinc-100 placeholder-zinc-500 border border-zinc-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 flex-1 disabled:opacity-50"
+                className="px-3 py-2 rounded bg-zinc-900 text-zinc-100 placeholder-zinc-500 border border-zinc-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 flex-1 min-w-0 disabled:opacity-50"
                 autoComplete="email"
                 aria-label="Email address for newsletter"
                 aria-describedby="newsletter-description"
@@ -231,7 +231,7 @@ export default function LiveThroughFooter() {
               <button
                 type="submit"
                 disabled={isSubmitting || submitStatus === 'success'}
-                className="px-4 py-2 rounded bg-teal-600 text-white font-semibold hover:bg-teal-700 transition-colors focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center min-w-[120px]"
+                className="px-4 py-2 rounded bg-teal-600 text-white font-semibold hover:bg-teal-700 transition-colors focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center md:min-w-[100px] w-full md:w-auto flex-shrink-0"
                 aria-label="Subscribe to newsletter"
               >
                 {isSubmitting ? (
