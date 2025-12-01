@@ -68,9 +68,10 @@
 
 ## Deployment & Infrastructure
 
-- **Hosting:** Vercel (recommended for Next.js), also compatible with Netlify, Railway, or any Node.js platform
+- **Hosting:** Netlify (primary hosting platform)
 - **Image CDN:** Supabase Storage with global CDN
 - **Build Tool:** Next.js built-in build system with Turbopack
+- **Netlify Configuration:** `netlify.toml` (for deployment settings and redirects)
 
 ## Third-Party Services
 

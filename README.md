@@ -143,7 +143,8 @@ livethrough/
 ├── supabase/                    # Database migrations
 │   └── migrations/
 │       └── 20250725120000_create_ad_analytics.sql  # Ad analytics table
-└── public/                      # Static assets
+├── public/                      # Static assets
+└── netlify.toml                 # Netlify deployment configuration
 ```
 
 ## 🗄️ Database Schema
@@ -305,11 +306,20 @@ The application is fully responsive and optimized for:
    npm run start
    ```
 
+3. **Netlify Deployment**
+   
+   The application is configured for Netlify deployment with `netlify.toml`:
+   - Automatic builds on push to the `dev` branch
+   - Environment variables configured in Netlify dashboard
+   - Redirects and rewrites configured for Next.js App Router
+
 ### Deployment Platforms
 
-The application is ready for deployment on platforms like:
-- **[Vercel](https://vercel.com/)** (recommended for Next.js)
-- **[Netlify](https://netlify.com/)**
+The application is deployed on:
+- **[Netlify](https://netlify.com/)** (primary hosting platform)
+
+The application is also compatible with:
+- **[Vercel](https://vercel.com/)**
 - **[Railway](https://railway.app/)**
 - Any platform supporting Node.js
 
