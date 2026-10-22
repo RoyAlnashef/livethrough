@@ -3,7 +3,7 @@
 ## Framework & Runtime
 
 - **Application Framework:** Next.js 15.2.4 (App Router with Turbopack)
-- **Language/Runtime:** Node.js 18+ (TypeScript 5.0)
+- **Language/Runtime:** Node.js 22.23.4+ (TypeScript 5.0)
 - **Package Manager:** npm
 
 ## Frontend

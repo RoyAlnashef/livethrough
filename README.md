@@ -11,7 +11,7 @@ LiveThrough is a marketplace that connects outdoor enthusiasts with certified su
 
 ## Prerequisites
 
-- [Node.js](https://nodejs.org/) 18+
+- [Node.js](https://nodejs.org/) 22.23.4+ (22.x; includes [October 2026 security fixes](https://nodejs.org/en/blog/vulnerability/october-2026-security-releases)). Use [`.nvmrc`](.nvmrc): `nvm install && nvm use`.
 - npm
 - A [Supabase](https://supabase.com/) project
 
